@@ -1,0 +1,230 @@
+$blue: #004DFF;
+
+.nav {
+  display: flex;
+  align-items: center;
+  padding: 1rem 2rem;
+  color: #ecf0f1;
+  justify-content: space-between;
+  height: 80px;
+  width: 100%;
+
+  .back-btn {
+    display: none;
+    position: absolute;
+    left: 1rem;
+    align-items: center;
+    cursor: pointer;
+
+    svg {
+      font-size: 1.5rem;
+      color: #333;
+      transition: color 0.2s ease;
+    }
+
+    &:hover svg {
+      color: $blue;
+    }
+  }
+
+  .left {
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.2rem;
+    width: 20vw;
+    display: flex;
+    align-items: center;
+    height: 100%;
+
+    img {
+      height: 100%;
+      width: 70%;
+      object-fit: cover;
+    }
+
+    &:hover {
+      color: #3498db;
+    }
+  }
+
+  .right {
+    width: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .link {
+      color: rgb(49, 48, 48);
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      margin-right: 20px;
+      text-align: center;
+
+      &:hover {
+        text-decoration: underline;
+        color: black;
+        cursor: pointer;
+      }
+    }
+
+    .login-btn {
+      background-color: $blue;
+      color: #ecf0f1;
+      padding: 0.6rem 1rem;
+      text-align: center;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      text-decoration: none;
+      &:hover {
+        background-color: #0f3ba0;
+      }
+    }
+
+    // User logged-in actions
+    .user-actions {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+
+      .notification-icon {
+        cursor: pointer;
+        color: #333;
+        font-size: 1.4rem;
+        transition: color 0.2s ease;
+        border-radius: 100%;
+        border: 1px solid black;
+        height: 36px;
+        width: 36px;
+        padding: 5px;
+
+        &:hover {
+          color: $blue;
+        }
+      }
+
+      .profile-btn {
+        cursor: pointer;
+
+        .profile-pic {
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          object-fit: cover;
+          border: 2px solid transparent;
+          transition: border-color 0.2s ease;
+
+          &:hover {
+            border-color: $blue;
+          }
+        }
+
+        svg {
+          font-size: 1.8rem;
+          color: #333;
+        }
+      }
+    }
+  }
+
+  // Responsive
+  @media (max-width: 1024px) {
+    .right {
+      width: 30%;
+    }
+    .left img {
+      width: 60%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+
+    .left,
+    .right {
+      width: 100%;
+      justify-content: center;
+      margin: 0.5rem 0;
+    }
+
+    .right {
+      gap: 0.5rem;
+
+      .link {
+        font-size: 1rem;
+        margin-right: 10px;
+      }
+    }
+
+    .left img {
+      width: 50%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .left img {
+      width: 70%;
+    }
+
+    .right {
+      gap: 0.3rem;
+
+      .link,
+      button {
+        font-size: 0.9rem;
+      }
+
+      .user-actions {
+        gap: 10px;
+
+        .profile-pic {
+          width: 30px;
+          height: 30px;
+        }
+      }
+    }
+  }
+}
+.modal-overlay {
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 16px;
+  position: relative;
+  max-width: 400px;
+  width: 100%;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+

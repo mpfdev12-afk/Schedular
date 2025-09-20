@@ -1,0 +1,159 @@
+.cards {
+  padding: 1rem;
+  min-width: 30vw;
+
+  .card-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    background: #fff;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    .left-section {
+      flex-shrink: 0;
+      .avatar {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 3px solid #eee;
+        background: #f7f7f7;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+
+    .right-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+
+      h2 {
+        font-size: 1.4rem;
+        margin-bottom: 0.25rem;
+        font-weight: 600;
+        color: #222;
+      }
+
+      .speciality {
+        font-size: 0.95rem;
+        color: #555;
+
+        span {
+          color: #0077ff;
+          font-weight: 500;
+        }
+      }
+
+      .divider {
+        margin: 0.75rem 0;
+        border: none;
+        height: 1px;
+        background: #ddd;
+      }
+
+      .details {
+        font-size: 0.9rem;
+        color: #444;
+        margin-bottom: 0.75rem;
+
+        .qualification {
+          font-weight: 500;
+          margin-bottom: 0.25rem;
+        }
+      }
+
+      .timing {
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+
+        .days {
+          background: #eef6ff;
+          color: #0077ff;
+          padding: 0.25rem 0.5rem;
+          border-radius: 0.5rem;
+          font-weight: 500;
+        }
+      }
+
+      .book-btn {
+        padding: 0.6rem 1.2rem;
+        border: none;
+        border-radius: 0.5rem;
+        background: #0077ff;
+        color: white;
+        font-size: 0.95rem;
+        font-weight: 500;
+        cursor: pointer;
+        align-self: flex-start;
+        transition: background 0.2s ease;
+
+        &:hover {
+          background: #005fcc;
+        }
+      }
+    }
+  }
+
+  // Tablet
+  @media (max-width: 992px) {
+    min-width: 40vw;
+    .card-container {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+
+      .left-section {
+        .avatar {
+          width: 100px;
+          height: 100px;
+        }
+      }
+
+      .right-section {
+        align-items: center;
+
+        .book-btn {
+          align-self: center;
+        }
+      }
+    }
+  }
+
+  // Mobile
+  @media (max-width: 576px) {
+    padding: 0.5rem;
+    min-width: 80vw;
+
+    .card-container {
+      padding: 1rem;
+      gap: 1rem;
+
+      .right-section {
+        h2 {
+          font-size: 1.2rem;
+        }
+
+        .speciality {
+          font-size: 0.85rem;
+        }
+
+        .details {
+          font-size: 0.85rem;
+        }
+      }
+    }
+  }
+}

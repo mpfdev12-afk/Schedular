@@ -1,0 +1,54 @@
+.batches {
+  max-width: 90vw;
+  margin: 2rem auto;
+  padding: 1rem;
+  h2 {
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+
+  .filters {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin: 3rem;
+    justify-content: center;
+
+    input,
+    select {
+      padding: 0.5rem 0.75rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      width: 200px;
+    }
+  }
+
+  .batch-list {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .no-batches {
+    text-align: center;
+    color: #999;
+    font-size: 1rem;
+    margin-top: 2rem;
+  }
+
+  button{
+    display: inline-block;
+        background-color: #28a745;
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 500;
+
+        &:hover {
+          background-color: #218838;
+        }
+  }
+}

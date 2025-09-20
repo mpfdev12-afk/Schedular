@@ -1,0 +1,98 @@
+.Category{
+    //background-color: aquamarine;
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    h1{
+        margin: 0px;
+                text-align: center;
+    }
+    .cat{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 75vw;
+
+        div{
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 250px;
+            width: 25%;
+            margin: 90px 30px;
+            font-size: 30px;
+            border-radius: 10px;
+            border: 4px solid #004dff;
+            &:hover{
+                border:6px solid #093bb1;
+                cursor: pointer;
+                //background-color: rgba(153, 209, 235, 0.082);
+            }
+
+
+            img{
+                height: 60%;
+                width: 80%;
+                object-fit: contain;
+            }
+            span{
+                font-size: 20px;
+            }
+        }
+    }
+}
+
+ @media (max-width: 780px) {
+    .Category{
+        h1{
+                font-size: 2rem;
+            }
+        height: 80vh;
+        div{
+            //background-color: #004dff;
+            flex-direction: column;
+            height: 50vh;
+            margin: 0%;
+            .cat-cont{
+                margin: 10px;
+                flex-direction: row;
+                width: 60%;
+                height: 200px;
+                img{
+                    width: 35%;
+                    height: 120px;
+                }
+            }
+        }
+    }
+
+ }
+ @media (max-width: 450px) {
+    .Category{
+        h1{
+                font-size: 1.5rem;
+            }
+        height: 80vh;
+        div{
+            //background-color: #004dff;
+            flex-direction: column;
+            height: 50vh;
+            margin: 0%;
+            .cat-cont{
+                margin: 10px;
+                flex-direction: row;
+                width: 80%;
+                height: 150px;
+                img{
+                    width: 35%;
+                    height: 100px;
+                }
+            }
+        }
+    }
+
+ }

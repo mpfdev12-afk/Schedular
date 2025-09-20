@@ -1,0 +1,118 @@
+https://chatgpt.com/c/6856ed73-1ed4-800b-8785-de819cbedad7
+
+1. User Schema
+json
+Copy
+Edit
+{
+  id: Number,
+  fullName: String,
+  dateOfBirth: Date,
+  gender: String,
+  contact: {
+    email: String,
+    phone: String
+  },
+  address: {
+    street: String,
+    city: String,
+    state: String,
+    zipCode: String,
+    country: String
+  },
+  emergencyContact: {
+    name: String,
+    relation: String,
+    phone: String
+  },
+  bloodGroup: String,
+  languagesSpoken: [String],
+  createdAt: Date,
+  learningMaterial: [String], // materialId list
+}
+
+/////////////////////////////////////////////////////////////////
+
+2. Advisor Schema
+json
+Copy
+Edit
+{
+  id: String,
+  title: String,
+  fullName: String,
+  specialization: String,
+  qualification: String,
+  experienceYears: Number,
+  languagesSpoken: [String],
+  category: String,
+  description: String,
+  contact: {
+    email: String,
+    phone: String
+  },
+  availability: {
+    workingDays: {
+      startDay: String,
+      endDay: String
+    },
+    slotStartTime: String, // "HH:mm"
+    slotEndTime: String,
+    breakSlots: [Number],  // hours
+    slotDurationMinutes: Number
+  },
+  imageUrl: String
+}
+
+/////////////////////////////////////////////////////////////////////
+
+3. BookedSlots Schema (Separate collection/table)
+Each document/row represents one booking.
+
+json
+Copy
+Edit
+{
+  date: String, // e.g. "24062025"
+  userId: Number,
+  advisorId: String,
+  slotTime: Number, // 24-hr format
+  details: String,
+  status: String // confirmed, pending, cancelled,
+  Attendee_Count:5 //2-10
+}
+4. HistorySessions Schema
+json
+Copy
+Edit
+{
+  userId: Number,
+  advisorId: String,
+  date: String,
+  slotTime: Number,
+  details: String,
+  feedbackGiven: Boolean,
+  status: String // completed, no-show etc.
+}
+
+////////////////////////////////////////////////////
+5. LearningMaterials Schema
+json
+Copy
+Edit
+{
+  id: String,
+  title: String,
+  type: String, // video, pdf, etc.
+  url: String
+}
+And store user-material completion status separately:
+
+json
+Copy
+Edit
+{
+  userId: Number,
+  materialId: String,
+  completed: Boolean
+}

@@ -1,0 +1,81 @@
+.create {
+  display: flex;
+  justify-content: center;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    background-color: #fff;
+    border-radius: 16px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 700px;
+
+    h2 {
+      text-align: center;
+      margin-bottom: 1rem;
+      font-size: 1.8rem;
+      font-weight: 600;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+
+      select,
+      input {
+        width: 100%;
+      }
+    }
+
+    textarea,
+    input,
+    select {
+      padding: 0.9rem 1rem;
+      font-size: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+
+      &:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+      }
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 120px;
+      grid-column: span 2; // full width if placed inside form-row
+    }
+
+    button {
+      padding: 1rem;
+      background: linear-gradient(135deg, #007bff, #0056b3);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: linear-gradient(135deg, #0056b3, #004494);
+      }
+    }
+  }
+
+  /* 📱 Responsive */
+  @media (max-width: 768px) {
+    form {
+      .form-row {
+        grid-template-columns: 1fr; // stack in one column
+      }
+    }
+  }
+}

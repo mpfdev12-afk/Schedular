@@ -1,0 +1,109 @@
+.quick-appointments {
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  margin-top: 100px;
+
+  h2 {
+    margin-bottom: 15px;
+    font-size: 1.4rem;
+    color: #222;
+  }
+
+  .filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+
+    select {
+      padding: 6px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th,
+    td {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      text-align: left;
+    }
+
+    thead {
+      background: #007bff;
+      color: white;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #f8f9fa;
+    }
+
+    /* Join button */
+    .join-btn {
+      padding: 5px 10px;
+      background: #28a745;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.2s ease-in-out;
+
+      &:hover {
+        background: #218838;
+      }
+    }
+
+    /* Status labels */
+    .status {
+      display: inline-block;
+      padding: 5px 8px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      color: white;
+      font-weight: 500;
+
+      &.pending {
+        background: #ffc107; /* yellow */
+        color: #212529;
+      }
+
+      &.confirmed {
+        background: #17a2b8; /* teal */
+      }
+
+      &.cancelled {
+        background: #6c757d; /* gray */
+      }
+    }
+  }
+
+  .pagination {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+
+    button {
+      padding: 6px 12px;
+      border: none;
+      background: #007bff;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.2s ease-in-out;
+
+      &:hover:not(:disabled) {
+        background: #0056b3;
+      }
+
+      &:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+      }
+    }
+  }
+}

@@ -1,0 +1,126 @@
+    /* Place this in src/styles/advisorDashboard.scss */
+$primary: #2563eb;
+$light-gray: #f6f9fb;
+$text: #1f2937;
+$card-shadow: 0 8px 20px rgba(18, 33, 73, 0.04);
+    .calendar-card {
+      background: #fff;
+
+      padding: 14px;
+      border-radius: 10px;
+      box-shadow: $card-shadow;
+
+      .cal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        h3 {
+          margin: 0;
+        }
+
+        .cal-nav button {
+          border: none;
+          background: #f1f5f9;
+          padding: 3px 10px;
+          border-radius: 6px;
+          margin: 0px 3px;
+          cursor: pointer;
+        }
+      }
+
+      .weekdays {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        margin-top: 20px;
+        color: #94a3b8;
+        font-weight: 600;
+        font-size: 12px;
+        text-align: center;
+      }
+
+      .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 3px;
+        margin-top: 8px;
+        font-size: 10px;
+
+        .blank {
+          min-height: 48px;
+        }
+
+        .day {
+          min-height: 56px;
+          border-radius: 8px;
+          background: #fff;
+          padding: 2px;
+          align-items: center;
+          text-align: left;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          cursor: pointer;
+
+          .day-num {
+            font-weight: 700;
+            color: $text;
+            font-size: small;
+          }
+
+          .dots {
+            margin-top: auto;
+            display: flex;
+            gap: 4px;
+          }
+
+          .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+
+            &.green {
+              background: #16a34a;
+            }
+
+            &.red {
+              background: #ef4444;
+            }
+
+            &.blue {
+              background: #2563eb;
+            }
+
+            &.purple {
+              background: #7c3aed;
+            }
+          }
+
+          &.active {
+            background: #2563eb;
+            color: #fff;
+
+            .day-num {
+              color: #fff;
+            }
+          }
+        }
+      }
+
+      .cal-legend {
+        display: flex;
+        gap: 8px;
+        margin-top: 12px;
+
+        .legend {
+          display: flex;
+          gap: 6px;
+          align-items: center;
+
+          .dot {
+            width: 10px;
+            height: 10px;
+          }
+        }
+      }
+    }

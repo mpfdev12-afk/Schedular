@@ -1,0 +1,176 @@
+/* Place this in src/styles/advisorDashboard.scss */
+$primary: #2563eb;
+$light-gray: #f6f9fb;
+$text: #1f2937;
+$card-shadow: 0 8px 20px rgba(18, 33, 73, 0.04);
+
+.main-card {
+      background: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: $card-shadow;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 80vh;
+      overflow: scroll;
+
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 12px;
+
+        h3 {
+          margin: 0;
+        }
+
+        .small {
+          font-size: 12px;
+          color: #64748b;
+        }
+
+        .controls {
+          display: flex;
+          gap: 8px;
+          align-items: center;
+
+          select {
+            padding: 6px 8px;
+            border-radius: 6px;
+            border: 1px solid #e6edf5;
+          }
+
+          .link {
+            background: none;
+            border: none;
+            color: $primary;
+            cursor: pointer;
+          }
+        }
+      }
+      .no-content {
+        text-align: center;
+        color: #94a3b8;
+        font-size: 15px;
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 50vh;
+        width: 100%;
+      }
+
+      .main-table {
+        width: 100%;
+        border-collapse: collapse;
+        max-height: 55vh;
+        tr{
+          height: 50px;
+        }:hover{
+          cursor: pointer;
+        }
+        th {
+          text-align: center;
+          padding: 8px 6px;
+          color: #94a3b8;
+          font-weight: 600;
+          font-size: 13px;
+        }
+        .prof-pic{
+          padding: 10px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        td {
+          padding: 20px 6px;
+          border-top: 1px solid #eef3f8;
+          //vertical-align: top;
+          font-size: 15px;
+
+          img{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            height: 40px;
+            width: 40px;
+            object-fit: cover;
+            border-radius: 100%;
+          }
+        }
+
+        tr.selected {
+          background: #f8fbff;
+        }
+
+        .patient-name {
+          font-weight: 600;
+        }
+
+        .muted.small {
+          color: #64748b;
+          font-size: 12px;
+        }
+
+        .center {
+          text-align: center;
+
+          .join {
+            background-color: $light-gray;
+            color: $text;
+            border: none;
+            text-decoration: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            cursor: pointer;
+
+            &:hover {
+              background-color: $primary;
+              color: white;
+            }
+          }
+        }
+
+        .priority {
+          padding: 4px 8px;
+          border-radius: 999px;
+          color: #fff;
+          font-size: 12px;
+
+          &.low {
+            background: #16a34a;
+          }
+
+          &.medium {
+            background: #f59e0b;
+          }
+
+          &.high {
+            background: #ef4444;
+          }
+        }
+      }
+
+      .patient-detail {
+        margin-top: 10px;
+        padding: 10px;
+        background: #fbfdff;
+        border-radius: 8px;
+
+        .small {
+          font-size: 12px;
+          color: #64748b;
+        }
+      }
+
+      .pagenav{
+        border: none;
+        background:none;
+      }
+    }
+    /* modal.scss */
+

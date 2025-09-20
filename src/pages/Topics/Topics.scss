@@ -1,0 +1,46 @@
+.topics-container {
+  width: 90vw;
+  max-width: 800px;
+  padding: 2rem;
+  margin: 100px auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: #333;
+  }
+
+  .topics-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+    padding: 0;
+    margin: 0;
+
+    .topic-item {
+      padding: 10px 15px;
+      background: #f2f2f2;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 0.95rem;
+      color: #444;
+      transition: background 0.2s ease;
+
+      &:hover {
+        background: #e0e0e0;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .no-topics {
+    color: #888;
+    text-align: center;
+    margin-top: 2rem;
+  }
+}

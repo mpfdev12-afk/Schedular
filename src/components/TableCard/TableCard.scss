@@ -1,0 +1,155 @@
+// ProfileCard.scss
+.profile-card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  padding: 30px;
+  width: 400px;
+  margin: 0 auto;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #333;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.profile-image {
+  margin-right: 20px;
+  
+  .profile-pic {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #f0f0f0;
+  }
+  
+  svg {
+    display: block;
+  }
+}
+
+.profile-info {
+  h1 {
+    margin: 0 0 5px 0;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: #2c2c2c;
+  }
+  
+  .username {
+    margin: 0;
+    font-size: 16px;
+    color: #657786;
+    font-weight: 400;
+  }
+}
+
+.profile-description {
+  margin-bottom: 20px;
+  
+  p {
+    margin: 0 0 12px 0;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #555;
+  }
+  
+  .company {
+    font-weight: 600;
+    color: #2c2c2c;
+  }
+}
+
+.specialties {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.specialty {
+  display: flex;
+  align-items: center;
+  padding: 8px 14px;
+  background: #f8f9fa;
+  border-radius: 20px;
+  font-size: 14px;
+  color: #495057;
+  
+  .specialty-icon {
+    margin-right: 6px;
+    color: #6c757d;
+    font-size: 13px;
+  }
+}
+
+.session-details {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  
+  h3 {
+    margin: 0 0 15px 0;
+    font-size: 18px;
+    color: #2c2c2c;
+    font-weight: 600;
+  }
+}
+
+.detail-item {
+  margin-bottom: 10px;
+  font-size: 15px;
+  
+  strong {
+    color: #495057;
+    margin-right: 5px;
+  }
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.join-btn {
+  width: 100%;
+  padding: 14px 20px;
+  background: #4a6cf7;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  
+  &:hover {
+    background: #3b5be3;
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 480px) {
+  .profile-card {
+    padding: 20px;
+  }
+  
+  .profile-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .profile-image {
+    margin-right: 0;
+    margin-bottom: 15px;
+  }
+  
+  .specialties {
+    justify-content: center;
+  }
+}

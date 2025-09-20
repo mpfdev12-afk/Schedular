@@ -1,0 +1,226 @@
+/* Place this in src/styles/advisorDashboard.scss */
+$primary: #2563eb;
+$light-gray: #f6f9fb;
+$text: #1f2937;
+$card-shadow: 0 8px 20px rgba(18, 33, 73, 0.04);
+
+* {
+  box-sizing: border-box;
+}
+
+.dashboard {
+  display: flex;
+  height: 100vh;
+  background: $light-gray;
+
+  .dashboard-content {
+    flex: 1;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 50px;
+      h2 {
+        margin: 0;
+        font-size: 20px;
+        color: $text;
+      }
+
+      .muted {
+        color: #64748b;
+      }
+
+      .header-actions {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+
+        svg {
+          color: #475569;
+        }
+
+        img {
+          border-radius: 50%;
+          width: 40px;
+          height: 40px;
+        }
+      }
+    }
+    .two-col {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 16px;
+      .positivity-wrapper {
+    background: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: $card-shadow;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 80vh;
+    overflow: scroll;
+  }
+      .aside-sec{
+        gap: 16px;
+        height: 100%;
+        justify-content: space-around;
+        .notification{
+          background-color: #fff;
+          padding: 10px;
+          margin-top: 10px;
+          height: 110px;
+          font-weight: 700;
+          border-radius: 10px;
+        }
+        .newBatch{
+           display: flex;
+           align-items: center;
+           justify-content: center;
+           margin-bottom: 10px;
+           height: 50px;
+            color: $primary;
+            border: 2px solid $primary;
+            &:hover {
+                background-color: $primary;
+                color: #fff;
+                cursor: pointer;
+                transition: all 0.3s ease  ;
+
+            }
+        }
+      }
+    }
+
+    .schedule-card {
+      background: #fff;
+      padding: 14px;
+      border-radius: 10px;
+      box-shadow: $card-shadow;
+
+      .schedule-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+
+        h3 {
+          margin: 0;
+        }
+      }
+
+      .timeline {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 12px;
+
+        .timeline-event {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 10px;
+          border-radius: 8px;
+          background: #fbfdff;
+          border: 1px solid #eef3f8;
+
+          .ev-left {
+            .ev-title {
+              font-weight: 700;
+            }
+
+            .small {
+              color: #64748b;
+            }
+          }
+
+          .ev-right {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+
+            .pill {
+              width: 12px;
+              height: 12px;
+              border-radius: 4px;
+
+              &.green {
+                background: #16a34a;
+              }
+
+              &.red {
+                background: #ef4444;
+              }
+
+              &.blue {
+                background: #2563eb;
+              }
+
+              &.purple {
+                background: #7c3aed;
+              }
+            }
+
+            .btn-del {
+              border: none;
+              background: #fff;
+              color: #ef4444;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+
+      .add-event {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+
+        input,
+        select {
+          padding: 8px;
+          border-radius: 8px;
+          border: 1px solid #e6edf5;
+        }
+
+        .btn-add {
+          padding: 8px 12px;
+          background: $primary;
+          color: #fff;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+.pagination {
+  text-align: end;
+  margin-top: 10px;
+}
+
+/* Responsive */
+@media (max-width: 1000px) {
+  .dashboard {
+    flex-direction: column;
+
+    .dashboard-content {
+      padding: 16px;
+
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+}
