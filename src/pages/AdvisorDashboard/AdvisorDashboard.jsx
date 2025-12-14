@@ -2,7 +2,7 @@ import React, { useMemo, useState, useEffect } from "react";
 import { FiSearch } from "react-icons/fi";
 import { FaBed, FaUserMd, FaAmbulance } from "react-icons/fa";
 import { fetchDataFromApi } from "../../utils/api";
-import "./advisorDashboard.scss";
+import "./AdvisorDashboard.scss";
 import {
   capitalizeWords,
   formatDateToYYYYMMDD,
@@ -93,22 +93,22 @@ export default function AdvisorDashboard() {
         })
         .catch((err) => console.log(err))
         .finally(() => setLoading(false));
-      } else if (tab === "Past Events") {
-            fetchDataFromApi(
-              `/appointment//getallPastAppointment?userId=${user._id}&page=${page}&limit=${tableLimit}&sortOrder=${sortOrder}&domain=${domain}`
-            )
-              .then((res) => {
-                setTableData(res?.data?.appointments || []);
-                setTotalData(res?.data?.total);
-              })
-              .catch((err) => console.log(err))
-              .finally(() => setLoading(false));
-              setPositivity(false);
-      } else if(tab === "Positivity Zone") {
-        setPositivity(true);
-      } else{
-        setPositivity(false);
-      }
+    } else if (tab === "Past Events") {
+      fetchDataFromApi(
+        `/appointment//getallPastAppointment?userId=${user._id}&page=${page}&limit=${tableLimit}&sortOrder=${sortOrder}&domain=${domain}`
+      )
+        .then((res) => {
+          setTableData(res?.data?.appointments || []);
+          setTotalData(res?.data?.total);
+        })
+        .catch((err) => console.log(err))
+        .finally(() => setLoading(false));
+      setPositivity(false);
+    } else if (tab === "Positivity Zone") {
+      setPositivity(true);
+    } else {
+      setPositivity(false);
+    }
 
     return () => {
       if (intervalId) clearInterval(intervalId);
@@ -154,27 +154,29 @@ export default function AdvisorDashboard() {
         />
 
         <section className="two-col">
-          {positivity?
+          {positivity ? (
             <div className="positivity-wrapper">
               <Positivity />
-            </div>:
-          <Table
-            TableContent={tableData}
-            tableTitle={tableTitle}
-            tableHeader={tableHeader}
-            SelectedFields={selectedFields}
-            sortOrder={sortOrder}
-            setSortOrder={setSortOrder}
-            setSearchText={setSearchText}
-            setSelectedDate={setSelectedDate}
-            page={page}
-            setPage={setPage}
-            isMeetLink={isMeetLink}
-            limit={tableLimit}
-            EmptyMessage={EmptyMessage}
-            advisorId={user?._id}
-            total={totalData}
-          />}
+            </div>
+          ) : (
+            <Table
+              TableContent={tableData}
+              tableTitle={tableTitle}
+              tableHeader={tableHeader}
+              SelectedFields={selectedFields}
+              sortOrder={sortOrder}
+              setSortOrder={setSortOrder}
+              setSearchText={setSearchText}
+              setSelectedDate={setSelectedDate}
+              page={page}
+              setPage={setPage}
+              isMeetLink={isMeetLink}
+              limit={tableLimit}
+              EmptyMessage={EmptyMessage}
+              advisorId={user?._id}
+              total={totalData}
+            />
+          )}
 
           <div className="aside-sec">
             {tab == "Batches" && (
