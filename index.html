@@ -2,9 +2,33 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+
+    <!-- PWA: Primary icon / favicon -->
+    <link rel="icon" type="image/png" sizes="192x192" href="/pwa-192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/pwa-512.png" />
+
+    <!-- PWA: iOS home-screen icon -->
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- PWA: Web App Manifest (Manual) -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+
+    <!-- PWA: Theme colour -->
+    <meta name="theme-color" content="#4f46e5" />
+
+    <!-- Viewport -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
+
+    <!-- SEO -->
+    <title>Schedular – Wellness Advisor Booking</title>
+    <meta
+      name="description"
+      content="Book personal advisory sessions across Mental, Physical and Financial wellness with verified advisors."
+    />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Schedular" />
   </head>
   <body>
     <div id="root"></div>

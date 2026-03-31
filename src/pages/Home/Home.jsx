@@ -1,39 +1,30 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import LandingPage from "../LandingPage/LandingPage";
-import DashBoard from "../DashBoard/DashBoard";
-import { fetchDataFromApi } from "../../utils/api";
 import Loader from "../../components/Loader/Loader";
 import Category from "../Category/Category";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Home = () => {
-  const [user, setUser] = useState(undefined);
-  //   useEffect(() => {
-  //   const unsubscribe = onAuthStateChanged(auth, (u) => {
-  //     setUser(u);
-  //   });
-  //   return () => unsubscribe();
-  // }, []);
   const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
+  const role = useSelector((state) => state.role);
+
+  // user slice starts as {} (empty object); treat absence of _id as "not yet loaded or not logged in"
+  const isLoading = user === undefined;
+  const isLoggedIn = user && user._id;
 
   useEffect(() => {
-    fetchDataFromApi("/users/getloggedinUserAdvisor")
-      .then((res) => {
-        setUser(res.data?.user);
-        const role = res?.data?.role;
-        console.log(res);
-        if (role == "advisor") navigate("/dashboard");
-        else navigate("/category");
-      })
-      .catch((err) => {
-        console.error("Error fetching user:", err);
-        setUser(null);
-      });
-  }, []);
+    if (isLoading) return;
+    if (isLoggedIn) {
+      if (role === "advisor") navigate("/dashboard");
+      else navigate("/category");
+    }
+  }, [isLoading, isLoggedIn, role, navigate]);
 
-  if (user === undefined) return <Loader />;
+  if (isLoading) return <Loader />;
 
-  return user ? <Category /> : <LandingPage />;
+  return isLoggedIn ? <Category /> : <LandingPage />;
 };
 
 export default Home;

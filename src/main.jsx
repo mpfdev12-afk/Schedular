@@ -1,8 +1,9 @@
-import { StrictMode } from "react";
+import { StrictMode, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { toast } from "react-toastify";
 import Home from "./pages/Home/Home.jsx";
 import Calender from "./pages/Calender/Calender.jsx";
 import Login from "./pages/Login/Login.jsx";
@@ -11,7 +12,6 @@ import Category from "./pages/Category/Category.jsx";
 import SessionType from "./pages/SessionType/SessionType.jsx";
 import Signin from "./pages/SignIn/Signin.jsx";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute.jsx";
-import EventCard from "./components/Cards/EventCard.jsx";
 import DashBoard from "./pages/DashBoard/DashBoard.jsx";
 import AdvisorList from "./pages/AdvisorList/AdvisorList.jsx";
 import Schedule from "./pages/Schedule/Schedule.jsx";
@@ -27,8 +27,8 @@ import HabitSchedular from "./pages/HabitSchedular/HabitSchedular.jsx";
 import QuickAppointment from "./pages/QuickAppointment/QuickAppointment.jsx";
 import LearningMaterial from "./pages/LearningMaterial/LearningMaterial.jsx";
 import AdvisorQuick from "./pages/AdvisorQuick/AdvisorQuick.jsx";
-import AdvisorDashboard from "./pages/AdvisorDashboard/AdvisorDashboard.jsx";
 import LoginasUser from "./pages/Login/LoginasUser.jsx";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -122,12 +122,71 @@ const router = createBrowserRouter([
   },
 ]);
 
+// SW update notification — manual registration to bypass broken build scripts
+function SWUpdateNotifier() {
+  useEffect(() => {
+    if ("serviceWorker" in navigator && import.meta.env.PROD) {
+      navigator.serviceWorker
+        .register("/sw.js")
+        .then((registration) => {
+          // Check for updates on a regular interval
+          registration.addEventListener("updatefound", () => {
+            const newWorker = registration.installing;
+            newWorker.addEventListener("statechange", () => {
+              if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
+                // New content is available, show toast
+                showUpdateToast(() => {
+                  newWorker.postMessage({ type: "SKIP_WAITING" });
+                  window.location.reload();
+                });
+              }
+            });
+          });
+
+          if (registration.active) {
+            console.log("Service Worker active");
+          }
+        })
+        .catch((error) => {
+          console.error("Service Worker registration failed:", error);
+        });
+    }
+  }, []);
+
+  const showUpdateToast = (onRefresh) => {
+    toast.info(
+      () => (
+        <div>
+          <strong>New version available!</strong>
+          <br />
+          <button
+            style={{
+              marginTop: 6,
+              padding: "4px 12px",
+              background: "#4f46e5",
+              color: "#fff",
+              border: "none",
+              borderRadius: 4,
+              cursor: "pointer",
+            }}
+            onClick={onRefresh}
+          >
+            Refresh
+          </button>
+        </div>
+      ),
+      { autoClose: false, closeOnClick: false }
+    );
+  };
+
+  return null;
+}
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router}>
-        <App />
-      </RouterProvider>
+      <RouterProvider router={router} />
+      <SWUpdateNotifier />
     </Provider>
   </StrictMode>
 );

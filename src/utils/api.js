@@ -1,30 +1,27 @@
 import axios from "axios"
-import { toast } from "react-toastify";
 
-const base_url = 'http://localhost:8000/api/v1'
+const base_url = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1'
 
-export const fetchDataFromApi = async (url,params,id='')=>{
+export const fetchDataFromApi = async (url, params, id = '') => {
     try {
-        const {data} = await axios.get(base_url+url,{
+        const { data } = await axios.get(base_url + url, {
             params,
-            withCredentials:true
-        })
-    
+            withCredentials: true
+        });
         return data;
-    }
-    catch (error) {
-        //console.log(error);
+    } catch (error) {
+        throw error;
     }
 }
 
-export const sendDataToapi = async (url,body,header,params)=>{
+export const sendDataToapi = async (url, body, header, params) => {
     try {
-        const result = await axios.post(base_url + url,body,{
+        const result = await axios.post(base_url + url, body, {
             headers: {
                 'Content-Type': header || 'multipart/form-data',
             },
             params,
-            withCredentials:true, // Ensure cookies are sent with the request (Imp)
+            withCredentials: true,
         });
         return result;
     } catch (error) {
@@ -32,13 +29,13 @@ export const sendDataToapi = async (url,body,header,params)=>{
     }
 }
 
-export const updateDatatoapi = async (url,body,header)=>{
+export const updateDatatoapi = async (url, body, header) => {
     try {
-        const result = await axios.patch(base_url + url,body,{
+        const result = await axios.patch(base_url + url, body, {
             headers: {
                 'Content-Type': header || 'multipart/form-data',
             },
-            withCredentials:true, // Ensure cookies are sent with the request (Imp)
+            withCredentials: true,
         });
         return result;
     } catch (error) {
@@ -46,11 +43,13 @@ export const updateDatatoapi = async (url,body,header)=>{
     }
 }
 
-export const deleteDataFromApi = async (url)=>{
-    try{
-        const result = await axios.delete(base_url+url);
+export const deleteDataFromApi = async (url) => {
+    try {
+        const result = await axios.delete(base_url + url, {
+            withCredentials: true,
+        });
         return result;
-    }catch(err){
-        throw err
+    } catch (err) {
+        throw err;
     }
 }
