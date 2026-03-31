@@ -1,78 +1,60 @@
-const CACHE_NAME = 'schedular-pwa-v1';
-const ASSETS_TO_CACHE = [
-  '/',
-  '/index.html',
-  '/logo3.png',
-  '/pwa-192.png',
-  '/pwa-512.png',
-  '/apple-touch-icon.png'
-];
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/7.0.0/workbox-sw.js');
 
-// Install: Cache core assets
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS_TO_CACHE);
+if (workbox) {
+  console.log('Workbox is loaded');
+
+  // Skip waiting and claim clients immediately for faster updates
+  workbox.core.skipWaiting();
+  workbox.core.clientsClaim();
+
+  // Precaching core assets
+  workbox.precaching.precacheAndRoute([
+    { url: '/', revision: '1' },
+    { url: '/index.html', revision: '1' },
+    { url: '/manifest.webmanifest', revision: '1' },
+    { url: '/pwa-192.png', revision: '1' },
+    { url: '/pwa-512.png', revision: '1' },
+    { url: '/apple-touch-icon.png', revision: '1' }
+  ]);
+
+  // Caching images - CacheFirst
+  workbox.routing.registerRoute(
+    ({ request }) => request.destination === 'image',
+    new workbox.strategies.CacheFirst({
+      cacheName: 'images',
+      plugins: [
+        new workbox.expiration.ExpirationPlugin({
+          maxEntries: 60,
+          maxAgeSeconds: 30 * 24 * 60 * 60, // 30 Days
+        }),
+      ],
     })
   );
-  self.skipWaiting();
-});
 
-// Activate: Cleanup old caches
-self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (cacheName !== CACHE_NAME) {
-            return caches.delete(cacheName);
-          }
-        })
-      );
+  // Caching API calls - NetworkFirst
+  workbox.routing.registerRoute(
+    ({ url }) => url.pathname.startsWith('/api/'),
+    new workbox.strategies.NetworkFirst({
+      cacheName: 'api-cache',
+      plugins: [
+        new workbox.expiration.ExpirationPlugin({
+          maxEntries: 50,
+          maxAgeSeconds: 24 * 60 * 60, // 24 Hours
+        }),
+      ],
     })
   );
-  self.clients.claim();
-});
 
-// Fetch: Strategy - Network First (with fallback to cache)
-self.addEventListener('fetch', (event) => {
-  // Only handle GET requests
-  if (event.request.method !== 'GET') return;
-
-  const url = new URL(event.request.url);
-
-  // For API calls, always go to network first
-  if (url.pathname.startsWith('/api/')) {
-    event.respondWith(
-      fetch(event.request)
-        .catch(() => caches.match(event.request))
-    );
-    return;
-  }
-
-  // For other requests: try network, then fallback to cache
-  // This ensures things like JS/CSS are fresh when online but work offline.
-  event.respondWith(
-    fetch(event.request)
-      .then((response) => {
-        // Cache successful responses for next time
-        if (response.ok) {
-          const responseToCache = response.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseToCache);
-          });
-        }
-        return response;
-      })
-      .catch(() => {
-        return caches.match(event.request) || caches.match('/');
-      })
+  // General assets (JS/CSS) - StaleWhileRevalidate
+  workbox.routing.registerRoute(
+    ({ request }) => 
+      request.destination === 'script' || 
+      request.destination === 'style',
+    new workbox.strategies.StaleWhileRevalidate({
+      cacheName: 'static-resources',
+    })
   );
-});
 
-// Listener for manual update triggering
-self.addEventListener('message', (event) => {
-  if (event.data && event.data.type === 'SKIP_WAITING') {
-    self.skipWaiting();
-  }
-});
+} else {
+  console.error('Workbox failed to load');
+}

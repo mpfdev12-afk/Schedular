@@ -33,5 +33,19 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <script>
+      // Diagnostic script for PWA
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.getRegistration().then((reg) => {
+            if (reg) {
+              console.log('✅ PWA: Service Worker is active:', reg.scope);
+            } else {
+              console.log('❌ PWA: No Service Worker found');
+            }
+          });
+        });
+      }
+    </script>
   </body>
 </html>
