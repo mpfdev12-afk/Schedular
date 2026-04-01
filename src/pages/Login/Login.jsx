@@ -30,7 +30,7 @@ export default function Login() {
         setLoading(false);
         console.log("Logged in user:", res);
         toast.success("Login Sucessfully");
-        navigate("/");
+        navigate("/category");
       })
       .catch((err) => {
         setLoading(false);
