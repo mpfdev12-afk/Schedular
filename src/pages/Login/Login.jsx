@@ -30,12 +30,12 @@ export default function Login() {
         setLoading(false);
         console.log("Logged in user:", res);
         toast.success("Login Sucessfully");
-        window.location.href = "/";
+        navigate("/");
       })
       .catch((err) => {
         setLoading(false);
-        console.log(error.message);
-        toast.error(error.message, {
+        console.log(err.message);
+        toast.error(err.message, {
           position: "bottom-center",
         });
       });

@@ -105,7 +105,7 @@ const RegisterAdvisor = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      window.location.href = "/";
+      navigate("/");
     } catch (err) {
       setMsg("Something went wrong!");
     } finally {
