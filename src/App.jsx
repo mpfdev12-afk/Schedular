@@ -35,13 +35,16 @@ function App() {
 
   return (
     <>
-      {loading && <Loader />}
-      <div>
-        {currentUrl !== "/dashboard" && <Navbar />}
-        <Outlet />
-        <ToastContainer />
-        {FEATURES.DETOX_MODE && <DetoxFAB />}
-      </div>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div>
+          {currentUrl !== "/dashboard" && <Navbar />}
+          <Outlet />
+          <ToastContainer />
+          {FEATURES.DETOX_MODE && <DetoxFAB />}
+        </div>
+      )}
     </>
   );
 }
