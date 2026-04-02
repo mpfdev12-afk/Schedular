@@ -17,20 +17,31 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log("BOOT: Starting authentication check...");
     setLoading(true);
+
+    // Safety timeout: Ensure the loader disappears even if the API hangs
+    const safetyTimer = setTimeout(() => {
+      console.warn("BOOT: Auth check taking too long, forcing loader hide.");
+      setLoading(false);
+    }, 3000);
+
     fetchDataFromApi("/users/getloggedinUserAdvisor")
       .then((res) => {
-        // Handle both standard ApiResponse format and mock responses
+        console.log("BOOT: Auth check success.", res);
         const userData = res?.data?.user || res?.user || {};
         const roleData = res?.data?.role || res?.role || "";
 
         dispatch(Useraction.loginUser(userData));
         dispatch(RoleAction.loginRole(roleData));
-        console.log("Logged in user:", userData);
       })
-      .catch((err) => console.log("Login fetch error:", err))
+      .catch((err) => {
+        console.error("BOOT: Auth check failed:", err);
+      })
       .finally(() => {
+        clearTimeout(safetyTimer);
         setLoading(false);
+        console.log("BOOT: Sequence complete.");
       });
   }, [dispatch]);
 

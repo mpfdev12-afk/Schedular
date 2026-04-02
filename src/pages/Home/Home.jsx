@@ -10,19 +10,17 @@ const Home = () => {
   const user = useSelector((state) => state.user);
   const role = useSelector((state) => state.role);
 
-  // user slice starts as {} (empty object); treat absence of _id as "not yet loaded or not logged in"
-  const isLoading = user === undefined;
+  // If the boot sequence in App.jsx hasn't finish, we might still be in a loading state.
+  // However, App.jsx handles the primary full-page loader now.
   const isLoggedIn = user && user._id;
 
   useEffect(() => {
-    if (isLoading) return;
     if (isLoggedIn) {
+      console.log("HOME: Logged in, redirecting...");
       if (role === "advisor") navigate("/dashboard");
       else navigate("/category");
     }
-  }, [isLoading, isLoggedIn, role, navigate]);
-
-  if (isLoading) return <Loader />;
+  }, [isLoggedIn, role, navigate]);
 
   return isLoggedIn ? <Category /> : <LandingPage />;
 };
