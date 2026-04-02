@@ -1,0 +1,114 @@
+.breathing-game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(99, 102, 241, 0.05));
+  border: 1px solid rgba(255, 255, 255, 0.6);
+
+  h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--color-text-main);
+  }
+
+  .pattern-selector {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .pat-btn {
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      border: 1.5px solid var(--color-text-muted);
+      background: transparent;
+      color: var(--color-text-main);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &.active {
+        background: var(--color-zen);
+        color: #fff;
+        border-color: var(--color-zen);
+      }
+
+      &:disabled:not(.active) {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  .bubble-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 220px;
+    width: 220px;
+    margin: 1rem 0;
+  }
+
+  .bubble {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at 30% 30%, var(--color-zen-glow), var(--color-zen));
+    box-shadow: 0 0 40px var(--color-zen-glow), 0 0 80px rgba(16, 185, 129, 0.1);
+    transition: transform 4s ease-in-out, box-shadow 0.5s ease;
+
+    &.inhale {
+      box-shadow: 0 0 60px var(--color-zen-glow), 0 0 120px rgba(16, 185, 129, 0.2);
+    }
+    &.exhale {
+      box-shadow: 0 0 20px var(--color-zen-glow);
+    }
+
+    .bubble-text {
+      color: #fff;
+      font-weight: 700;
+      font-size: 1rem;
+      text-align: center;
+    }
+
+    .bubble-counter {
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 2rem;
+      font-weight: 700;
+      margin-top: 0.25rem;
+    }
+  }
+
+  .cycles {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    margin-bottom: 1rem;
+  }
+
+  .control-btn {
+    padding: 0.6rem 2.5rem;
+    border-radius: 25px;
+    border: none;
+    background: var(--color-zen);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px var(--color-zen-glow);
+    }
+  }
+}
+

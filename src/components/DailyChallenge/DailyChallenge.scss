@@ -1,0 +1,93 @@
+.daily-challenge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.04);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+
+  &.done {
+    border-color: var(--color-zen);
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(255, 255, 255, 0.65));
+  }
+
+  .challenge-badge {
+    position: absolute;
+    top: 12px;
+    right: -30px;
+    background: var(--color-zen);
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.25rem 2.5rem;
+    transform: rotate(45deg);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .challenge-emoji {
+    font-size: 3rem;
+    margin-bottom: 0.75rem;
+    animation: bounceEmoji 2s ease-in-out infinite;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--color-text-main);
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+    max-width: 300px;
+  }
+
+  .challenge-cat {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--color-zen);
+    background: rgba(16, 185, 129, 0.1);
+    padding: 0.2rem 0.8rem;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+  }
+
+  .mark-done-btn {
+    padding: 0.6rem 2rem;
+    border-radius: 25px;
+    border: none;
+    background: var(--color-zen);
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px var(--color-zen-glow);
+    }
+  }
+
+  .completed-badge {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-zen);
+  }
+}
+
+@keyframes bounceEmoji {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+

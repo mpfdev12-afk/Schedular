@@ -1,4 +1,4 @@
-import { StrictMode, useEffect } from "react";
+import React, { StrictMode, useEffect, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
@@ -28,6 +28,18 @@ import QuickAppointment from "./pages/QuickAppointment/QuickAppointment.jsx";
 import LearningMaterial from "./pages/LearningMaterial/LearningMaterial.jsx";
 import AdvisorQuick from "./pages/AdvisorQuick/AdvisorQuick.jsx";
 import LoginasUser from "./pages/Login/LoginasUser.jsx";
+import { FEATURES } from "./config/featureFlags.js";
+
+// ─── Plug & Play Imports ───
+const ZenZone = FEATURES.ZEN_ZONE
+  ? React.lazy(() => import("./pages/ZenZone/ZenZone.jsx"))
+  : null;
+const MindfulnessZone = FEATURES.MINDFULNESS_ZONE
+  ? React.lazy(() => import("./pages/MindfulnessZone/MindfulnessZone.jsx"))
+  : null;
+const DetoxDashboard = FEATURES.DETOX_MODE
+  ? React.lazy(() => import("./pages/DetoxDashboard/DetoxDashboard.jsx"))
+  : null;
 
 const router = createBrowserRouter([
   {
@@ -110,6 +122,43 @@ const router = createBrowserRouter([
         path: "/dashboard",
         element: <DashBoard />,
       },
+      // ─── Plug & Play Routes ───
+      ...(FEATURES.ZEN_ZONE
+        ? [
+            {
+              path: "/zen-zone",
+              element: (
+                <Suspense fallback={<div>Loading...</div>}>
+                  <ZenZone />
+                </Suspense>
+              ),
+            },
+          ]
+        : []),
+      ...(FEATURES.MINDFULNESS_ZONE
+        ? [
+            {
+              path: "/mindfulness",
+              element: (
+                <Suspense fallback={<div>Loading...</div>}>
+                  <MindfulnessZone />
+                </Suspense>
+              ),
+            },
+          ]
+        : []),
+      ...(FEATURES.DETOX_MODE
+        ? [
+            {
+              path: "/detox",
+              element: (
+                <Suspense fallback={<div>Loading...</div>}>
+                  <DetoxDashboard />
+                </Suspense>
+              ),
+            },
+          ]
+        : []),
       {
         path: "/user/signin",
         element: <RegisterForm />,
@@ -133,7 +182,10 @@ function SWUpdateNotifier() {
           registration.addEventListener("updatefound", () => {
             const newWorker = registration.installing;
             newWorker.addEventListener("statechange", () => {
-              if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
+              if (
+                newWorker.state === "installed" &&
+                navigator.serviceWorker.controller
+              ) {
                 // New content is available, show toast
                 showUpdateToast(() => {
                   newWorker.postMessage({ type: "SKIP_WAITING" });
@@ -175,7 +227,7 @@ function SWUpdateNotifier() {
           </button>
         </div>
       ),
-      { autoClose: false, closeOnClick: false }
+      { autoClose: false, closeOnClick: false },
     );
   };
 
@@ -188,5 +240,5 @@ createRoot(document.getElementById("root")).render(
       <RouterProvider router={router} />
       <SWUpdateNotifier />
     </Provider>
-  </StrictMode>
+  </StrictMode>,
 );

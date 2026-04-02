@@ -1,0 +1,120 @@
+.meditation-timer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.04);
+  transition: all 0.6s ease;
+
+  &.meditating {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.06), rgba(255, 255, 255, 0.65));
+  }
+
+  &.complete {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(236, 72, 153, 0.05));
+  }
+
+  h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem; }
+
+  .duration-row {
+    display: flex;
+    gap: 0.4rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .dur-btn {
+      padding: 0.35rem 0.9rem;
+      border-radius: 18px;
+      border: 1.5px solid var(--color-text-muted);
+      background: transparent;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--color-text-main);
+      transition: all 0.3s ease;
+
+      &.active {
+        background: var(--color-mindfulness);
+        color: #fff;
+        border-color: var(--color-mindfulness);
+      }
+      &:disabled:not(.active) { opacity: 0.5; cursor: not-allowed; }
+    }
+  }
+
+  .mandala-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem 0 1.5rem;
+  }
+
+  .mandala-ring {
+    width: 190px;
+    height: 190px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.5s ease;
+
+    .mandala-inner {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.9);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      .time {
+        font-size: 2.4rem;
+        font-weight: 700;
+        color: var(--color-text-main);
+        letter-spacing: 0.05em;
+      }
+
+      .hint {
+        font-size: 0.8rem;
+        color: var(--color-text-muted);
+        font-weight: 500;
+      }
+
+      .done-msg {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--color-mindfulness);
+      }
+    }
+  }
+
+  .med-controls {
+    display: flex;
+    gap: 0.75rem;
+
+    .med-btn {
+      padding: 0.6rem 2rem;
+      border-radius: 25px;
+      border: none;
+      background: var(--color-mindfulness);
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &.secondary {
+        background: transparent;
+        border: 1.5px solid var(--color-text-muted);
+        color: var(--color-text-main);
+      }
+      &:hover { transform: translateY(-2px); box-shadow: 0 8px 20px var(--color-mindfulness-glow); }
+    }
+  }
+}
+

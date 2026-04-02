@@ -12,6 +12,7 @@ import { UsertableConfigs } from "../../components/Table/tableConfig";
 import "./UserDashboard.scss";
 import { useNavigate } from "react-router-dom";
 import { Positivity } from "../PositivityZone/Positivity";
+
 export default function UserDashboard() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -33,7 +34,7 @@ export default function UserDashboard() {
   const [isMeetLink, setIsMeetLink] = useState(true);
   const [selectedFields, setSelectedFields] = useState([]);
   const [totalData, setTotalData] = useState(0);
-  const [positivity,setPositivity] = useState(false);
+  const [positivity, setPositivity] = useState(false);
 
   const navigate = useNavigate();
 
@@ -53,7 +54,7 @@ export default function UserDashboard() {
 
     if (tab === "Appointments") {
       fetchDataFromApi(
-        `/appointment/filter?userId=${user._id}&page=${page}&limit=${tableLimit}&sortOrder=${sortOrder}&domain=${domain}`
+        `/appointment/filter?userId=${user._id}&page=${page}&limit=${tableLimit}&sortOrder=${sortOrder}&domain=${domain}`,
       )
         .then((res) => {
           setTableData(res?.data?.appointments || []);
@@ -61,10 +62,10 @@ export default function UserDashboard() {
         })
         .catch((err) => console.log(err))
         .finally(() => setLoading(false));
-        setPositivity(false);
+      setPositivity(false);
     } else if (tab === "Batches") {
       fetchDataFromApi(
-        `/batch/filter?userId=${user._id}&page=${page}&limit=${tableLimit}&sortOrder=${sortOrder}&domain=${domain}`
+        `/batch/filter?userId=${user._id}&page=${page}&limit=${tableLimit}&sortOrder=${sortOrder}&domain=${domain}`,
       )
         .then((res) => {
           setTableData(res?.data?.batches || []);
@@ -73,10 +74,10 @@ export default function UserDashboard() {
         })
         .catch((err) => console.log(err))
         .finally(() => setLoading(false));
-        setPositivity(false);
+      setPositivity(false);
     } else if (tab === "Past Events") {
       fetchDataFromApi(
-        `/appointment//getallPastAppointment?userId=${user._id}&page=${page}&limit=${tableLimit}&sortOrder=${sortOrder}&domain=${domain}`
+        `/appointment//getallPastAppointment?userId=${user._id}&page=${page}&limit=${tableLimit}&sortOrder=${sortOrder}&domain=${domain}`,
       )
         .then((res) => {
           setTableData(res?.data?.appointments || []);
@@ -84,10 +85,10 @@ export default function UserDashboard() {
         })
         .catch((err) => console.log(err))
         .finally(() => setLoading(false));
-        setPositivity(false);
-    } else if(tab === "Positivity Zone") {
+      setPositivity(false);
+    } else if (tab === "Positivity Zone") {
       setPositivity(true);
-    } else{
+    } else {
       setPositivity(false);
     }
 
@@ -135,28 +136,30 @@ export default function UserDashboard() {
         />
 
         <section className="two-col">
-          {positivity?
-          <div className="positivity-wrapper">
-            <Positivity />
-          </div>:
-          <Table
-            TableContent={tableData}
-            tableTitle={tableTitle}
-            tableHeader={tableHeader}
-            SelectedFields={selectedFields}
-            sortOrder={sortOrder}
-            setSortOrder={setSortOrder}
-            setSearchText={setSearchText}
-            setSelectedDate={setSelectedDate}
-            page={page}
-            setPage={setPage}
-            isMeetLink={isMeetLink}
-            limit={tableLimit}
-            EmptyMessage={EmptyMessage}
-            advisorId={user?._id}
-            isProfilepic={tab === "Appointments"}
-            total={totalData}
-          />}
+          {positivity ? (
+            <div className="positivity-wrapper">
+              <Positivity />
+            </div>
+          ) : (
+            <Table
+              TableContent={tableData}
+              tableTitle={tableTitle}
+              tableHeader={tableHeader}
+              SelectedFields={selectedFields}
+              sortOrder={sortOrder}
+              setSortOrder={setSortOrder}
+              setSearchText={setSearchText}
+              setSelectedDate={setSelectedDate}
+              page={page}
+              setPage={setPage}
+              isMeetLink={isMeetLink}
+              limit={tableLimit}
+              EmptyMessage={EmptyMessage}
+              advisorId={user?._id}
+              isProfilepic={tab === "Appointments"}
+              total={totalData}
+            />
+          )}
 
           {/* <CalendarCard
             events={events}

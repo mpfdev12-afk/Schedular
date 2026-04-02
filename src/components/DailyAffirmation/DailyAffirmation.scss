@@ -1,0 +1,81 @@
+.daily-affirmation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.06), rgba(236, 72, 153, 0.04));
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.04);
+  position: relative;
+  overflow: hidden;
+
+  .glow-orb {
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--color-mindfulness-glow), transparent);
+    opacity: 0.4;
+    animation: floatOrb 6s ease-in-out infinite;
+  }
+
+  h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    z-index: 1;
+  }
+
+  .affirmation-card {
+    z-index: 1;
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+    transition: all 0.4s ease;
+
+    &.flip {
+      transform: rotateY(90deg);
+      opacity: 0;
+    }
+
+    p {
+      font-size: 1.15rem;
+      font-weight: 600;
+      line-height: 1.6;
+      color: var(--color-text-main);
+      background: linear-gradient(135deg, var(--color-mindfulness), #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  }
+
+  .shuffle-btn {
+    z-index: 1;
+    padding: 0.5rem 1.5rem;
+    border-radius: 20px;
+    border: 1.5px solid var(--color-mindfulness);
+    background: transparent;
+    color: var(--color-mindfulness);
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: var(--color-mindfulness);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+  }
+}
+
+@keyframes floatOrb {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-15px, 15px); }
+}
+

@@ -8,6 +8,8 @@ import { RoleAction } from "./store/roleSlice";
 import { ToastContainer } from "react-toastify";
 import Navbar from "./components/Navbar/Navbar";
 import Loader from "./components/Loader/Loader";
+import { FEATURES } from "./config/featureFlags";
+import DetoxFAB from "./components/DetoxMode/DetoxFAB";
 
 function App() {
   const location = useLocation();
@@ -38,6 +40,7 @@ function App() {
         {currentUrl !== "/dashboard" && <Navbar />}
         <Outlet />
         <ToastContainer />
+        {FEATURES.DETOX_MODE && <DetoxFAB />}
       </div>
     </>
   );

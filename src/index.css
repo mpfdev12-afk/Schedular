@@ -1,9 +1,46 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --color-bg-base: #f8fafc;
+  --color-surface: #ffffff;
+
+  --color-mental: #6366f1;
+  --color-mental-glow: rgba(99, 102, 241, 0.35);
+
+  --color-physical: #10b981;
+  --color-physical-glow: rgba(16, 185, 129, 0.35);
+
+  --color-financial: #1e40af;
+  --color-financial-glow: rgba(30, 64, 175, 0.35);
+
+  --color-mindfulness: #a855f7;
+  --color-mindfulness-glow: rgba(168, 85, 247, 0.25);
+
+  --color-zen: #10b981;
+  --color-zen-glow: rgba(16, 185, 129, 0.25);
+
+  --color-text-main: #1e293b;
+  --color-text-muted: #64748b;
+}
+
 * {
-  font-family: "Poppins", sans-serif;
-  font-size: 0.9rem;
-  line-height: 1.6;
+  font-family: "Plus Jakarta Sans", "Inter", sans-serif;
+}
+
+body {
+  background-color: var(--color-bg-base);
+  color: var(--color-text-main);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.04);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }

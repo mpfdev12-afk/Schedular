@@ -15,6 +15,7 @@ import Stats from "../../components/Stats/Stats";
 import { tableConfigs } from "../../components/Table/tableConfig";
 import { useNavigate } from "react-router-dom";
 import { Positivity } from "../PositivityZone/Positivity";
+
 export default function AdvisorDashboard() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -50,7 +51,7 @@ export default function AdvisorDashboard() {
   }, []);
   const fetchQuickSessions = () => {
     fetchDataFromApi(
-      `/appointment/getQuickAppointments?limit=${tableLimit}&domain=${user.domain}`
+      `/appointment/getQuickAppointments?limit=${tableLimit}&domain=${user.domain}`,
     )
       .then((res) => {
         setTableData(res?.data || []);
@@ -68,7 +69,7 @@ export default function AdvisorDashboard() {
 
     if (tab === "Appointments") {
       fetchDataFromApi(
-        `/appointment/filter?advisorId=${user._id}&page=${page}&limit=${tableLimit}&sortOrder=${sortOrder}&date=${selectedDate}`
+        `/appointment/filter?advisorId=${user._id}&page=${page}&limit=${tableLimit}&sortOrder=${sortOrder}&date=${selectedDate}`,
       )
         .then((res) => {
           setTableData(res?.data?.appointments || []);
@@ -84,7 +85,7 @@ export default function AdvisorDashboard() {
       }, 3000);
     } else if (tab === "Batches") {
       fetchDataFromApi(
-        `/batch/filter?advisorId=${user._id}&page=${page}&limit=${tableLimit}&sortOrder=${sortOrder}&domain=${domain}`
+        `/batch/filter?advisorId=${user._id}&page=${page}&limit=${tableLimit}&sortOrder=${sortOrder}&domain=${domain}`,
       )
         .then((res) => {
           setTableData(res?.data?.batches || []);
@@ -95,7 +96,7 @@ export default function AdvisorDashboard() {
         .finally(() => setLoading(false));
     } else if (tab === "Past Events") {
       fetchDataFromApi(
-        `/appointment//getallPastAppointment?userId=${user._id}&page=${page}&limit=${tableLimit}&sortOrder=${sortOrder}&domain=${domain}`
+        `/appointment//getallPastAppointment?userId=${user._id}&page=${page}&limit=${tableLimit}&sortOrder=${sortOrder}&domain=${domain}`,
       )
         .then((res) => {
           setTableData(res?.data?.appointments || []);
