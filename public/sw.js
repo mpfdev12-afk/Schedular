@@ -7,15 +7,21 @@ if (workbox) {
   workbox.core.skipWaiting();
   workbox.core.clientsClaim();
 
-  // Precaching core assets
+  // Precaching only static assets that DON'T change between builds frequently
   workbox.precaching.precacheAndRoute([
-    { url: '/', revision: '1' },
-    { url: '/index.html', revision: '1' },
     { url: '/manifest.webmanifest', revision: '1' },
     { url: '/pwa-192.png', revision: '1' },
     { url: '/pwa-512.png', revision: '1' },
     { url: '/apple-touch-icon.png', revision: '1' }
   ]);
+
+  // Handle navigation requests (index.html) with NetworkFirst
+  workbox.routing.registerRoute(
+    ({ request }) => request.mode === 'navigate',
+    new workbox.strategies.NetworkFirst({
+      cacheName: 'navigation-cache',
+    })
+  );
 
   // Caching images - CacheFirst
   workbox.routing.registerRoute(

@@ -32,7 +32,19 @@
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <script 
+      type="module" 
+      src="/src/main.jsx" 
+      onerror="
+        console.error('Failed to load main module. Attempting Service Worker recovery...');
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.getRegistrations().then(regs => {
+            for(let reg of regs) reg.unregister();
+            window.location.reload(true);
+          });
+        }
+      "
+    ></script>
     <script>
       // Diagnostic script for PWA
       if ('serviceWorker' in navigator) {

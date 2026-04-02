@@ -4,7 +4,7 @@ const roleSlice = createSlice({
     name: "role",
     initialState: "",
     reducers: {
-        loginRole: (state, action) => action.payload,
+        loginRole: (state, action) => action.payload || "",
         logoutRole: () => ""
     }
 });

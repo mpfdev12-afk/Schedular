@@ -20,11 +20,15 @@ function App() {
     setLoading(true);
     fetchDataFromApi("/users/getloggedinUserAdvisor")
       .then((res) => {
-        dispatch(Useraction.loginUser(res?.data?.user));
-        dispatch(RoleAction.loginRole(res?.data?.role));
-        console.log(res);
+        // Handle both standard ApiResponse format and mock responses
+        const userData = res?.data?.user || res?.user || {};
+        const roleData = res?.data?.role || res?.role || "";
+
+        dispatch(Useraction.loginUser(userData));
+        dispatch(RoleAction.loginRole(roleData));
+        console.log("Logged in user:", userData);
       })
-      .catch((err) => console.log(err))
+      .catch((err) => console.log("Login fetch error:", err))
       .finally(() => {
         setLoading(false);
       });
