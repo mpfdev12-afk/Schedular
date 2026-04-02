@@ -176,7 +176,7 @@ function SWUpdateNotifier() {
   useEffect(() => {
     if ("serviceWorker" in navigator && import.meta.env.PROD) {
       navigator.serviceWorker
-        .register("/sw.js")
+        .register("/sw.js", { updateViaCache: 'none' })
         .then((registration) => {
           // Check for updates on a regular interval
           registration.addEventListener("updatefound", () => {

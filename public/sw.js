@@ -3,23 +3,31 @@ importScripts('https://storage.googleapis.com/workbox-cdn/releases/7.0.0/workbox
 if (workbox) {
   console.log('Workbox is loaded');
 
+  const VERSION = 'v1.0.2';
+  const CACHE_NAMES = {
+    api: `api-cache-${VERSION}`,
+    images: `images-cache-${VERSION}`,
+    static: `static-resources-${VERSION}`,
+    navigation: `navigation-cache-${VERSION}`,
+  };
+
   // Skip waiting and claim clients immediately for faster updates
   workbox.core.skipWaiting();
   workbox.core.clientsClaim();
 
   // Precaching only static assets that DON'T change between builds frequently
   workbox.precaching.precacheAndRoute([
-    { url: '/manifest.webmanifest', revision: '1' },
-    { url: '/pwa-192.png', revision: '1' },
-    { url: '/pwa-512.png', revision: '1' },
-    { url: '/apple-touch-icon.png', revision: '1' }
+    { url: '/manifest.webmanifest', revision: VERSION },
+    { url: '/pwa-192.png', revision: VERSION },
+    { url: '/pwa-512.png', revision: VERSION },
+    { url: '/apple-touch-icon.png', revision: VERSION }
   ]);
 
   // Handle navigation requests (index.html) with NetworkFirst
   workbox.routing.registerRoute(
     ({ request }) => request.mode === 'navigate',
     new workbox.strategies.NetworkFirst({
-      cacheName: 'navigation-cache',
+      cacheName: CACHE_NAMES.navigation,
     })
   );
 
@@ -27,7 +35,7 @@ if (workbox) {
   workbox.routing.registerRoute(
     ({ request }) => request.destination === 'image',
     new workbox.strategies.CacheFirst({
-      cacheName: 'images',
+      cacheName: CACHE_NAMES.images,
       plugins: [
         new workbox.expiration.ExpirationPlugin({
           maxEntries: 60,
@@ -41,7 +49,7 @@ if (workbox) {
   workbox.routing.registerRoute(
     ({ url }) => url.pathname.startsWith('/api/'),
     new workbox.strategies.NetworkFirst({
-      cacheName: 'api-cache',
+      cacheName: CACHE_NAMES.api,
       plugins: [
         new workbox.expiration.ExpirationPlugin({
           maxEntries: 50,
@@ -57,7 +65,7 @@ if (workbox) {
       request.destination === 'script' || 
       request.destination === 'style',
     new workbox.strategies.StaleWhileRevalidate({
-      cacheName: 'static-resources',
+      cacheName: CACHE_NAMES.static,
     })
   );
 
