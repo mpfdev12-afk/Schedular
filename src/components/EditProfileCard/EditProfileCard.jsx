@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import "./EditProfileCard.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { sendDataToapi } from "../../utils/api";
+import { updateDatatoapi } from "../../utils/api";
 import { toast } from "react-toastify";
 import { Useraction } from "../../store/userSlice";
-import { RoleAction } from "../../store/roleSlice";
-import { FaUserCircle } from "react-icons/fa";
+import { FaUserCircle, FaCamera, FaTimes } from "react-icons/fa";
 
-const EditProfileCard = ({ user, onEdit }) => {
+const EditProfileCard = ({ user, onEdit, onClose }) => {
   const role = useSelector((state) => state.role);
   const [loading, setLoading] = useState(false);
+  const [imgLoading, setImgLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     fullname: user?.fullname || "",
@@ -36,19 +36,37 @@ const EditProfileCard = ({ user, onEdit }) => {
 
   const dispatch = useDispatch();
 
-  const handleLogout = () => {
+  const handleUpdate = () => {
     setLoading(true);
-    const apiPath = role === "advisor" ? "/advisors/logout" : "/users/logout";
+    const apiPath = role === "advisor" ? "/advisors/updateProfile" : "/users/updateProfile";
 
-    sendDataToapi(apiPath)
-      .then(() => {
+    updateDatatoapi(apiPath, formData, "application/json")
+      .then((res) => {
         toast.success("Profile Updated Successfully!");
-        dispatch(Useraction.logoutUser());
-        dispatch(RoleAction.logoutRole());
-        window.location.href = "/";
+        dispatch(Useraction.loginUser(res.data.data)); // Update store with new data
+        onEdit(false);
       })
-      .catch((err) => console.log(err))
+      .catch((err) => toast.error(err?.response?.data?.message || "Update Failed"))
       .finally(() => setLoading(false));
+  };
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    
+    setImgLoading(true);
+    const form = new FormData();
+    form.append("profilepic", file);
+
+    const apiPath = role === "advisor" ? "/advisors/updateProfilePic" : "/users/updateProfilePic";
+    
+    updateDatatoapi(apiPath, form, "")
+      .then((res) => {
+        toast.success("Image Updated Successfully!");
+        dispatch(Useraction.loginUser(res.data.data)); // Update store with new image
+      })
+      .catch((err) => toast.error(err?.response?.data?.message || "Image Upload Failed"))
+      .finally(() => setImgLoading(false));
   };
 
   const handleChange = (e) => {
@@ -61,6 +79,11 @@ const EditProfileCard = ({ user, onEdit }) => {
 
   return (
     <div className="profile-card">
+      <div className="closeButton">
+        <button className="close-btn-inner" title="Close" onClick={onClose}>
+          <span style={{ fontSize: '18px', fontWeight: 'bold' }}>✕</span>
+        </button>
+      </div>
       <div className="editButton">
         <button className="edit-btn" onClick={() => onEdit(true)}>
           Cancel
@@ -75,6 +98,12 @@ const EditProfileCard = ({ user, onEdit }) => {
           ) : (
             <FaUserCircle size={80} color="#e0e0e0" />
           )}
+          <label className="image-upload-label" title="Change Profile Picture">
+             <input type="file" accept="image/*" onChange={handleImageUpload} style={{ display: 'none' }} disabled={imgLoading}/>
+             <div className="upload-icon-container">
+               {imgLoading ? <span className="loader-ring"></span> : <FaCamera />}
+             </div>
+          </label>
         </div>
         <div className="profile-info">
           <input
@@ -220,8 +249,8 @@ const EditProfileCard = ({ user, onEdit }) => {
       </div>
 
       {/* Action */}
-      <button className="logOut" onClick={handleLogout} disabled={loading}>
-        {loading ? "Updating..." : "Update"}
+      <button className="update-btn" onClick={handleUpdate} disabled={loading}>
+        {loading ? "Updating..." : "Save Updates"}
       </button>
     </div>
   );

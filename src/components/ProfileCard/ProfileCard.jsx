@@ -5,10 +5,10 @@ import { sendDataToapi } from "../../utils/api";
 import { toast } from "react-toastify";
 import { Useraction } from "../../store/userSlice";
 import { RoleAction } from "../../store/roleSlice";
-import { FaUserCircle, FaPen } from "react-icons/fa";
+import { FaUserCircle, FaPen, FaTimes } from "react-icons/fa";
 import { capitalizeWords } from "../../utils/usableFunctions";
 
-const ProfileCard = ({ user, onEdit }) => {
+const ProfileCard = ({ user, onEdit, onClose }) => {
   const role = useSelector((state) => state.role);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
@@ -47,9 +47,14 @@ const ProfileCard = ({ user, onEdit }) => {
 
   return (
     <div className="profile-card">
+      <div className="closeButton">
+        <button className="close-btn-inner" title="Close" onClick={onClose}>
+          <span style={{ fontSize: '18px', fontWeight: 'bold' }}>✕</span>
+        </button>
+      </div>
       <div className="editButton">
-        <button className="edit-btn" onClick={() => onEdit(false)}>
-          <FaPen size={16} />
+        <button className="edit-btn" title="Edit Profile" onClick={() => onEdit(false)}>
+          <FaPen size={12} /> <span style={{fontSize: '12px', fontWeight: '600'}}>Edit</span>
         </button>
       </div>
 

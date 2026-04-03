@@ -98,13 +98,7 @@ const Navbar = () => {
         transition={{ duration: 0.25, ease: "easeInOut" }}
         onClick={(e) => e.stopPropagation()}
       >
-        {edit ? <ProfileCard user={user} onEdit={handleEditClick} />: <EditProfileCard user={user} onEdit={handleCancelClick} />}
-        <button
-          className="close-btn"
-          onClick={() => setProfileShow(false)}
-        >
-          ✕
-        </button>
+        {edit ? <ProfileCard user={user} onEdit={handleEditClick} onClose={() => {setProfileShow(false);setEdit(true);}} />: <EditProfileCard user={user} onEdit={handleCancelClick} onClose={() => {setProfileShow(false);setEdit(true);}} />}
       </motion.div>
     </AnimatePresence>
   </div>
