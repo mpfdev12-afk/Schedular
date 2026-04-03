@@ -30,6 +30,7 @@ const LandingPage = () => {
       <div className="landingPage">
         <div className="left">
           <h1>Start Your Journey</h1>
+          <p className="hero-subtitle">Your all-in-one wellness companion. Connect, schedule, and thrive effortlessly.</p>
           <button className="google" onClick={SignInWithGoogle}>
             <FcGoogle className="icon" /> Sign in with Google
           </button>

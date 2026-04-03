@@ -12,9 +12,9 @@ export const Positivity = () =>{
         <>
         <div className="positivity">
           <div id="positivity-start" className="positivity-heading">
-            <u><h1 className="main-title">Positivity Zone</h1></u>
+            <h1 className="main-title">Positivity Zone 🌈</h1>
             <p className="sub-title">
-              A space to uplift your spirit, inspire your thoughts, and brighten your day 🌈
+              A space to uplift your spirit, inspire your thoughts, and brighten your day.
             </p>
           </div>
         
@@ -40,8 +40,8 @@ export const Positivity = () =>{
                 ))}
               </div>
         
-              <div>
-                <h1>Articles</h1>
+              <div className="positivity-heading" style={{marginTop: '40px', marginBottom: '20px'}}>
+                <h1 className="main-title">Latest Articles</h1>
               </div>
         
               <div className="positivity-zone-section">

@@ -28,63 +28,83 @@ $blue: #004DFF;
     align-items: center;
 
     h1 {
-      font-size: 2.5rem;
+      font-size: 3rem;
+      font-weight: 800;
+      color: #1e293b;
       text-align: center;
-      margin-bottom: 20px;
-      font-family: "Open Sans", Arial, sans-serif; // fallback font
+      margin-bottom: 10px;
+      letter-spacing: -1px;
     }
 
-    button {
-      background-color: rgb(24, 24, 90);
-      color: aliceblue;
-      margin: 10px;
-      width: 250px;
-      padding: 15px;
+    .hero-subtitle {
+      font-size: 1.1rem;
+      color: #64748b;
+      margin-bottom: 30px;
+      text-align: center;
+      max-width: 80%;
+      line-height: 1.5;
+    }
+
+    button, .link {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      color: #1e293b;
+      margin: 12px;
+      width: 300px;
+      padding: 16px 20px;
       display: flex;
       align-items: center;
       justify-content: center;
+      border-radius: 16px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
 
       .icon {
-        background-color: white;
-        height: 80%;
-        width: 32px;
-        padding: 2px;
-        border-radius: 3px;
-        margin-right: 20px;
-        color: black;
+        height: 24px;
+        width: 24px;
+        margin-right: 15px;
+        transition: transform 0.3s ease;
+      }
+
+      &:hover {
+        transform: translateY(-3px);
+        background: #ffffff;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        border-color: #cbd5e1;
+
+        .icon {
+          transform: scale(1.1);
+        }
+      }
+
+      &:active {
+        transform: translateY(0) scale(0.98);
+      }
+    }
+
+    .google {
+      background: rgba(255, 255, 255, 0.85); /* Slightly brighter for primary CTA */
+      border: 1px solid #e2e8f0;
+      
+      &:hover {
+        box-shadow: 0 15px 35px rgba(59, 130, 246, 0.15); /* Subtle blue glow */
+        border-color: rgba(59, 130, 246, 0.3);
       }
     }
 
     span {
-      margin: 10px;
-    }
-
-    .google {
-      background-color: $blue;
-    }
-
-    .link {
-      color: black;
-      text-decoration: none;
-      margin: 10px;
-      width: 250px;
-      padding: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      &:hover {
-        text-decoration: underline;
-      }
-
-      .icon {
-        height: 80%;
-        width: 32px;
-        padding: 2px;
-        border-radius: 3px;
-        margin-right: 5px;
-        color: black;
-      }
+      margin: 15px;
+      font-weight: 600;
+      color: #94a3b8;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
   }
 
@@ -93,15 +113,33 @@ $blue: #004DFF;
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.2), transparent 70%);
+      border-radius: 50%;
+      filter: blur(40px);
+      z-index: 0;
+    }
 
     img {
       height: 60%;
       width: 60%;
-      border-radius: 20px;
-
-      /* Prevent reflow on load */
+      border-radius: 24px;
       display: block;
       object-fit: cover;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.5);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+
+      &:hover {
+        transform: translateY(-10px) scale(1.02);
+      }
     }
   }
 }
@@ -301,9 +339,11 @@ $blue: #004DFF;
     width: 780px;
 
     .main-title {
-      font-family: "Pacifico", cursive, Arial, sans-serif;
-      color: #333;
-      margin-bottom: 10px;
+      font-weight: 800;
+      font-size: 2.5rem;
+      color: #1e293b;
+      margin-bottom: 15px;
+      letter-spacing: -0.5px;
     }
 
     .sub-title {
