@@ -7,6 +7,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { Navigate, Link, useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader/Loader";
 import { sendDataToapi } from "../../utils/api";
+import { useDispatch } from "react-redux";
+import { Useraction } from "../../store/userSlice";
+import { RoleAction } from "../../store/roleSlice";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -19,6 +22,7 @@ export default function Login() {
   }, []);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -28,7 +32,9 @@ export default function Login() {
     sendDataToapi("/users/login", formDataToSend, "application/json")
       .then((res) => {
         setLoading(false);
-        console.log("Logged in user:", res);
+        const userData = res?.data?.data?.user || res?.data?.user || res?.user || {};
+        dispatch(Useraction.loginUser(userData));
+        dispatch(RoleAction.loginRole("user"));
         toast.success("Login Sucessfully");
         navigate("/category");
       })

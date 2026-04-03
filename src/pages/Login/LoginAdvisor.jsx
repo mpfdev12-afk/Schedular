@@ -4,12 +4,16 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "../../components/Loader/Loader";
 import { sendDataToapi } from "../../utils/api";
+import { useDispatch } from "react-redux";
+import { Useraction } from "../../store/userSlice";
+import { RoleAction } from "../../store/roleSlice";
 
 const LoginAdvisor = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -23,6 +27,9 @@ const LoginAdvisor = () => {
         JSON.stringify(payload),
         "application/json"
       );
+      const userData = res?.data?.data?.user || res?.data?.user || res?.user || {};
+      dispatch(Useraction.loginUser(userData));
+      dispatch(RoleAction.loginRole("advisor"));
       toast.success("Login Successful");
       navigate("/");
     } catch (err) {
