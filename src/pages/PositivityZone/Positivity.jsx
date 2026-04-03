@@ -4,15 +4,6 @@ import { BlogData } from "../../data/BlogData";
 import { News } from "../../data/News";
 import { FaArrowDown } from "react-icons/fa";
 export const Positivity = () =>{
-    const wellnessTips = [
-      "Take 5 deep breaths right now. Inhale confidence, exhale doubt.",
-      "Hydration is key. Drink a glass of water before you continue.",
-      "Stretch your neck and shoulders. You've been sitting for a while!",
-      "Write down one thing you're grateful for today.",
-      "Disconnect for 15 minutes. No screens, just you and your thoughts."
-    ];
-    const dailyTip = wellnessTips[Math.floor(Math.random() * wellnessTips.length)];
-
     const scrollToPositivity = () => {
     const section = document.getElementById("positivity-start");
     if (section) section.scrollIntoView({ behavior: "smooth" });
@@ -20,12 +11,6 @@ export const Positivity = () =>{
     return(
         <>
         <div className="positivity">
-          <div className="daily-tip-container">
-            <div className="tip-card">
-              <span className="tip-label">💡 Daily Wellness Tip</span>
-              <p>{dailyTip}</p>
-            </div>
-          </div>
 
           <div id="positivity-start" className="positivity-heading">
             <h1 className="main-title">Positivity Zone 🌈</h1>

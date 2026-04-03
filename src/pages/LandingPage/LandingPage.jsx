@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./LandingPage.scss";
 import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "../../components/Navbar/Navbar";
@@ -13,6 +13,7 @@ import { BlogData } from "../../data/BlogData";
 import { News } from "../../data/News";
 import { FaArrowDown } from "react-icons/fa";
 import { Positivity } from "../PositivityZone/Positivity";
+import axios from "axios";
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -22,6 +23,25 @@ const LandingPage = () => {
   };
 
   const [mood, setMood] = useState(null);
+  const [dailyTips, setDailyTips] = useState({
+    mental: { content: "Loading your mental insight..." },
+    physical: { content: "Loading your physical insight..." },
+    financial: { content: "Loading your financial insight..." }
+  });
+
+  useEffect(() => {
+    const fetchTips = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/tips/daily`);
+        if (response.data && response.data.data) {
+          setDailyTips(response.data.data);
+        }
+      } catch (error) {
+        console.error("Error fetching daily tips:", error);
+      }
+    };
+    fetchTips();
+  }, []);
 
   const moods = [
     { emoji: "😊", label: "Happy", tip: "Spread the joy! Take a moment to share this feeling with someone today." },
@@ -172,6 +192,48 @@ const LandingPage = () => {
             </div>
             <h3>Financial Security</h3>
             <p>Achieve peace of mind with smart planning and secure management tools.</p>
+          </motion.div>
+        </div>
+      </motion.section>
+
+      {/* --- Daily Wisdom (Triple Tips) --- */}
+      <motion.section 
+        className="daily-wisdom-section"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={{
+          visible: {
+            transition: {
+              staggerChildren: 0.3
+            }
+          }
+        }}
+      >
+        <motion.h2 className="section-title" variants={itemVariants}>Daily Wisdom</motion.h2>
+        <div className="wisdom-grid">
+          <motion.div className="wisdom-card mental" variants={itemVariants}>
+            <div className="card-header">
+              <img src="mental_3d.png" alt="Mental Icon" />
+              <span>Mental Insight</span>
+            </div>
+            <p>"{dailyTips.mental.content}"</p>
+          </motion.div>
+
+          <motion.div className="wisdom-card physical" variants={itemVariants}>
+            <div className="card-header">
+              <img src="physical_3d.png" alt="Physical Icon" />
+              <span>Physical Vitality</span>
+            </div>
+            <p>"{dailyTips.physical.content}"</p>
+          </motion.div>
+
+          <motion.div className="wisdom-card financial" variants={itemVariants}>
+            <div className="card-header">
+              <img src="financial_3d.png" alt="Financial Icon" />
+              <span>Financial Security</span>
+            </div>
+            <p>"{dailyTips.financial.content}"</p>
           </motion.div>
         </div>
       </motion.section>
