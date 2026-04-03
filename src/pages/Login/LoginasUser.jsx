@@ -12,12 +12,12 @@ const LoginasUser = () => {
   return (
     <div className="Category">
       <h1>You are Logging in as?</h1>
-      <div className="cat">
-        <div onClick={() => onNav("/loginCondition/login")} className="cat-cont">
+      <div className="category-grid">
+        <div onClick={() => onNav("/loginCondition/login")} className="category-card">
           <img src="mental2.png"></img>
           <span>User</span>
         </div>
-        <div onClick={() => onNav("/loginCondition/loginAdvisor")} className="cat-cont">
+        <div onClick={() => onNav("/loginCondition/loginAdvisor")} className="category-card">
           <img src="physical2.png"></img>
           <span>Advisor</span>
         </div>

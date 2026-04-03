@@ -1,13 +1,14 @@
 .Category {
-    min-height: calc(100vh - 80px);
+    min-height: 100vh;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
-    padding: 1.5rem 2rem 2rem;
+    padding: 10px 1.5rem 2rem;
+    /* Ensures clearance from the fixed 80px navbar */
     position: relative;
     overflow-x: hidden;
-    gap: 1rem;
+    gap: 1.5rem;
 
     /* ─── Ambient gradient orbs ─── */
     &::before,
@@ -19,6 +20,7 @@
         z-index: 0;
         filter: blur(80px);
     }
+
     &::before {
         width: 420px;
         height: 420px;
@@ -27,6 +29,7 @@
         background: radial-gradient(circle, rgba(99, 102, 241, 0.12), transparent 70%);
         animation: floatOrb 12s ease-in-out infinite alternate;
     }
+
     &::after {
         width: 360px;
         height: 360px;
@@ -39,7 +42,8 @@
     .category-hero {
         width: 100%;
         max-width: 1100px;
-        margin-bottom: 1.5rem;
+        margin-bottom: 0.5rem;
+        margin-top: 0;
         z-index: 2;
         opacity: 1;
         position: relative;
@@ -47,24 +51,22 @@
         visibility: visible;
 
         .welcome-text {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.25rem;
             text-align: left;
             font-weight: 800;
-            font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+            font-size: clamp(1.6rem, 3.5vw, 2.2rem);
             letter-spacing: -0.02em;
             color: #334155;
             word-break: break-word;
             overflow-wrap: break-word;
             line-height: 1.2;
-            display: block;
         }
 
         .hero-desc {
             max-width: 720px;
             color: var(--color-text-muted);
-            font-size: 1.05rem;
-            line-height: 1.6;
-            display: block;
+            font-size: 1rem;
+            line-height: 1.5;
         }
     }
 
@@ -72,20 +74,23 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        gap: 1rem;
-        flex-wrap: wrap;
-        margin-bottom: 1rem;
+        gap: 0.75rem;
+        flex-wrap: nowrap;
+        margin-bottom: 0.5rem;
+        width: 100%;
+        position: relative;
+        z-index: 3;
     }
 
     .hero-eyebrow {
         display: inline-flex;
         align-items: center;
-        padding: 0.5rem 0.9rem;
+        padding: 0.4rem 0.8rem;
         border-radius: 999px;
         background: rgba(255, 255, 255, 0.6);
         border: 1px solid rgba(255, 255, 255, 0.7);
         color: var(--color-text-muted);
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         font-weight: 600;
         letter-spacing: 0.01em;
         backdrop-filter: blur(10px);
@@ -94,49 +99,43 @@
     .streak-pill {
         display: inline-flex;
         align-items: center;
-        gap: 0.55rem;
-        padding: 0.55rem 0.9rem;
+        justify-content: center;
+        gap: 0.4rem;
+        padding: 0.45rem 0.8rem;
         border-radius: 999px;
         background: linear-gradient(135deg, rgba(249, 115, 22, 0.12), rgba(239, 68, 68, 0.08));
-        border: 1px solid rgba(249, 115, 22, 0.16);
+        border: 1px solid rgba(249, 115, 22, 0.2);
         color: #c2410c;
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         font-weight: 700;
-        box-shadow: 0 10px 30px rgba(249, 115, 22, 0.08);
+        box-shadow: 0 4px 12px rgba(249, 115, 22, 0.1);
         backdrop-filter: blur(10px);
+        flex-shrink: 0;
+        white-space: nowrap;
 
         .streak-icon {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
     }
 
-    /* welcome-text and hero-desc styles are handled inside .category-hero above */
-
-    .cat {
+    /* ─── Category Cards Layout ─── */
+    .category-grid {
         display: flex;
+        flex-wrap: wrap;
         justify-content: center;
-        align-items: stretch;
         gap: 1.5rem;
         width: 100%;
-        max-width: 1100px;
-        flex-wrap: wrap;
-        margin-bottom: 1rem;
+        max-width: 1000px;
+        z-index: 1;
 
-        &.detox-row {
-            margin-top: 0;
-            margin-bottom: 2rem;
-        }
-
-        .cat-cont {
+        .category-card {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 220px;
-            width: calc(33.33% - 1rem);
-            min-width: 200px;
-            max-width: 280px;
-            padding: 1.25rem;
+            width: 220px;
+            padding: 1rem;
             border-radius: 24px;
             cursor: pointer;
             position: relative;
@@ -146,11 +145,21 @@
             animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
             text-align: center;
 
-            &:nth-child(1) { animation-delay: 0.15s; }
-            &:nth-child(2) { animation-delay: 0.3s; }
-            &:nth-child(3) { animation-delay: 0.45s; }
-            &:nth-child(4) { animation-delay: 0.6s; }
-            &:nth-child(5) { animation-delay: 0.75s; }
+            &:nth-child(1) {
+                animation-delay: 0.15s;
+            }
+
+            &:nth-child(2) {
+                animation-delay: 0.3s;
+            }
+
+            &:nth-child(3) {
+                animation-delay: 0.45s;
+            }
+
+            &:nth-child(4) {
+                animation-delay: 0.6s;
+            }
 
             &:active {
                 transform: scale(0.96);
@@ -160,7 +169,10 @@
             &::before {
                 content: '';
                 position: absolute;
-                top: 0; left: 0; right: 0; bottom: 0;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
                 background: radial-gradient(circle at center, var(--glow-color, transparent) 0%, transparent 70%);
                 opacity: 0;
                 transition: opacity 0.4s ease;
@@ -168,22 +180,22 @@
             }
 
             .domain-icon {
-                height: 150px;
-                width: 150px;
+                height: 100px;
+                width: 100px;
                 z-index: 1;
-                margin-bottom: 0.75rem;
+                margin-bottom: 0.5rem;
                 transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             }
 
             span {
-                font-size: 1.15rem;
+                font-size: 1.05rem;
                 font-weight: 600;
                 z-index: 1;
                 color: var(--color-text-main);
             }
 
             .cat-subtitle {
-                font-size: 0.8rem;
+                font-size: 0.78rem;
                 font-weight: 400;
                 color: var(--color-text-muted);
                 margin-top: 2px;
@@ -195,15 +207,14 @@
             &::after {
                 content: '';
                 position: absolute;
-                top: 0; left: -75%;
+                top: 0;
+                left: -75%;
                 width: 50%;
                 height: 100%;
-                background: linear-gradient(
-                    105deg,
-                    transparent 30%,
-                    rgba(255, 255, 255, 0.25) 50%,
-                    transparent 70%
-                );
+                background: linear-gradient(105deg,
+                        transparent 30%,
+                        rgba(255, 255, 255, 0.25) 50%,
+                        transparent 70%);
                 z-index: 2;
                 pointer-events: none;
                 transition: none;
@@ -236,18 +247,22 @@
                 --theme-color: var(--color-mental);
                 --glow-color: var(--color-mental-glow);
             }
+
             &.physical {
                 --theme-color: var(--color-physical);
                 --glow-color: var(--color-physical-glow);
             }
+
             &.financial {
                 --theme-color: var(--color-financial);
                 --glow-color: var(--color-financial-glow);
             }
+
             &.mindfulness {
                 --theme-color: var(--color-mindfulness);
                 --glow-color: var(--color-mindfulness-glow);
             }
+
             &.zen {
                 --theme-color: var(--color-zen);
                 --glow-color: var(--color-zen-glow);
@@ -256,114 +271,148 @@
     }
 }
 
-/* Responsive Scaling */
+/* ─── Responsive: Tablet ─── */
+/* ─── Responsive: Tablet ─── */
 @media (max-width: 900px) {
     .Category {
-        padding: 2rem 1.5rem 3rem;
+        /* Explicitly declared to prevent shorthand conflicts */
+        padding-top: 104px;
+        /* 80px nav + 24px spacing */
+        padding-bottom: 1.5rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
 
         .category-hero {
-            text-align: center;
+            text-align: left;
         }
 
-        .hero-topline {
-            justify-content: center;
-        }
+        .category-grid {
+            max-width: 700px;
+            gap: 1rem;
 
-        h1 {
-            text-align: center;
-        }
-
-        .hero-copy {
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .cat {
-            gap: 1.25rem;
-            .cat-cont {
-                width: calc(50% - 1rem);
-                min-width: 160px;
-                max-width: 260px;
-                height: 240px;
+            .category-card {
+                height: 180px;
+                width: 180px;
 
                 .domain-icon {
-                    height: 90px;
-                    width: 90px;
-                }
-            }
-        }
-    }
-}
-
-@media (max-width: 600px) {
-    .Category {
-        padding: 1.5rem 1rem 3rem;
-
-        .category-hero {
-            margin-bottom: 1.4rem;
-        }
-
-        .hero-topline {
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 0.85rem;
-        }
-
-        h1 {
-            font-size: 1.5rem;
-            margin-bottom: 0.6rem;
-        }
-
-        .hero-copy {
-            font-size: 0.92rem;
-            padding: 0 0.5rem;
-        }
-
-        .cat {
-            flex-direction: column;
-            align-items: center;
-            gap: 1.2rem;
-            width: 100%;
-
-            .cat-cont {
-                width: 90%;
-                max-width: 320px;
-                min-width: unset;
-                height: 220px;
-
-                .domain-icon {
-                    height: 80px;
-                    width: 80px;
+                    height: 75px;
+                    width: 75px;
                 }
 
                 span {
-                    font-size: 1.05rem;
+                    font-size: 0.95rem;
                 }
             }
         }
     }
 }
 
-/* Master Line Drawing Animation Engine */
-.domain-icon {
-    height: 180px;
-    width: 180px;
-    z-index: 1;
-    margin-bottom: 1rem;
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+/* ─── Responsive: Mobile ─── */
+@media (max-width: 650px) {
+    .Category {
+        /* Explicitly declared to prevent shorthand conflicts */
+        padding-top: 90px;
+        /* 80px nav + 10px spacing */
+        padding-bottom: 1.25rem;
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+
+        gap: 0.75rem;
+        justify-content: flex-start;
+
+        .category-hero {
+            margin-bottom: 0;
+        }
+
+        .hero-topline {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.4rem;
+            gap: 0.5rem;
+        }
+
+        .hero-eyebrow {
+            font-size: 0.75rem;
+            padding: 0.35rem 0.65rem;
+        }
+
+        .streak-pill {
+            padding: 0.35rem 0.65rem;
+            font-size: 0.72rem;
+        }
+
+        .welcome-text {
+            font-size: 1.3rem !important;
+            margin-bottom: 0.2rem;
+        }
+
+        .hero-desc {
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            max-width: 100%;
+
+            .category-card {
+                width: 100%;
+                height: 160px;
+                padding: 0.6rem;
+                border-radius: 16px;
+
+                .domain-icon {
+                    height: 55px;
+                    width: 55px;
+                    margin-bottom: 0.25rem;
+                }
+
+                span {
+                    font-size: 0.9rem;
+                }
+
+                .cat-subtitle {
+                    font-size: 0.68rem;
+                }
+            }
+        }
+    }
 }
+
+/* ─── Responsive: Very narrow phones ─── */
+@media (max-width: 380px) {
+    .Category {
+        .hero-topline {
+            flex-wrap: wrap;
+        }
+
+        .category-grid {
+            grid-template-columns: 1fr;
+
+            .category-card {
+                height: auto;
+                min-height: 140px;
+            }
+        }
+    }
+}
+
+/* ═══════════════════════════════════════════ */
+/* Master Line Drawing Animation Engine       */
+/* ═══════════════════════════════════════════ */
 
 .svg-drawing-icon {
     .svg-shape {
         stroke-width: 3.5px;
         stroke-linecap: round;
         stroke-linejoin: round;
-        fill-opacity: 0;          /* Initially Transparent 3D fill */
-        stroke-dasharray: 400;    /* Long enough to cover generic paths */
-        stroke-dashoffset: 400;   /* Completely hidden initially */
-        
-        /* 1) 4s drawing phase  — slow, premium feel */
-        /* 2) 2s fading fill phase that materializes the 3D volume */
+        fill-opacity: 0;
+        stroke-dasharray: 400;
+        stroke-dashoffset: 400;
+
         animation:
             tracePath 4s cubic-bezier(0.16, 1, 0.3, 1) forwards,
             fadeInto3D 2s ease-in-out 3.5s forwards;
@@ -371,62 +420,152 @@
 }
 
 /* Specific Timing Adjustments for Complexity */
-.petal-1 { animation-delay: 0s, 3.5s !important; }
-.petal-2 { animation-delay: 0.4s, 3.9s !important; }
-.petal-3 { animation-delay: 0.8s, 4.3s !important; }
-.inner-core { animation-delay: 2s, 4.5s !important; }
+.petal-1 {
+    animation-delay: 0s, 3.5s !important;
+}
 
-.bar-1, .bar-2, .bar-3, .bar-4 {
+.petal-2 {
+    animation-delay: 0.4s, 3.9s !important;
+}
+
+.petal-3 {
+    animation-delay: 0.8s, 4.3s !important;
+}
+
+.inner-core {
+    animation-delay: 2s, 4.5s !important;
+}
+
+.bar-1,
+.bar-2,
+.bar-3,
+.bar-4 {
     animation: growBar 2s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
     transform-origin: bottom;
     transform-box: fill-box;
     fill-opacity: 1 !important;
     stroke: none !important;
 }
-.bar-1 { animation-delay: 1s !important; transform: scaleY(0); }
-.bar-2 { animation-delay: 1.8s !important; transform: scaleY(0); }
-.bar-3 { animation-delay: 2.6s !important; transform: scaleY(0); }
-.bar-4 { animation-delay: 3.4s !important; transform: scaleY(0); }
-.trend-arrow { animation-delay: 3.2s, 5s !important; animation: traceArrow 3s forwards !important; stroke-dasharray: 300; stroke-dashoffset: 300; }
 
-.phys-heart { animation: traceHeart 5s cubic-bezier(0.16, 1, 0.3, 1) forwards, fadeInto3D 2s ease-in-out 4s forwards !important; stroke-dasharray: 500; stroke-dashoffset: 500; }
-.phys-ekg { animation: traceArrow 3.5s cubic-bezier(0.16, 1, 0.3, 1) 3s forwards !important; stroke-dasharray: 300; stroke-dashoffset: 300; }
+.bar-1 {
+    animation-delay: 1s !important;
+    transform: scaleY(0);
+}
+
+.bar-2 {
+    animation-delay: 1.8s !important;
+    transform: scaleY(0);
+}
+
+.bar-3 {
+    animation-delay: 2.6s !important;
+    transform: scaleY(0);
+}
+
+.bar-4 {
+    animation-delay: 3.4s !important;
+    transform: scaleY(0);
+}
+
+.trend-arrow {
+    animation-delay: 3.2s, 5s !important;
+    animation: traceArrow 3s forwards !important;
+    stroke-dasharray: 300;
+    stroke-dashoffset: 300;
+}
+
+.phys-heart {
+    animation: traceHeart 5s cubic-bezier(0.16, 1, 0.3, 1) forwards, fadeInto3D 2s ease-in-out 4s forwards !important;
+    stroke-dasharray: 500;
+    stroke-dashoffset: 500;
+}
+
+.phys-ekg {
+    animation: traceArrow 3.5s cubic-bezier(0.16, 1, 0.3, 1) 3s forwards !important;
+    stroke-dasharray: 300;
+    stroke-dashoffset: 300;
+}
 
 /* The Line Drawing Stroke Keyframes */
 @keyframes tracePath {
-    0% { stroke-dashoffset: 400; fill-opacity: 0; }
-    100% { stroke-dashoffset: 0; fill-opacity: 0; }
+    0% {
+        stroke-dashoffset: 400;
+        fill-opacity: 0;
+    }
+
+    100% {
+        stroke-dashoffset: 0;
+        fill-opacity: 0;
+    }
 }
-@keyframes traceHeart { 
-    0% { stroke-dashoffset: 500; fill-opacity: 0; } 
-    100% { stroke-dashoffset: 0; fill-opacity: 0; } 
+
+@keyframes traceHeart {
+    0% {
+        stroke-dashoffset: 500;
+        fill-opacity: 0;
+    }
+
+    100% {
+        stroke-dashoffset: 0;
+        fill-opacity: 0;
+    }
 }
-@keyframes traceArrow { 
-    0% { stroke-dashoffset: 300; fill-opacity: 0; } 
-    100% { stroke-dashoffset: 0; fill-opacity: 0; } 
+
+@keyframes traceArrow {
+    0% {
+        stroke-dashoffset: 300;
+        fill-opacity: 0;
+    }
+
+    100% {
+        stroke-dashoffset: 0;
+        fill-opacity: 0;
+    }
 }
 
 /* The 3D Materialization Keyframe */
 @keyframes fadeInto3D {
-    0% { fill-opacity: 0; }
-    100% { fill-opacity: 0.35; stroke-opacity: 1; filter: drop-shadow(0 0 6px var(--glow-color)); }
+    0% {
+        fill-opacity: 0;
+    }
+
+    100% {
+        fill-opacity: 0.35;
+        stroke-opacity: 1;
+        filter: drop-shadow(0 0 6px var(--glow-color));
+    }
 }
 
 /* Vertical Bar Growth */
 @keyframes growBar {
-    0% { transform: scaleY(0); }
-    100% { transform: scaleY(1); }
+    0% {
+        transform: scaleY(0);
+    }
+
+    100% {
+        transform: scaleY(1);
+    }
 }
 
 /* The Continuous Repeating Pulse */
 .continuously-repeating-pulse {
-    animation: pulseObj 4s infinite ease-in-out 6s; /* Delay until fully drawn */
+    animation: pulseObj 4s infinite ease-in-out 6s;
 }
 
 @keyframes pulseObj {
-    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(0,0,0,0.1)); }
-    50% { transform: scale(1.08) translateY(-4px); filter: drop-shadow(0 0 25px rgba(255,255,255,0.4)); }
+
+    0%,
+    100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.1));
+    }
+
+    50% {
+        transform: scale(1.08) translateY(-4px);
+        filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.4));
+    }
 }
+
 /* SVG Icon Keyframe Animations */
 .pulse-slow {
     animation: pulseObj 3s infinite ease-in-out;
@@ -439,21 +578,47 @@
 }
 
 @keyframes floatPetal {
-    0% { transform: translateY(0px) rotate(0deg); opacity: 0.9; }
-    100% { transform: translateY(-3px) rotate(1deg); opacity: 1; }
+    0% {
+        transform: translateY(0px) rotate(0deg);
+        opacity: 0.9;
+    }
+
+    100% {
+        transform: translateY(-3px) rotate(1deg);
+        opacity: 1;
+    }
 }
 
 @keyframes fadeSlideDown {
-    0% { opacity: 0; transform: translateY(-18px); }
-    100% { opacity: 1; transform: translateY(0); }
+    0% {
+        opacity: 0;
+        transform: translateY(-18px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes fadeInUp {
-    0% { opacity: 0; transform: translateY(32px) scale(0.96); }
-    100% { opacity: 1; transform: translateY(0) scale(1); }
+    0% {
+        opacity: 0;
+        transform: translateY(32px) scale(0.96);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 @keyframes floatOrb {
-    0% { transform: translate(0, 0) scale(1); }
-    100% { transform: translate(30px, 20px) scale(1.1); }
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    100% {
+        transform: translate(30px, 20px) scale(1.1);
+    }
 }

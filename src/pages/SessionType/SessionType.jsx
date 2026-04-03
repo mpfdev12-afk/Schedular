@@ -10,19 +10,19 @@ const SessionType = () => {
     navigate(path);
   };
   return (
-    <div className="Category">
+    <div className="session-type">
       <BackButton />
       <h1>How do you need help for?</h1>
-      <div className="cat">
-        <div onClick={() => onNav("quick-session")} className="cat-cont">
+      <div className="session-grid">
+        <div onClick={() => onNav("quick-session")} className="session-card">
           <img src="/QuickSession.png"></img>
           <span>Quick Session</span>
         </div>
-        <div onClick={() => onNav("habbit-learning")} className="cat-cont">
+        <div onClick={() => onNav("habbit-learning")} className="session-card">
           <img src="/HabitSchedular.png"></img>
           <span>Habbit Schedular</span>
         </div>
-        <div onClick={() => onNav("learning")} className="cat-cont">
+        <div onClick={() => onNav("learning")} className="session-card">
           <img src="/Personailsed.png"></img>
           <span>Personalised Learning</span>
         </div>

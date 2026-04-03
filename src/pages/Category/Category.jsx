@@ -88,32 +88,30 @@ const Category = () => {
         </div>
       </div>
 
-      <div className="cat">
+      <div className="category-grid">
         {mainCards.map((card) => (
           <div
             key={card.key}
             onClick={() => onNav(card.path)}
-            className={`cat-cont ${card.className} glass-card`}
+            className={`category-card ${card.className} glass-card`}
           >
             {card.icon}
             <span>{card.title}</span>
             <span className="cat-subtitle">{card.subtitle}</span>
           </div>
         ))}
-      </div>
 
-      {FEATURES.DETOX_MODE && (
-        <div className="cat detox-row">
+        {FEATURES.DETOX_MODE && (
           <div
             onClick={() => onNav("/detox")}
-            className="cat-cont mindfulness glass-card"
+            className="category-card mindfulness glass-card"
           >
             <DetoxIcon />
             <span>Detox Mode</span>
             <span className="cat-subtitle">Calm & Reset</span>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

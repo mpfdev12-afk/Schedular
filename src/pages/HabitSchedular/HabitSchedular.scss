@@ -1,22 +1,24 @@
-.habit{
+.habit {
     //background-color: aquamarine;
     height: 70vh;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    h1{
+
+    h1 {
         margin: 0px;
         margin-top: 100px;
         text-align: center;
     }
-    .cat{
+
+    .habit-grid {
         display: flex;
         justify-content: space-around;
         align-items: center;
         width: 75vw;
 
-        div{
+        div {
             background-color: white;
             display: flex;
             flex-direction: column;
@@ -29,18 +31,20 @@
             border-radius: 10px;
             border: 4px solid #004dff;
             padding: 10px;
-            &:hover{
-                border:6px solid #093bb1;
+
+            &:hover {
+                border: 6px solid #093bb1;
                 cursor: pointer;
                 //background-color: rgba(153, 209, 235, 0.082);
             }
 
-            img{
+            img {
                 height: 60%;
                 width: 80%;
                 object-fit: contain;
             }
-            span{
+
+            span {
                 font-size: 20px;
                 text-align: center;
             }
@@ -48,23 +52,27 @@
     }
 }
 
- @media (max-width: 800px) {
-    .habit{
-        h1{
-                font-size: 2rem;
-            }
+@media (max-width: 800px) {
+    .habit {
+        h1 {
+            font-size: 2rem;
+        }
+
         height: 80vh;
-        div{
+
+        div {
             //background-color: #004dff;
             flex-direction: column;
             height: 50vh;
             margin: 0%;
-            .cat-cont{
+
+            .habit-card {
                 margin: 10px;
                 flex-direction: row;
                 width: 80%;
                 height: 200px;
-                img{
+
+                img {
                     width: 35%;
                     height: 120px;
                 }
@@ -72,24 +80,29 @@
         }
     }
 
- }
- @media (max-width: 450px) {
-    .Category{
-        h1{
-                font-size: 1.5rem;
-            }
+}
+
+@media (max-width: 450px) {
+    .habit {
+        h1 {
+            font-size: 1.5rem;
+        }
+
         height: 80vh;
-        div{
+
+        div {
             //background-color: #004dff;
             flex-direction: column;
             height: 50vh;
             margin: 0%;
-            .cat-cont{
+
+            .habit-card {
                 margin: 10px;
                 flex-direction: row;
                 width: 80%;
                 height: 150px;
-                img{
+
+                img {
                     width: 35%;
                     height: 100px;
                 }
@@ -97,4 +110,4 @@
         }
     }
 
- }
+}
