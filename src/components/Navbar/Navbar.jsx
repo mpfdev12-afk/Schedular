@@ -7,15 +7,25 @@ import { useDispatch, useSelector } from "react-redux";
 import ProfileCard from "../ProfileCard/ProfileCard";
 import { motion, AnimatePresence } from "framer-motion";
 import EditProfileCard from "../EditProfileCard/EditProfileCard";
+import LiveLogo from "./LiveLogo";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isLoggedin, setLoggedin] = useState(false);
   const [profileShow, setProfileShow] = useState(false);
-  const [edit,setEdit] = useState(true);
+  const [edit, setEdit] = useState(true);
+  const [scrolled, setScrolled] = useState(false);
   const user = useSelector((state) => state.user);
-  console.log(user);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   useEffect(() => {
     if (user && user._id) {
       setLoggedin(true);
@@ -31,10 +41,13 @@ const Navbar = () => {
     setEdit(cancel);
   }
   return (
-    <div className="nav">
-      {/* Logo */}
+    <div className={`nav ${scrolled ? "scrolled" : ""}`}>
+      {/* Logo & Brand */}
       <div className="left" onClick={() => navigate("/")}>
-        <img src="/logo3.png" alt="Logo" />
+        <div className="logo-wrapper">
+          <LiveLogo size={42} />
+        </div>
+        <span className="brand-name">Schedular</span>
       </div>
 
       {/* Links */}

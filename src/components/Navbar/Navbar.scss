@@ -1,129 +1,207 @@
 $blue: #004DFF;
+$gradient-blue: linear-gradient(135deg, #004DFF 0%, #00d2ff 100%);
+$font-premium: 'Outfit', 'Inter', sans-serif;
 
 .nav {
   display: flex;
   align-items: center;
-  padding: 1rem 2rem;
-  color: #ecf0f1;
+  padding: 0.8rem 2.5rem;
+  color: #333;
   justify-content: space-between;
-  height: 80px;
-  width: 100%;
+  height: 70px;
+  width: 95%;
+  margin: 15px auto;
+  position: sticky;
+  top: 15px;
+  z-index: 1000;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
-  .back-btn {
-    display: none;
-    position: absolute;
-    left: 1rem;
-    align-items: center;
-    cursor: pointer;
-
-    svg {
-      font-size: 1.5rem;
-      color: #333;
-      transition: color 0.2s ease;
-    }
-
-    &:hover svg {
-      color: $blue;
-    }
+  &.scrolled {
+    width: 90%;
+    height: 65px;
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    top: 10px;
   }
 
   .left {
     cursor: pointer;
-    font-weight: bold;
-    font-size: 1.2rem;
-    width: 20vw;
     display: flex;
     align-items: center;
-    height: 100%;
+    gap: 12px;
+    transition: transform 0.3s ease;
 
-    img {
-      height: 100%;
-      width: 70%;
-      object-fit: cover;
+    .logo-wrapper {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 14px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      overflow: visible;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .brand-name {
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -0.8px;
+      font-family: $font-premium;
+      background: linear-gradient(
+        90deg, 
+        #004DFF 0%, 
+        #00d2ff 30%, 
+        #34d399 60%, 
+        #004DFF 100%
+      );
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: textShimmer 4s linear infinite;
+      transition: all 0.3s ease;
     }
 
     &:hover {
-      color: #3498db;
+      transform: translateY(-1px);
+      
+      .logo-wrapper {
+        transform: scale(1.05);
+        background: white;
+        box-shadow: 0 8px 25px rgba(0, 77, 255, 0.1);
+      }
+
+      .brand-name {
+        letter-spacing: -0.4px;
+      }
     }
   }
 
+@keyframes textShimmer {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
   .right {
-    width: 20%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 25px;
 
     .link {
-      color: rgb(49, 48, 48);
+      color: #555;
       text-decoration: none;
-      font-size: 1rem;
-      font-weight: 500;
-      margin-right: 20px;
-      text-align: center;
+      font-size: 0.95rem;
+      font-weight: 600;
+      font-family: $font-premium;
+      transition: all 0.2s ease;
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: $blue;
+        transition: width 0.3s ease;
+        border-radius: 2px;
+      }
 
       &:hover {
-        text-decoration: underline;
-        color: black;
-        cursor: pointer;
+        color: $blue;
+        &::after {
+          width: 100%;
+        }
       }
     }
 
     .login-btn {
-      background-color: $blue;
-      color: #ecf0f1;
-      padding: 0.6rem 1rem;
-      text-align: center;
+      background: $gradient-blue;
+      color: white;
+      padding: 0.7rem 1.4rem;
       border: none;
-      border-radius: 6px;
-      font-size: 1rem;
+      border-radius: 14px;
+      font-size: 0.95rem;
+      font-weight: 600;
       cursor: pointer;
-      text-decoration: none;
+      font-family: $font-premium;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 77, 255, 0.2);
+
       &:hover {
-        background-color: #0f3ba0;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 77, 255, 0.3);
+        filter: brightness(1.1);
+      }
+
+      &:active {
+        transform: translateY(0);
       }
     }
 
     // User logged-in actions
     .user-actions {
       display: flex;
-      gap: 15px;
-      justify-content: center;
+      align-items: center;
+      gap: 18px;
 
       .notification-icon {
         cursor: pointer;
-        color: #333;
-        font-size: 1.4rem;
-        transition: color 0.2s ease;
-        border-radius: 100%;
-        border: 1px solid black;
-        height: 36px;
-        width: 36px;
-        padding: 5px;
+        color: #555;
+        background: rgba(0, 0, 0, 0.03);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        border-radius: 12px;
+        height: 40px;
+        width: 40px;
+        padding: 8px;
+        transition: all 0.3s ease;
 
         &:hover {
           color: $blue;
+          background: rgba(0, 77, 255, 0.05);
+          border-color: rgba(0, 77, 255, 0.1);
+          transform: translateY(-2px);
         }
       }
 
       .profile-btn {
         cursor: pointer;
+        transition: all 0.3s ease;
 
         .profile-pic {
-          width: 36px;
-          height: 36px;
-          border-radius: 50%;
+          width: 42px;
+          height: 42px;
+          border-radius: 12px;
           object-fit: cover;
-          border: 2px solid transparent;
-          transition: border-color 0.2s ease;
+          border: 2px solid white;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+          transition: all 0.3s ease;
+        }
 
-          &:hover {
+        &:hover {
+          transform: translateY(-2px);
+          .profile-pic {
             border-color: $blue;
+            box-shadow: 0 4px 15px rgba(0, 77, 255, 0.2);
           }
         }
 
         svg {
-          font-size: 1.8rem;
-          color: #333;
+          font-size: 2.2rem;
+          color: #555;
+          &:hover {
+            color: $blue;
+          }
         }
       }
     }
@@ -131,58 +209,34 @@ $blue: #004DFF;
 
   // Responsive
   @media (max-width: 1024px) {
-    .right {
-      width: 30%;
-    }
-    .left img {
-      width: 60%;
-    }
+    width: 98%;
+    padding: 0.8rem 1.5rem;
   }
 
   @media (max-width: 768px) {
-    padding: 1rem;
+    width: 95%;
+    padding: 0.6rem 1rem;
+    height: 65px;
+    top: 10px;
 
-    .left,
-    .right {
-      width: 100%;
-      justify-content: center;
-      margin: 0.5rem 0;
+    .left {
+      .brand-name {
+        font-size: 1.2rem;
+      }
+      .logo-wrapper {
+        width: 35px;
+        height: 35px;
+      }
     }
 
     .right {
-      gap: 0.5rem;
-
+      gap: 15px;
       .link {
-        font-size: 1rem;
-        margin-right: 10px;
+        display: none; // Hide on mobile for cleaner look
       }
-    }
-
-    .left img {
-      width: 50%;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .left img {
-      width: 70%;
-    }
-
-    .right {
-      gap: 0.3rem;
-
-      .link,
-      button {
-        font-size: 0.9rem;
-      }
-
-      .user-actions {
-        gap: 10px;
-
-        .profile-pic {
-          width: 30px;
-          height: 30px;
-        }
+      .login-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
       }
     }
   }
