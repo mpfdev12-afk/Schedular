@@ -36,7 +36,7 @@ const LoginasUser = () => {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.3, duration: 0.5 }}
-                  onClick={() => onNav("/loginCondition/login")} 
+                  onClick={() => onNav("/user/login")} 
                   className="selection-card user-tile"
                 >
                   <img src="/mental2.png" alt="User Portal" />
@@ -47,7 +47,7 @@ const LoginasUser = () => {
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.4, duration: 0.5 }}
-                  onClick={() => onNav("/loginCondition/loginAdvisor")} 
+                  onClick={() => onNav("/advisor/login")} 
                   className="selection-card advisor-tile"
                 >
                   <img src="/physical2.png" alt="Advisor Portal" />

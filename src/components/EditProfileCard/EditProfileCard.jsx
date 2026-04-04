@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateDatatoapi } from "../../utils/api";
 import { toast } from "react-toastify";
 import { Useraction } from "../../store/userSlice";
-import { FaUserCircle, FaCamera, FaTimes } from "react-icons/fa";
+import { FaUserCircle, FaCamera, FaTimes, FaUndo } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 const EditProfileCard = ({ user, onEdit, onClose }) => {
   const role = useSelector((state) => state.role);
@@ -20,14 +21,6 @@ const EditProfileCard = ({ user, onEdit, onClose }) => {
     languagesSpoken: Array.isArray(user?.languagesSpoken)
       ? user.languagesSpoken.join(", ")
       : user?.languagesSpoken || "",
-    learningMaterial: Array.isArray(user?.learningMaterial)
-      ? user.learningMaterial.join(", ")
-      : user?.learningMaterial || "",
-    domain: Array.isArray(user?.domain)
-      ? user.domain.join(", ")
-      : user?.domain || "",
-
-    // advisor-only fields
     specialization: user?.specialization || "",
     qualification: user?.qualification || "",
     experienceYears: user?.experienceYears || "",
@@ -43,8 +36,8 @@ const EditProfileCard = ({ user, onEdit, onClose }) => {
     updateDatatoapi(apiPath, formData, "application/json")
       .then((res) => {
         toast.success("Profile Updated Successfully!");
-        dispatch(Useraction.loginUser(res.data.data)); // Update store with new data
-        onEdit(false);
+        dispatch(Useraction.loginUser(res.data.data));
+        onEdit(true); // Switch back to view mode
       })
       .catch((err) => toast.error(err?.response?.data?.message || "Update Failed"))
       .finally(() => setLoading(false));
@@ -63,7 +56,7 @@ const EditProfileCard = ({ user, onEdit, onClose }) => {
     updateDatatoapi(apiPath, form, "")
       .then((res) => {
         toast.success("Image Updated Successfully!");
-        dispatch(Useraction.loginUser(res.data.data)); // Update store with new image
+        dispatch(Useraction.loginUser(res.data.data));
       })
       .catch((err) => toast.error(err?.response?.data?.message || "Image Upload Failed"))
       .finally(() => setImgLoading(false));
@@ -71,186 +64,135 @@ const EditProfileCard = ({ user, onEdit, onClose }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   return (
-    <div className="profile-card">
-      <div className="closeButton">
-        <button className="close-btn-inner" title="Close" onClick={onClose}>
-          <span style={{ fontSize: '18px', fontWeight: 'bold' }}>✕</span>
+    <div className={`edit-profile-card ${role === 'advisor' ? 'advisor-mode' : 'user-mode'}`}>
+      <div className="action-control-layer">
+        <button className="close-action-modal" title="Close Profile Modal" onClick={onClose}>
+          <span className="close-icon-text">&#10005;</span>
         </button>
-      </div>
-      <div className="editButton">
-        <button className="edit-btn" onClick={() => onEdit(true)}>
-          Cancel
+
+        <button className="back-action-btn" title="Cancel changes and go back" onClick={() => onEdit(true)}>
+          <FaUndo size={14} /> <span>Cancel Changes</span>
         </button>
       </div>
 
-      {/* Header */}
-      <div className="profile-header">
-        <div className="profile-image">
+      {/* Header with Identity */}
+      <div className="edit-header">
+        <div className="edit-image-section">
           {user?.profilepic ? (
-            <img src={user.profilepic} alt="Profile" className="profile-pic" />
+            <img src={user.profilepic} alt="Profile" className="edit-pic" />
           ) : (
-            <FaUserCircle size={80} color="#e0e0e0" />
+            <FaUserCircle size={100} color="#e2e8f0" />
           )}
-          <label className="image-upload-label" title="Change Profile Picture">
-             <input type="file" accept="image/*" onChange={handleImageUpload} style={{ display: 'none' }} disabled={imgLoading}/>
-             <div className="upload-icon-container">
-               {imgLoading ? <span className="loader-ring"></span> : <FaCamera />}
-             </div>
+          <label className="camera-trigger">
+            <input type="file" accept="image/*" onChange={handleImageUpload} style={{ display: 'none' }} disabled={imgLoading}/>
+            {imgLoading ? <div className="loader-ring"></div> : <FaCamera />}
           </label>
         </div>
-        <div className="profile-info">
-          <input
-            type="text"
-            name="fullname"
-            value={formData.fullname}
-            onChange={handleChange}
-            className="input-edit"
-          />
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            className="input-edit"
-          />
+        <div className="header-inputs-grid">
+          <div className="edit-identity-input">
+            <label>Full Name</label>
+            <input
+              type="text"
+              name="fullname"
+              placeholder="Enter your name"
+              value={formData.fullname}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="edit-identity-input email-field">
+            <label>Email Address</label>
+            <input
+              type="email"
+              name="email"
+              placeholder="your@email.com"
+              value={formData.email}
+              onChange={handleChange}
+            />
+          </div>
         </div>
       </div>
 
-      {/* Body */}
-      <div className="session-details">
-        {formData.dob && (
-          <div className="detail-item">
-            <strong>DOB:</strong>
-            <input
-              type="date"
-              name="dob"
-              value={formData.dob}
-              onChange={handleChange}
-              className="input-edit"
-            />
-          </div>
-        )}
-
-        <div className="detail-item">
-          <strong>Phone:</strong>
-          <input
-            type="text"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            className="input-edit"
-          />
-        </div>
-
-        <div className="detail-item">
-          <strong>Gender:</strong>
-          <input
-            type="text"
-            name="gender"
-            value={formData.gender}
-            onChange={handleChange}
-            className="input-edit"
-          />
-        </div>
-
-        <div className="detail-item">
-          <strong>Languages:</strong>
-          <input
-            type="text"
-            name="languagesSpoken"
-            value={formData.languagesSpoken}
-            onChange={handleChange}
-            className="input-edit"
-          />
-        </div>
-
-        <div className="detail-item">
-          <strong>Learning Material:</strong>
-          <input
-            type="text"
-            name="learningMaterial"
-            value={formData.learningMaterial}
-            onChange={handleChange}
-            className="input-edit"
-          />
-        </div>
-
-        <div className="detail-item">
-          <strong>Domain:</strong>
-          <input
-            type="text"
-            name="domain"
-            value={formData.domain}
-            onChange={handleChange}
-            className="input-edit"
-          />
-        </div>
-
-        {/* Advisor fields */}
+      {/* Scrollable Detail Fields */}
+      <div className="scroll-area">
         {role === "advisor" && (
           <>
-            <div className="detail-item">
-              <strong>Specialization:</strong>
+            <div className="field-group">
+              <label>Professional Specialization</label>
               <input
                 type="text"
                 name="specialization"
+                placeholder="e.g. Clinical Psychologist"
                 value={formData.specialization}
                 onChange={handleChange}
-                className="input-edit"
+                className="premium-field"
               />
             </div>
-
-            <div className="detail-item">
-              <strong>Qualification:</strong>
-              <input
-                type="text"
-                name="qualification"
-                value={formData.qualification}
-                onChange={handleChange}
-                className="input-edit"
-              />
-            </div>
-
-            <div className="detail-item">
-              <strong>Experience:</strong>
+            <div className="field-group">
+              <label>Years of Experience</label>
               <input
                 type="number"
                 name="experienceYears"
+                placeholder="e.g. 5"
                 value={formData.experienceYears}
                 onChange={handleChange}
-                className="input-edit"
+                className="premium-field"
               />
             </div>
-
-            <div className="detail-item">
-              <strong>About:</strong>
+            <div className="field-group">
+              <label>Professional Bio</label>
               <textarea
                 name="description"
+                placeholder="Briefly describe your expertise..."
                 value={formData.description}
                 onChange={handleChange}
-                className="input-edit"
+                className="premium-field"
               />
             </div>
           </>
         )}
 
-        {user?.createdAt && (
-          <div className="detail-item">
-            <strong>Joined:</strong> {user.createdAt.slice(0, 10)}
-          </div>
-        )}
+        <div className="field-group">
+          <label>Date of Birth</label>
+          <input
+            type="date"
+            name="dob"
+            value={formData.dob}
+            onChange={handleChange}
+            className="premium-field"
+          />
+        </div>
+
+        <div className="field-group">
+          <label>Contact Phone</label>
+          <input
+            type="text"
+            name="phone"
+            placeholder="+1 (555) 000-0000"
+            value={formData.phone}
+            onChange={handleChange}
+            className="premium-field"
+          />
+        </div>
+
+        <div className="field-group">
+          <label>Gender Identification</label>
+          <input
+            type="text"
+            name="gender"
+            placeholder="e.g. Non-binary"
+            value={formData.gender}
+            onChange={handleChange}
+            className="premium-field"
+          />
+        </div>
       </div>
 
-      {/* Action */}
-      <button className="update-btn" onClick={handleUpdate} disabled={loading}>
-        {loading ? "Updating..." : "Save Updates"}
+      <button className="save-action-btn" onClick={handleUpdate} disabled={loading}>
+        {loading ? "Saving Changes..." : "Save Profile Updates"}
       </button>
     </div>
   );

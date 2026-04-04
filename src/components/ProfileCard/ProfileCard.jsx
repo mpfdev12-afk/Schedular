@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { Useraction } from "../../store/userSlice";
 import { RoleAction } from "../../store/roleSlice";
 import { FaUserCircle, FaPen, FaTimes } from "react-icons/fa";
+import { motion } from "framer-motion";
 import { capitalizeWords } from "../../utils/usableFunctions";
 
 const ProfileCard = ({ user, onEdit, onClose }) => {
@@ -46,25 +47,26 @@ const ProfileCard = ({ user, onEdit, onClose }) => {
   };
 
   return (
-    <div className="profile-card">
-      <div className="closeButton">
-        <button className="close-btn-inner" title="Close" onClick={onClose}>
-          <span style={{ fontSize: '18px', fontWeight: 'bold' }}>✕</span>
+    <div className={`profile-card ${role === 'advisor' ? 'advisor-glow' : 'user-glow'}`}>
+      {/* Top Action Layer */}
+      <div className="profile-actions-header">
+        <button className="close-btn-minimal" title="Close Profile Modal" onClick={onClose}>
+          <span className="close-icon-text">&#10005;</span>
         </button>
-      </div>
-      <div className="editButton">
-        <button className="edit-btn" title="Edit Profile" onClick={() => onEdit(false)}>
-          <FaPen size={12} /> <span style={{fontSize: '12px', fontWeight: '600'}}>Edit</span>
+        <button className="edit-btn-premium" title="Edit Profile" onClick={() => onEdit(false)}>
+          <FaPen className="edit-icon" /> <span>Edit Profile</span>
         </button>
       </div>
 
       {/* Header */}
       <div className="profile-header">
-        <div className="profile-image">
+        <div className="profile-image-container">
           {user?.profilepic ? (
             <img src={user.profilepic} alt="Profile" className="profile-pic" />
           ) : (
-            <FaUserCircle size={80} color="#e0e0e0" />
+            <div className="fallback-avatar">
+              <FaUserCircle size={80} />
+            </div>
           )}
         </div>
         <div className="profile-info">
@@ -76,76 +78,59 @@ const ProfileCard = ({ user, onEdit, onClose }) => {
       {/* Body */}
       <div className="session-details">
         {user?.dob && (
-          <div className="detail-item">
-            <strong>DOB:</strong> {formatDOB(user.dob)}
-          </div>
+          <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }} className="detail-item">
+            <strong>DOB</strong>
+            <span className="detail-value">{formatDOB(user.dob)}</span>
+          </motion.div>
         )}
 
         {user?.contact?.phone && (
-          <div className="detail-item">
-            <strong>Phone:</strong> {user.contact.phone}
-          </div>
+          <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15 }} className="detail-item">
+            <strong>Phone</strong>
+            <span className="detail-value">{user.contact.phone}</span>
+          </motion.div>
         )}
 
         {user?.gender && (
-          <div className="detail-item">
-            <strong>Gender:</strong> {user.gender}
-          </div>
-        )}
-
-        {user?.languagesSpoken && (
-          <div className="detail-item">
-            <strong>Languages:</strong> {formatArrayOrString(user.languagesSpoken)}
-          </div>
+          <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="detail-item">
+            <strong>Gender</strong>
+            <span className="detail-value">{user.gender}</span>
+          </motion.div>
         )}
 
         {/* Advisor Specific Fields */}
         {user?.specialization && (
-          <div className="detail-item">
-            <strong>Specialization:</strong> {user.specialization}
-          </div>
+          <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.25 }} className="detail-item">
+            <strong>Expertise</strong>
+            <span className="detail-value">{user.specialization}</span>
+          </motion.div>
         )}
 
-        {user?.qualification && (
-          <div className="detail-item">
-            <strong>Qualification:</strong> {user.qualification}
-          </div>
+        {user?.experienceYears !== undefined && (
+          <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }} className="detail-item">
+            <strong>Experience</strong>
+            <span className="detail-value">{user.experienceYears} Years</span>
+          </motion.div>
         )}
 
-        {user?.experienceYears && (
-          <div className="detail-item">
-            <strong>Experience:</strong> {user.experienceYears} years
-          </div>
-        )}
-
-        {user?.description && (
-          <div className="detail-item">
-            <strong>About:</strong> {user.description}
-          </div>
-        )}
-
-        {user?.learningMaterial && (
-          <div className="detail-item">
-            <strong>Learning Material:</strong> {formatArrayOrString(user.learningMaterial)}
-          </div>
-        )}
-
-        {user?.domain && (
-          <div className="detail-item">
-            <strong>Domain:</strong> {formatArrayOrString(user.domain)}
-          </div>
+        {user?.domain && user.domain.length > 0 && (
+          <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.35 }} className="detail-item">
+            <strong>Focus Areas</strong>
+            <span className="detail-value">{formatArrayOrString(user.domain)}</span>
+          </motion.div>
         )}
 
         {user?.createdAt && (
-          <div className="detail-item">
-            <strong>Joined:</strong> {user.createdAt.slice(0, 10)}
-          </div>
+          <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4 }} className="detail-item">
+            <strong>Member Since</strong>
+            <span className="detail-value">{user.createdAt.slice(0, 10)}</span>
+          </motion.div>
         )}
       </div>
 
       {/* Action */}
       <button className="logOut" onClick={handleLogout} disabled={loading}>
-        {loading ? "Logging out..." : "LogOut"}
+        {loading ? "Signing out..." : "Log Out"}
       </button>
     </div>
   );

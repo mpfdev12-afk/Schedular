@@ -116,7 +116,7 @@ export default function Login() {
               </div>
 
               <div className="switch-text-premium">
-                Don't have an account? <Link to="/user/Signin">Create one</Link>
+                Don't have an account? <Link to="/user/register">Create one</Link>
               </div>
             </motion.div>
           </AnimatePresence>

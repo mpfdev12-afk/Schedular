@@ -112,7 +112,7 @@ const LoginAdvisor = () => {
               </div>
 
               <div className="switch-text-premium">
-                Ready to join us? <Link to="/advisor/Signin">Register here</Link>
+                Ready to join us? <Link to="/advisor/register">Register here</Link>
               </div>
             </motion.div>
           </AnimatePresence>

@@ -96,7 +96,7 @@ const LandingPage = () => {
               <TiVendorMicrosoft className="icon" /> Sign in with Microsoft
             </button>
             <span>Or</span>
-            <Link className="link" to="/user/Signin">
+            <Link className="link" to="/user/register">
               <HiMail className="icon" />
               Sign Up with Email
             </Link>
