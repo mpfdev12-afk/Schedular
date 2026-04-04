@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { capitalizeWords } from "../../utils/usableFunctions";
 import ProfileCard from "../ProfileCard/ProfileCard";
 import EditProfileCard from "../EditProfileCard/EditProfileCard"
+import { motion, AnimatePresence } from "framer-motion";
 
 const Stats = ({ stats,onEdit }) => {
   const user = useSelector((state) => state.user);
@@ -54,18 +55,33 @@ const Stats = ({ stats,onEdit }) => {
       </div>
 
       {/* Modal for Profile */}
-      {profileShow && (
-        <div className="modal-overlay" onClick={() => {setProfileShow(false);setEdit(true);}}>
-          <div
-            onClick={(e) => e.stopPropagation()} // stop closing when clicking inside
-          >
-            {edit?<ProfileCard user={user} onEdit={handleEditClick} />:<EditProfileCard user={user} onEdit={onHandleCancel} />}
-            <button className="close-btn" onClick={() => setProfileShow(false)}>
-              ✕
-            </button>
+      <AnimatePresence>
+        {profileShow && (
+          <div className="modal-overlay" onClick={() => {setProfileShow(false);setEdit(true);}}>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8, y: -20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.8, y: -20 }}
+              transition={{ duration: 0.25, ease: "easeInOut" }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {edit ? (
+                <ProfileCard 
+                  user={user} 
+                  onEdit={handleEditClick} 
+                  onClose={() => {setProfileShow(false); setEdit(true);}} 
+                />
+              ) : (
+                <EditProfileCard 
+                  user={user} 
+                  onEdit={onHandleCancel} 
+                  onClose={() => {setProfileShow(false); setEdit(true);}} 
+                />
+              )}
+            </motion.div>
           </div>
-        </div>
-      )}
+        )}
+      </AnimatePresence>
     </section>
   );
 };

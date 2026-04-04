@@ -241,15 +241,7 @@ $font-premium: 'Outfit', 'Inter', sans-serif;
     }
   }
 }
-.modal-overlay {
-  background: rgba(0, 0, 0, 0.5);
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
+/* Using global .modal-overlay from index.css */
 
 .modal-content {
   background: #fff;

@@ -44,3 +44,18 @@ body {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.04);
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
+/* Global Modal Overlay (Shared by Navbar and Stats) */
+.modal-overlay {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: flex-start; /* Start from top to prevent clipping */
+  justify-content: center;
+  z-index: 2000;
+  padding: 80px 1.5rem 40px; /* Space for viewport breathing room */
+  overflow-y: auto;
+}
