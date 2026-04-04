@@ -17,6 +17,7 @@ const Navbar = () => {
   const [edit, setEdit] = useState(true);
   const [scrolled, setScrolled] = useState(false);
   const user = useSelector((state) => state.user);
+  const role = useSelector((state) => state.role);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,7 +45,11 @@ const Navbar = () => {
     <>
       <div className={`nav ${scrolled ? "scrolled" : ""}`}>
         {/* Logo & Brand */}
-        <div className="left" onClick={() => navigate("/")}>
+        <div className="left" onClick={() => {
+          if (!user?._id) navigate("/");
+          else if (role === "advisor") navigate("/dashboard");
+          else navigate("/category");
+        }}>
           <div className="logo-wrapper">
             <LiveLogo size={42} />
           </div>

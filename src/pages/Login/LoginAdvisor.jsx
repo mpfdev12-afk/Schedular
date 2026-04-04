@@ -34,7 +34,7 @@ const LoginAdvisor = () => {
       dispatch(Useraction.loginUser(userData));
       dispatch(RoleAction.loginRole("advisor"));
       toast.success("Login Successful");
-      navigate("/");
+      navigate("/dashboard");
     } catch (err) {
       toast.error(err?.message || "Login failed", {
         position: "bottom-center",

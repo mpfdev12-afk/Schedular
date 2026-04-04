@@ -15,6 +15,10 @@ import Stats from "../../components/Stats/Stats";
 import { tableConfigs } from "../../components/Table/tableConfig";
 import { useNavigate } from "react-router-dom";
 import { Positivity } from "../PositivityZone/Positivity";
+import { FaUserCircle } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
+import ProfileCard from "../../components/ProfileCard/ProfileCard";
+import EditProfileCard from "../../components/EditProfileCard/EditProfileCard";
 
 export default function AdvisorDashboard() {
   const [user, setUser] = useState(null);
@@ -39,6 +43,10 @@ export default function AdvisorDashboard() {
   const [isMeetLink, setIsMeetLink] = useState(true);
   const [selectedFields, setSelectedFields] = useState([]);
   const [positivity, setPositivity] = useState(false);
+
+  // Profile Modal State
+  const [profileShow, setProfileShow] = useState(false);
+  const [edit, setEdit] = useState(true);
 
   const navigate = useNavigate();
 
@@ -125,9 +133,22 @@ export default function AdvisorDashboard() {
     setIsMeetLink(config.isMeetLink);
   }, [tab]);
 
+  const [theme, setTheme] = useState(localStorage.getItem("advisor-theme") || "navy");
+
+  useEffect(() => {
+    localStorage.setItem("advisor-theme", theme);
+  }, [theme]);
+
+  const themes = [
+    { id: "navy", color: "#0f172a", name: "Midnight Navy" },
+    { id: "onyx", color: "#050505", name: "Deep Onyx" },
+    { id: "forest", color: "#021f1a", name: "Deep Forest" },
+  ];
+
   return (
-    <div className="dashboard">
+    <div className={`dashboard theme-${theme}`}>
       <Sidebar
+        theme={theme}
         searchText={searchText}
         setSearchText={setSearchText}
         onSelectTab={settab}
@@ -145,7 +166,47 @@ export default function AdvisorDashboard() {
       />
 
       <main className="dashboard-content">
+        <header className="header">
+          <div className="title-area">
+            <h2>{tab} Overview</h2>
+            <p className="muted">Welcome back, {capitalizeWords(user?.fullname || "Advisor")}</p>
+          </div>
+          <div className="header-actions">
+            <div className="theme-workspace-selector" title="Choose Workspace Theme">
+              <select 
+                value={theme} 
+                onChange={(e) => setTheme(e.target.value)}
+                className="theme-dropdown"
+              >
+                {themes.map((t) => (
+                  <option key={t.id} value={t.id}>
+                    {t.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            
+            <div className="live-status-pill">
+              <span className="dot"></span>
+              LIVE HUB
+            </div>
+
+            <div 
+              className="header-profile-avatar" 
+              onClick={() => setProfileShow(true)}
+              title="My Account Profile"
+            >
+              {user?.profilepic ? (
+                <img src={user.profilepic} alt="Profile" className="avatar-img" />
+              ) : (
+                <FaUserCircle size={24} />
+              )}
+            </div>
+          </div>
+        </header>
+
         <Stats
+          onEdit={() => { setProfileShow(true); setEdit(false); }}
           stats={[
             { title: "Total Today's Appointment", value: 2 },
             { title: "Total Upcoming Events", value: 10 },
@@ -210,6 +271,35 @@ export default function AdvisorDashboard() {
           </div>
         </section>
       </main>
+
+      {/* Shared Global Profile Modal */}
+      <AnimatePresence>
+        {profileShow && (
+          <div className="modal-overlay" onClick={() => { setProfileShow(false); setEdit(true); }}>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.85, y: 40 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.85, y: 40 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {edit ? (
+                <ProfileCard 
+                  user={user} 
+                  onEdit={() => setEdit(false)} 
+                  onClose={() => { setProfileShow(false); setEdit(true); }} 
+                />
+              ) : (
+                <EditProfileCard 
+                  user={user} 
+                  onEdit={() => setEdit(true)} 
+                  onClose={() => { setProfileShow(false); setEdit(true); }} 
+                />
+              )}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

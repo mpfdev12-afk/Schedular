@@ -22,7 +22,13 @@ const Home = () => {
     }
   }, [isLoggedIn, role, navigate]);
 
-  return isLoggedIn ? <Category /> : <LandingPage />;
+  if (isLoggedIn) {
+    // Prevent advisor from seeing the user-centric Category page
+    if (role === "advisor") return <Loader />;
+    return <Category />;
+  }
+
+  return <LandingPage />;
 };
 
 export default Home;

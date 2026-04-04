@@ -12,6 +12,10 @@ import { UsertableConfigs } from "../../components/Table/tableConfig";
 import "./UserDashboard.scss";
 import { useNavigate } from "react-router-dom";
 import { Positivity } from "../PositivityZone/Positivity";
+import { FaUserCircle } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
+import ProfileCard from "../../components/ProfileCard/ProfileCard";
+import EditProfileCard from "../../components/EditProfileCard/EditProfileCard";
 
 export default function UserDashboard() {
   const [user, setUser] = useState(null);
@@ -35,6 +39,10 @@ export default function UserDashboard() {
   const [selectedFields, setSelectedFields] = useState([]);
   const [totalData, setTotalData] = useState(0);
   const [positivity, setPositivity] = useState(false);
+
+  // Profile Modal State
+  const [profileShow, setProfileShow] = useState(false);
+  const [edit, setEdit] = useState(true);
 
   const navigate = useNavigate();
 
@@ -109,6 +117,7 @@ export default function UserDashboard() {
   return (
     <div className="user-dashboard">
       <Sidebar
+        theme="pearl"
         searchText={searchText}
         setSearchText={setSearchText}
         onSelectTab={settab}
@@ -125,8 +134,28 @@ export default function UserDashboard() {
       />
 
       <main className="dashboard-content">
-        <header className="header"></header>
+        <header className="header">
+          <div className="title-area">
+            <h2>{tab} Overview</h2>
+            <p className="muted">Welcome back, {capitalizeWords(user?.fullname || "User")}</p>
+          </div>
+          <div className="header-actions">
+            <div 
+              className="header-profile-avatar" 
+              onClick={() => setProfileShow(true)}
+              title="My Account Profile"
+            >
+              {user?.profilepic ? (
+                <img src={user.profilepic} alt="Profile" className="avatar-img" />
+              ) : (
+                <FaUserCircle size={24} />
+              )}
+            </div>
+          </div>
+        </header>
+
         <Stats
+          onEdit={() => { setProfileShow(true); setEdit(false); }}
           stats={[
             { title: "Total Today's Appointment", value: 2 },
             { title: "Total Upcoming Events", value: 10 },
@@ -199,6 +228,35 @@ export default function UserDashboard() {
           </div>
         </section>
       </main>
+
+      {/* Shared Global Profile Modal */}
+      <AnimatePresence>
+        {profileShow && (
+          <div className="modal-overlay" onClick={() => { setProfileShow(false); setEdit(true); }}>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.85, y: 40 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.85, y: 40 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {edit ? (
+                <ProfileCard 
+                  user={user} 
+                  onEdit={() => setEdit(false)} 
+                  onClose={() => { setProfileShow(false); setEdit(true); }} 
+                />
+              ) : (
+                <EditProfileCard 
+                  user={user} 
+                  onEdit={() => setEdit(true)} 
+                  onClose={() => { setProfileShow(false); setEdit(true); }} 
+                />
+              )}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

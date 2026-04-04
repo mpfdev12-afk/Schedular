@@ -1,176 +1,198 @@
-/* Place this in src/styles/advisorDashboard.scss */
-$primary: #2563eb;
-$light-gray: #f6f9fb;
-$text: #1f2937;
-$card-shadow: 0 8px 20px rgba(18, 33, 73, 0.04);
+/* Premium Glassmorphic Table Styling */
+$primary-glow: #3b82f6;
+$glass-bg: rgba(255, 255, 255, 0.05);
+$glass-border: rgba(255, 255, 255, 0.08);
+$text-light: #f8fafc;
+$text-muted: #94a3b8;
 
 .main-card {
-      background: #fff;
-      padding: 15px;
-      border-radius: 10px;
-      box-shadow: $card-shadow;
+  background: $glass-bg;
+  backdrop-filter: blur(24px);
+  padding: 24px;
+  border-radius: 24px;
+  border: 1px solid $glass-border;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+  overflow: hidden; // Header stays fixed, body scrolls
+  color: $text-light;
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+
+    h3 {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .small {
+      font-size: 0.85rem;
+      color: $text-muted;
+    }
+
+    .controls {
       display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      height: 80vh;
-      overflow: scroll;
+      gap: 12px;
+      align-items: center;
 
-      .section-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 12px;
+      select {
+        background: rgba(255, 255, 255, 0.05);
+        color: #fff;
+        padding: 8px 12px;
+        border-radius: 10px;
+        border: 1px solid $glass-border;
+        outline: none;
+        cursor: pointer;
 
-        h3 {
-          margin: 0;
-        }
-
-        .small {
-          font-size: 12px;
-          color: #64748b;
-        }
-
-        .controls {
-          display: flex;
-          gap: 8px;
-          align-items: center;
-
-          select {
-            padding: 6px 8px;
-            border-radius: 6px;
-            border: 1px solid #e6edf5;
-          }
-
-          .link {
-            background: none;
-            border: none;
-            color: $primary;
-            cursor: pointer;
-          }
-        }
-      }
-      .no-content {
-        text-align: center;
-        color: #94a3b8;
-        font-size: 15px;
-        margin-top: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 50vh;
-        width: 100%;
+        option { background: #1e293b; }
       }
 
-      .main-table {
-        width: 100%;
-        border-collapse: collapse;
-        max-height: 55vh;
-        tr{
-          height: 50px;
-        }:hover{
-          cursor: pointer;
-        }
-        th {
-          text-align: center;
-          padding: 8px 6px;
-          color: #94a3b8;
-          font-weight: 600;
-          font-size: 13px;
-        }
-        .prof-pic{
-          padding: 10px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        td {
-          padding: 20px 6px;
-          border-top: 1px solid #eef3f8;
-          //vertical-align: top;
-          font-size: 15px;
-
-          img{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            height: 40px;
-            width: 40px;
-            object-fit: cover;
-            border-radius: 100%;
-          }
-        }
-
-        tr.selected {
-          background: #f8fbff;
-        }
-
-        .patient-name {
-          font-weight: 600;
-        }
-
-        .muted.small {
-          color: #64748b;
-          font-size: 12px;
-        }
-
-        .center {
-          text-align: center;
-
-          .join {
-            background-color: $light-gray;
-            color: $text;
-            border: none;
-            text-decoration: none;
-            border-radius: 8px;
-            padding: 8px 16px;
-            cursor: pointer;
-
-            &:hover {
-              background-color: $primary;
-              color: white;
-            }
-          }
-        }
-
-        .priority {
-          padding: 4px 8px;
-          border-radius: 999px;
-          color: #fff;
-          font-size: 12px;
-
-          &.low {
-            background: #16a34a;
-          }
-
-          &.medium {
-            background: #f59e0b;
-          }
-
-          &.high {
-            background: #ef4444;
-          }
-        }
-      }
-
-      .patient-detail {
-        margin-top: 10px;
-        padding: 10px;
-        background: #fbfdff;
-        border-radius: 8px;
-
-        .small {
-          font-size: 12px;
-          color: #64748b;
-        }
-      }
-
-      .pagenav{
+      .link {
+        color: $primary-glow;
+        font-weight: 600;
+        cursor: pointer;
+        background: none;
         border: none;
-        background:none;
+        &:hover { text-decoration: underline; }
       }
     }
-    /* modal.scss */
+  }
 
+  .no-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: $text-muted;
+    font-size: 1rem;
+    gap: 12px;
+    
+    &::before {
+      content: '📭';
+      font-size: 3rem;
+      opacity: 0.5;
+    }
+  }
+
+  .table-container {
+    flex: 1;
+    overflow-y: auto;
+    
+    &::-webkit-scrollbar { width: 6px; }
+    &::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+    }
+  }
+
+  .main-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+
+    th {
+      text-align: left;
+      padding: 12px;
+      color: $text-muted;
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid $glass-border;
+    }
+
+    tr {
+      transition: all 0.2s ease;
+      &:hover td {
+        background: rgba(255, 255, 255, 0.03);
+      }
+    }
+
+    td {
+      padding: 16px 12px;
+      font-size: 0.95rem;
+      color: #cbd5e1;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+
+      img {
+        height: 42px;
+        width: 42px;
+        object-fit: cover;
+        border-radius: 12px;
+        border: 2px solid rgba(255, 255, 255, 0.1);
+      }
+    }
+
+    .patient-name {
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .muted.small {
+      color: $text-muted;
+      font-size: 0.8rem;
+    }
+
+    .center {
+      text-align: center;
+      .join {
+        background: rgba($primary-glow, 0.15);
+        color: $primary-glow;
+        border: 1px solid rgba($primary-glow, 0.3);
+        padding: 8px 18px;
+        border-radius: 10px;
+        font-weight: 700;
+        font-size: 0.85rem;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+
+        &:hover {
+          background: $primary-glow;
+          color: #fff;
+          box-shadow: 0 0 15px rgba($primary-glow, 0.4);
+          transform: translateY(-2px);
+        }
+      }
+    }
+
+    .priority {
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+
+      &.low { background: rgba(34, 197, 94, 0.2); color: #4ade80; }
+      &.medium { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+      &.high { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+    }
+  }
+
+  .pagenav {
+    background: transparent;
+    border: 1px solid $glass-border;
+    color: #fff;
+    padding: 6px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    &:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+  }
+}

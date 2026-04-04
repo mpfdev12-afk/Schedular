@@ -33,7 +33,22 @@ const EditProfileCard = ({ user, onEdit, onClose }) => {
     setLoading(true);
     const apiPath = role === "advisor" ? "/advisors/updateProfile" : "/users/updateProfile";
 
-    updateDatatoapi(apiPath, formData, "application/json")
+    // Prepare data for backend (role-aware nesting)
+    const submissionData = {
+      ...formData,
+      "contact[phone]": formData.phone,
+      "contact[email]": formData.email,
+      experienceYears: Number(formData.experienceYears) || 0,
+      languagesSpoken: formData.languagesSpoken
+        .split(",")
+        .map((s) => s.trim())
+        .filter((s) => s !== ""),
+    };
+
+    // Clean up flat phone/email if needed (backend uses contact object)
+    delete submissionData.phone;
+
+    updateDatatoapi(apiPath, submissionData, "application/json")
       .then((res) => {
         toast.success("Profile Updated Successfully!");
         dispatch(Useraction.loginUser(res.data.data));
