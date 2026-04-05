@@ -9,6 +9,7 @@ import {
   DetoxIcon,
 } from "../../components/DomainIcons/DomainIcons";
 import { FEATURES } from "../../config/featureFlags";
+import StepIndicator from "../../components/StepIndicator/StepIndicator";
 
 const Category = () => {
   const navigate = useNavigate();
@@ -68,6 +69,9 @@ const Category = () => {
 
   return (
     <div className="Category">
+      <header className="category-header">
+        <StepIndicator currentStep={1} />
+      </header>
       <div className="category-hero">
         <div className="hero-topline">
           <span className="hero-eyebrow">Your wellness hub</span>

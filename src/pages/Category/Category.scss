@@ -7,8 +7,16 @@
     padding: 10px 1.5rem 2rem;
     /* Ensures clearance from the fixed 80px navbar */
     position: relative;
-    overflow-x: hidden;
     gap: 1.5rem;
+
+    .category-header {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 1rem;
+        z-index: 10;
+        position: relative;
+    }
 
     /* ─── Ambient gradient orbs ─── */
     &::before,

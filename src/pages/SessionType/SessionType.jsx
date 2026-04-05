@@ -33,6 +33,8 @@ const DOMAIN_CONFIG = {
   }
 };
 
+import StepIndicator from "../../components/StepIndicator/StepIndicator";
+
 const SessionType = () => {
   const navigate = useNavigate();
   const { category } = useParams();
@@ -98,10 +100,12 @@ const SessionType = () => {
       <BackButton />
       
       <header className="session-header">
+        <StepIndicator currentStep={2} category={category} />
         <span className="domain-pill" style={{ color: config.color, borderColor: config.color }}>
           {config.subtitle}
         </span>
         <h1>{config.title}</h1>
+
         <p className="session-desc">{config.description}</p>
       </header>
       

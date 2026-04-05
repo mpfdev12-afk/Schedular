@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import "./QuickAppointment.scss";
 import {
   deleteDataFromApi,
@@ -9,6 +9,20 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import BackButton from "../../components/BackButton/BackButton";
+import { motion, AnimatePresence } from "framer-motion";
+import { 
+  MentalIcon, 
+  PhysicalIcon, 
+  FinancialIcon,
+  DetoxIcon
+} from "../../components/DomainIcons/DomainIcons";
+
+const ICONS = {
+  mental: <MentalIcon />,
+  physical: <PhysicalIcon />,
+  financial: <FinancialIcon />,
+  detox: <DetoxIcon />
+};
 
 const QuickAppointment = () => {
   const { category, topic } = useParams();
@@ -18,6 +32,10 @@ const QuickAppointment = () => {
   const [meetLink, setMeetLink] = useState("#");
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
+
+  const domainIcon = useMemo(() => {
+    return ICONS[category?.toLowerCase()] || <MentalIcon />;
+  }, [category]);
 
   const handleQuick = () => {
     setStatus("pending");
@@ -71,54 +89,96 @@ const QuickAppointment = () => {
     return () => clearInterval(interval);
   }, [status, quickAppointment]);
 
+  const containerVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+  };
+
   return (
-    <div className="quick-appointment-container">
+    <motion.div 
+      className={`quick-appointment theme-${category?.toLowerCase()}`}
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}
+    >
+      <div className="bg-glow" />
       <BackButton />
-      {status === "idle" && (
-        <div className="initial-view">
-          <h2>Quick Appointment</h2>
-          <p>Click below to find an advisor instantly.</p>
-          <button className="btn-generate" onClick={handleQuick}>
-            Generate Quick Session Request
-          </button>
-        </div>
-      )}
 
-      {status === "pending" && (
-        <div className="loading-view">
-          <h2>Finding the Right Advisor for You...</h2>
-          <p>Please wait while we search for a match based on your needs.</p>
-
-          <div className="loading-animation">
-            <div className="dot dot1" />
-            <div className="dot dot2" />
-            <div className="dot dot3" />
-          </div>
-
-          <p className="tip">
-            💡 Tip: Ensure your profile is complete for faster matches!
-          </p>
-          <button className="btn-cancel" onClick={handleCancel}>
-            Cancel Quick Appointment
-          </button>
-        </div>
-      )}
-
-      {status === "confirmed" && (
-        <div className="confirmed-view">
-          <h2>🎉 Appointment Confirmed!</h2>
-          <p>Your meeting link is ready:</p>
-          <a
-            href={meetLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="meet-link"
+      <AnimatePresence mode="wait">
+        {status === "idle" && (
+          <motion.div 
+            key="idle"
+            className="view-container initial-view"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
           >
-            Join Meeting
-          </a>
-        </div>
-      )}
-    </div>
+            <div className="icon-main">{domainIcon}</div>
+            <h2>Immediate Rapid Guidance</h2>
+            <p>Need urgent clarity? Generate a request for an instant 15-minute 1-on-1 session with an available expert.</p>
+            <button className="btn-generate glass-card" onClick={handleQuick}>
+              Find an Expert Now
+            </button>
+          </motion.div>
+        )}
+
+        {status === "pending" && (
+          <motion.div 
+            key="pending"
+            className="view-container loading-view"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <div className="pulse-container">
+              <motion.div 
+                className="pulse-ring" 
+                animate={{ scale: [1, 1.5, 2], opacity: [0.5, 0.2, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
+              <div className="icon-center">{domainIcon}</div>
+            </div>
+            <h2>Searching for your Expert...</h2>
+            <p>Matching you with an available {category} specialized professional for your topic.</p>
+
+            <div className="status-badge glass-card">
+              <span className="dot animate-pulse" /> Connecting to network...
+            </div>
+
+            <button className="btn-cancel" onClick={handleCancel}>
+              Cancel Request
+            </button>
+          </motion.div>
+        )}
+
+        {status === "confirmed" && (
+          <motion.div 
+            key="confirmed"
+            className="view-container confirmed-view"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <div className="success-icon">🎉</div>
+            <h2>Match Found!</h2>
+            <div className="confirmed-card glass-card">
+              <p>Your session for <span>{topic?.replace("-", " ")}</span> is ready.</p>
+              <div className="info-row">
+                <span>Duration:</span> <strong>15 Minutes</strong>
+              </div>
+              <a
+                href={meetLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-join glass-card"
+              >
+                Join Meeting Now
+              </a>
+            </div>
+            <p className="notice">The link has been opened in a new tab.</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
 };
 

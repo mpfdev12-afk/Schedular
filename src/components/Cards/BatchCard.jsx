@@ -9,6 +9,7 @@ import {
 } from "../../utils/usableFunctions";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const formatTime = (time) => {
   const hours = Math.floor(time / 100);
@@ -34,10 +35,7 @@ const BatchCard = ({ batch }) => {
     attendees = [],
   } = batch;
 
-  const dayNames = weekdays;
-
   const navigate = useNavigate();
-
   const userId = useSelector((state) => state?.user?._id);
 
   const joinBatch = () => {
@@ -49,54 +47,71 @@ const BatchCard = ({ batch }) => {
 
     sendDataToapi(url, {}, "application/json", params)
       .then((res) => {
-        console.log("Batch joined:", res.data);
-        toast.success("Batch Joined SuccessFully!");
+        toast.success("Batch Joined Successfully!");
         navigate("/dashboard");
       })
       .catch((err) => {
-        toast.error("Join Batch Failed!", err);
+        toast.error("Join Batch Failed!");
         console.error("Join batch failed:", err);
       });
   };
 
+  const isFull = attendees.length >= maxAttendee;
+
   return (
-    <div className="batch-card">
-      <div className="left">
-        <img src={advisorId.profilepic} alt="" />
-      </div>
-      <div className="right">
-        <div className="header">
-          <h3>{`${advisorId.title} ${capitalizeWords(advisorId.fullname)}`}</h3>
-          <p>{advisorId.email}</p>
+    <motion.div 
+      className={`batch-card glass-card theme-${domain?.toLowerCase()}`}
+      whileHover={{ y: -5 }}
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+    >
+      <div className="batch-header">
+        <div className="advisor-info">
+          <img src={advisorId.profilepic || "/no-profile.jpg"} alt={advisorId.fullname} className="advisor-avatar" />
+          <div className="advisor-details">
+            <h4>{`${advisorId.title || ""} ${capitalizeWords(advisorId.fullname)}`}</h4>
+            <span className="domain-label">{capitalizeWords(domain)} Expert</span>
+          </div>
         </div>
-        <p>
-          <strong>Starting From:</strong> {formatDateToDDMMYYYY(startDate)}
-        </p>
-        <p>
-          <strong>Day:</strong> {weekDay}
-        </p>
-        <p>
-          <strong>Slot Time:</strong> {`${slotTime.start}-${slotTime.end}`}
-        </p>
-        <p>
-          <strong>Slot Available:</strong> {attendees.length}/{maxAttendee}
-        </p>
-        {description && (
-          <p>
-            <strong>Description:</strong> {description}
-          </p>
-        )}
-        <div className="bottom">
-          <a
-            rel="noopener noreferrer"
-            className="join-link"
-            onClick={joinBatch}
-          >
-            Join Batch
-          </a>
+        <div className="batch-status">
+          <span className={`status-pill ${isFull ? "full" : "available"}`}>
+            {isFull ? "Batch Full" : `${maxAttendee - attendees.length} Slots Left`}
+          </span>
         </div>
       </div>
-    </div>
+
+      <div className="batch-content">
+        <h3 className="topic-title">{capitalizeWords(topic)}</h3>
+        <p className="description">{description || "Dive deep into this topic with guided group instruction and shared learning."}</p>
+        
+        <div className="info-grid">
+          <div className="info-item">
+            <span className="label">Starts On</span>
+            <span className="value">{formatDateToDDMMYYYY(startDate)}</span>
+          </div>
+          <div className="info-item">
+            <span className="label">Weekly Day</span>
+            <span className="value">{weekDay}</span>
+          </div>
+          <div className="info-item">
+            <span className="label">Timing</span>
+            <span className="value">{`${slotTime.start} - ${slotTime.end}`}</span>
+          </div>
+          <div className="info-item">
+            <span className="label">Community</span>
+            <span className="value">{attendees.length} Members</span>
+          </div>
+        </div>
+
+        <button 
+          className={`join-btn ${isFull ? "disabled" : ""}`}
+          onClick={joinBatch}
+          disabled={isFull}
+        >
+          {isFull ? "Registration Closed" : "Join this Batch"}
+        </button>
+      </div>
+    </motion.div>
   );
 };
 

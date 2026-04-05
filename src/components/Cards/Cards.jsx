@@ -2,6 +2,7 @@ import React from "react";
 import "./Cards.scss";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { motion } from "framer-motion";
 
 const Cards = ({ advisor }) => {
   const navigate = useNavigate();
@@ -10,6 +11,7 @@ const Cards = ({ advisor }) => {
   const goToCalender = () => {
     navigate(`${advisor._id}/${user?._id}`, { state: { advisor } });
   };
+
   function capitalizeWords(str) {
     if (!str) return "";
     return str
@@ -19,64 +21,60 @@ const Cards = ({ advisor }) => {
   }
 
   const fullName = `${advisor.title || ""} ${advisor.fullname}`;
-  const specialization = advisor.specialization || "";
-  const experience = advisor.experienceYears || "N/A";
-  const qualification = advisor.qualification || "";
+  const specialization = advisor.specialization || "Expert Advisor";
+  const experience = advisor.experienceYears || "5+";
+  const qualification = advisor.qualification || "Certified Professional";
   const languages = Array.isArray(advisor.languagesSpoken)
     ? advisor.languagesSpoken.join(", ")
-    : advisor.languagesSpoken;
-
-  const workingDays =
-    advisor.availability?.workingDays?.startDay !== undefined &&
-    advisor.availability?.workingDays?.endDay !== undefined
-      ? `Day ${advisor.availability.workingDays.startDay} - Day ${advisor.availability.workingDays.endDay}`
-      : "Not Available";
-
-  const formatTime = (time) => {
-    if (!time) return "";
-    const h = Math.floor(time / 100);
-    const m = time % 100;
-    const suffix = h >= 12 ? "PM" : "AM";
-    const hour12 = h % 12 === 0 ? 12 : h % 12;
-    return `${hour12}:${m.toString().padStart(2, "0")} ${suffix}`;
-  };
-
-  const slotStart = formatTime(advisor.availability?.slotStartTime);
-  const slotEnd = formatTime(advisor.availability?.slotEndTime);
-  const timeRange =
-    slotStart && slotEnd ? `${slotStart} - ${slotEnd}` : "Not Available";
+    : advisor.languagesSpoken || "English";
 
   return (
-    <div className="cards">
-      <div className="card-container">
-        <div className="left-section">
-          <div className="avatar">
+    <motion.div 
+      className={`advisor-card glass-card theme-${advisor.domain?.toLowerCase()}`}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      whileHover={{ y: -8, scale: 1.01 }}
+      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+    >
+      <div className="card-inner">
+        <div className="profile-section">
+          <div className="avatar-wrapper">
             <img
               src={advisor.profilepic || "/no-profile.jpg"}
               alt={advisor.fullname}
+              className="advisor-img"
             />
+            <div className="status-indicator online" />
           </div>
+          <div className="domain-tag">{capitalizeWords(advisor.domain)}</div>
         </div>
-        <div className="right-section">
-          <h2>{capitalizeWords(fullName)}</h2>
-          <p className="speciality">
-            {specialization} | <span>{experience} years</span>
-          </p>
-          <hr className="divider" />
-          <div className="details">
-            <p className="qualification">{qualification}</p>
-            <p>{languages}</p>
-            {/* <p>{advisor.description}</p> */}
+
+        <div className="content-section">
+          <div className="card-header">
+            <h3>{capitalizeWords(fullName)}</h3>
+            <p className="specialization">{specialization}</p>
           </div>
-          <div className="timing">
-            <span className="days">{capitalizeWords(advisor.domain)}</span>
+
+          <div className="metrics">
+            <div className="metric-item">
+              <span className="label">Experience</span>
+              <span className="value">{experience} Years</span>
+            </div>
+            <div className="metric-item">
+              <span className="label">Languages</span>
+              <span className="value">{languages}</span>
+            </div>
           </div>
+
+          <p className="qualification-text">{qualification}</p>
+
           <button className="book-btn" onClick={goToCalender}>
-            Book Appointment
+            Book 1-on-1 Session
+            <span className="arrow">→</span>
           </button>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

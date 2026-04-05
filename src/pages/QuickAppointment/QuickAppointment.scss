@@ -1,86 +1,234 @@
-.quick-appointment-container {
+.quick-appointment {
+  --accent-color: var(--color-mental);
+  --accent-glow: var(--color-mental-glow);
+  
+  min-height: calc(100vh - 80px);
+  padding: 100px 1.5rem 80px;
   position: relative;
-  text-align: center;
-  padding: 100px 2rem 2rem; // padding-top to clear Navbar
-  max-width: 800px;
-  min-height: 80vh;
-  margin: 40px auto;
-  align-items: center;
-  justify-content: center;
+  overflow-x: hidden;
   display: flex;
-  background: white;
-  border-radius: 28px;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.04);
+  justify-content: center;
+  align-items: center;
 
-  h2 {
-    margin-bottom: 0.5rem;
-    color: #333;
+  &.theme-mental { --accent-color: var(--color-mental); --accent-glow: var(--color-mental-glow); }
+  &.theme-physical { --accent-color: var(--color-physical); --accent-glow: var(--color-physical-glow); }
+  &.theme-financial { --accent-color: var(--color-financial); --accent-glow: var(--color-financial-glow); }
+  &.theme-detox { --accent-color: var(--color-mindfulness); --accent-glow: var(--color-mindfulness-glow); }
+
+  .bg-glow {
+    position: fixed;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+    filter: blur(80px);
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.4;
   }
 
-  p {
+  .view-container {
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+
+    h2 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--color-text-main);
+      margin: 0;
+      letter-spacing: -0.02em;
+    }
+
+    p {
+      color: var(--color-text-muted);
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin: 0;
+    }
+  }
+
+  .icon-main {
+    width: 120px;
+    height: 120px;
     margin-bottom: 1rem;
-    color: #555;
-  }
+    animation: float 4s ease-in-out infinite;
 
-  .btn-generate,
-  .btn-cancel {
-    padding: 0.7rem 1.5rem;
-    font-size: 1rem;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-top: 1rem;
+    svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 10px 20px var(--accent-glow));
+    }
   }
 
   .btn-generate {
-    background: #4cafef;
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+    font-weight: 700;
     color: white;
+    background: var(--accent-color);
+    border: none;
+    border-radius: 100px;
+    cursor: pointer;
+    box-shadow: 0 15px 35px var(--accent-glow);
+    transition: all 0.3s ease;
+
     &:hover {
-      background: #3498db;
+      transform: translateY(-5px);
+      box-shadow: 0 20px 45px var(--accent-glow);
+    }
+  }
+
+  /* ─── Loading View Pulse ─── */
+  .pulse-container {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+
+    .icon-center {
+      width: 80px;
+      height: 80px;
+      z-index: 2;
+      svg {
+        width: 100%;
+        height: 100%;
+        filter: drop-shadow(0 0 15px var(--accent-glow));
+      }
+    }
+
+    .pulse-ring {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 3px solid var(--accent-color);
+      z-index: 1;
+    }
+  }
+
+  .status-badge {
+    padding: 0.6rem 1.2rem;
+    border-radius: 99px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--color-text-main);
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      background: #10b981;
+      border-radius: 50%;
+      
+      &.animate-pulse {
+        animation: pulseDot 1.5s infinite;
+      }
     }
   }
 
   .btn-cancel {
-    background: #ff4c4c;
-    color: white;
+    background: transparent;
+    border: 1px solid rgba(0,0,0,0.1);
+    padding: 0.6rem 1.5rem;
+    border-radius: 12px;
+    color: var(--color-text-muted);
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: all 0.2s;
+
     &:hover {
-      background: #e63939;
+      background: rgba(239, 68, 68, 0.05);
+      color: #ef4444;
+      border-color: #ef4444;
     }
   }
 
-  .loading-animation {
+  /* ─── Confirmed Success View ─── */
+  .success-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    animation: bounce 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .confirmed-card {
+    width: 100%;
+    padding: 2rem;
+    border-radius: 24px;
+    background: white;
     display: flex;
-    justify-content: center;
-    margin: 1rem 0;
-    .dot {
-      width: 12px;
-      height: 12px;
-      margin: 0 5px;
-      border-radius: 50%;
-      background-color: #4cafef;
-      animation: bounce 0.6s infinite alternate;
+    flex-direction: column;
+    gap: 1.25rem;
+
+    p {
+      span {
+        color: var(--accent-color);
+        font-weight: 700;
+        text-transform: capitalize;
+      }
     }
-    .dot1 { animation-delay: 0s; }
-    .dot2 { animation-delay: 0.2s; }
-    .dot3 { animation-delay: 0.4s; }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem;
+      background: rgba(0,0,0,0.02);
+      border-radius: 12px;
+      font-size: 1rem;
+      color: var(--color-text-muted);
+
+      strong {
+        color: var(--color-text-main);
+      }
+    }
+
+    .btn-join {
+      background: var(--accent-color);
+      color: white;
+      padding: 1rem;
+      border-radius: 14px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.1rem;
+      box-shadow: 0 10px 30px var(--accent-glow);
+    }
   }
 
-  .meet-link {
-    display: inline-block;
-    background: #27ae60;
-    color: white;
-    padding: 0.8rem 1.5rem;
-    border-radius: 8px;
-    text-decoration: none;
-    &:hover {
-      background: #219150;
-      cursor: pointer;
-    }
+  .notice {
+    font-size: 0.9rem !important;
+    opacity: 0.7;
   }
 }
 
+@keyframes pulseDot {
+  0% { transform: scale(0.8); opacity: 0.5; }
+  100% { transform: scale(1.3); opacity: 1; }
+}
+
 @keyframes bounce {
-  to {
-    transform: translateY(-8px);
+  0% { transform: scale(0); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+@media (max-width: 480px) {
+  .quick-appointment {
+    .view-container h2 {
+      font-size: 1.8rem;
+    }
   }
 }
