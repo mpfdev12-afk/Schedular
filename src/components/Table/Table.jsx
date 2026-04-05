@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { capitalizeWords, formatIfDate } from "../../utils/usableFunctions";
 import "./Table.scss";
 import { toast } from "react-toastify";
@@ -34,6 +34,11 @@ export default function Table({
   const [cardShow,setCardShow] = useState(false);
   const [id,setId] = useState(null);
   const [activeBatchChat, setActiveBatchChat] = useState(null);
+
+  // Auto-close chat when section switches
+  useEffect(() => {
+    setActiveBatchChat(null);
+  }, [tableTitle, TableContent]);
   const handleQuickJoin = async (id) => {
     try {
       await updateDatatoapi(

@@ -14,6 +14,10 @@ import CalendarCard from "../../components/Cards/CalendarCard";
 import Stats from "../../components/Stats/Stats";
 import { tableConfigs } from "../../components/Table/tableConfig";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Useraction } from "../../store/userSlice";
+import { RoleAction } from "../../store/roleSlice";
+
 import { Positivity } from "../PositivityZone/Positivity";
 import { FaUserCircle } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
@@ -21,6 +25,7 @@ import ProfileCard from "../../components/ProfileCard/ProfileCard";
 import EditProfileCard from "../../components/EditProfileCard/EditProfileCard";
 
 export default function AdvisorDashboard() {
+  const dispatch = useDispatch();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
   const [tableData, setTableData] = useState([]);
@@ -53,7 +58,12 @@ export default function AdvisorDashboard() {
   useEffect(() => {
     setLoading(true);
     fetchDataFromApi("/advisors/getloggedinAdvisor")
-      .then((res) => setUser(res?.data))
+      .then((res) => {
+        setUser(res?.data);
+        // Sync with Redux to trigger Socket initialization
+        dispatch(Useraction.loginUser(res?.data));
+        dispatch(RoleAction.loginRole("advisor"));
+      })
       .catch((err) => console.log(err))
       .finally(() => setLoading(false));
   }, []);
