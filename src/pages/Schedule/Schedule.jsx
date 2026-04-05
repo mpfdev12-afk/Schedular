@@ -118,7 +118,7 @@ const Schedule = ({}) => {
         </label>
         <label>
           Topic:
-          <input value={topic} name={topic} disabled></input>
+          <input value={capitalizeWords(topic || formData.topic)} name="topic" disabled />
         </label>
 
         <label>

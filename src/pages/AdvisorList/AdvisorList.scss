@@ -1,7 +1,110 @@
-.list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  overflow-y: scroll;
+@use "../../index.css" as *;
+
+.advisor-list-container {
+  padding: 80px 4% 40px;
+  min-height: 100vh;
+  background: radial-gradient(circle at 10% 10%, rgba(167, 243, 208, 0.15) 0%, transparent 40%),
+              radial-gradient(circle at 90% 90%, rgba(186, 230, 253, 0.15) 0%, transparent 40%);
+
+  .discovery-header {
+    margin-bottom: 48px;
+    text-align: left;
+    max-width: 800px;
+    animation: fadeInSlide 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+
+    .domain-badge {
+      display: inline-block;
+      padding: 6px 14px;
+      background: rgba(16, 185, 129, 0.1);
+      color: #059669;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+      border: 1px solid rgba(16, 185, 129, 0.1);
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: #1e293b;
+      margin-bottom: 12px;
+      line-height: 1.1;
+    }
+
+    p {
+      color: #64748b;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+  }
+
+  .list-loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 100px 0;
+    color: #94a3b8;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    
+    &::after {
+      content: "...";
+      animation: dots 1.5s infinite;
+    }
+  }
+
+  .list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 32px;
+    animation: staggerFadeIn 0.8s ease-out forwards;
+  }
+
+  .empty-state {
+    padding: 60px;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    text-align: center;
+    color: #64748b;
+    font-size: 1.1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+  }
 }
 
+@keyframes dots {
+  0% { content: "."; }
+  33% { content: ".."; }
+  66% { content: "..."; }
+}
+
+@keyframes fadeInSlide {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes staggerFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsiveness */
+@media (max-width: 640px) {
+  .advisor-list-container {
+    padding-top: 100px;
+    
+    .discovery-header {
+      h1 { font-size: 2rem; }
+      p { font-size: 1rem; }
+    }
+
+    .list {
+      grid-template-columns: 1fr;
+    }
+  }
+}
