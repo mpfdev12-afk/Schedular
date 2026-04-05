@@ -36,13 +36,10 @@ export default function BatchCoopCard({ batch }) {
             </div>
           </div>
 
-          <button 
-            className="chat-toggle-btn" 
-            onClick={() => setShowChat(true)}
-          >
+          <div className="chat-hint">
             <FiMessageSquare className="icon" />
-            <span>Open Batch Chat</span>
-          </button>
+            <span>Join the conversation! Access the <strong>Live Batch Chat</strong> from the table below.</span>
+          </div>
         </div>
 
         <div className="vessel-container">

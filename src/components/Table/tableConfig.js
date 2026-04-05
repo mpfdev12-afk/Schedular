@@ -15,7 +15,7 @@ export const UsertableConfigs = {
       isMeetLink: true,
     },
     Batches: {
-      header: ["Batch Advisor", "Domain","Topic", "Start Date", "Week Day","Slot Start Time"],
+      header: ["Batch Advisor", "Domain","Topic", "Start Date", "Week Day","Slot Start Time", "Chat"],
       fields: ["advisorId fullname", "domain","topic", "startDate", "weekDay","slotTime start"],
       title: "Batches",
       empty: "No Batches found",
@@ -54,7 +54,7 @@ export const tableConfigs = {
       isMeetLink: true,
     },
     Batches: {
-      header: ["Week Day","Total Attendees","Topic", "Start Date","Slot Start Time"],
+      header: ["Week Day","Total Attendees","Topic", "Start Date","Slot Start Time", "Chat"],
       fields: ["weekDay","attendees length","topic", "startDate" ,"slotTime start"],
       title: "Batches",
       empty: "No Batches found",

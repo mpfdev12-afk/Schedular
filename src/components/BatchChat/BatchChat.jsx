@@ -12,6 +12,7 @@ export default function BatchChat({ batchId, batchTitle, onClose }) {
   const [loading, setLoading] = useState(true);
   const { socket } = useSocket();
   const user = useSelector((state) => state.user);
+  const role = useSelector((state) => state.role);
   const scrollRef = useRef();
 
   // 1. Fetch History on Mount
@@ -30,17 +31,26 @@ export default function BatchChat({ batchId, batchTitle, onClose }) {
 
     loadHistory();
 
-    // 2. Join Socket Room
-    if (socket) {
-      socket.emit("join_batch", batchId);
-
-      // 3. Listen for Incoming Messages
-      socket.on("receive_message", (newMessage) => {
-        setMessages((prev) => [...prev, newMessage]);
+    // 2. Join Socket Room with Identity
+    if (socket && user?._id) {
+      socket.emit("join_batch", { 
+        batchId, 
+        userId: user._id, 
+        role: role 
       });
 
+      // 3. Listen for Incoming Messages (Isolated by BatchId)
+      const handleIncomingMessage = (newMessage) => {
+        if (newMessage.batchId === batchId) {
+          setMessages((prev) => [...prev, newMessage]);
+        }
+      };
+
+      socket.on("receive_message", handleIncomingMessage);
+
       return () => {
-        socket.off("receive_message");
+        socket.off("receive_message", handleIncomingMessage);
+        socket.emit("leave_batch", batchId);
       };
     }
   }, [batchId, socket]);
@@ -59,9 +69,10 @@ export default function BatchChat({ batchId, batchTitle, onClose }) {
     const messageData = {
       batchId,
       senderId: user._id,
-      senderModel: "User", // This could be dynamic if we check roles
+      senderModel: role === "advisor" ? "Advisor" : "User",
       fullname: user.fullname,
       content: input,
+      role: role
     };
 
     socket.emit("send_message", messageData);
@@ -78,7 +89,7 @@ export default function BatchChat({ batchId, batchTitle, onClose }) {
       <div className="chat-header">
         <div className="title">
           <FiMessageSquare className="icon" />
-          <div className="text">
+          <div className="text" style={{ textTransform: 'capitalize' }}>
             <h4>{batchTitle} Chat</h4>
             <span className="online-tag">Live Sync Active</span>
           </div>
@@ -105,17 +116,23 @@ export default function BatchChat({ batchId, batchTitle, onClose }) {
         )}
       </div>
 
-      <form className="chat-input-area" onSubmit={handleSendMessage}>
-        <input 
-          type="text" 
-          placeholder="Share your progress..." 
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-        />
-        <button type="submit" className="send-btn" disabled={!input.trim()}>
-          <FiSend />
-        </button>
-      </form>
+      {role === "admin" ? (
+        <div className="moderation-banner">
+          <span>Moderation Mode (Read-Only)</span>
+        </div>
+      ) : (
+        <form className="chat-input-area" onSubmit={handleSendMessage}>
+          <input 
+            type="text" 
+            placeholder="Share your progress..." 
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+          />
+          <button type="submit" className="send-btn" disabled={!input.trim()}>
+            <FiSend />
+          </button>
+        </form>
+      )}
     </motion.div>
   );
 }

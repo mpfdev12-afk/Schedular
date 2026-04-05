@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { capitalizeWords, formatIfDate } from "../../utils/usableFunctions";
 import "./Table.scss";
 import { toast } from "react-toastify";
-import { updateDatatoapi } from "../../utils/api";
+import { updateDatatoapi, sendDataToapi } from "../../utils/api";
 import TableCard from "../TableCard/TableCard";
+import { FiMessageSquare } from "react-icons/fi";
+import BatchChat from "../BatchChat/BatchChat";
 
 export default function Table({
   tableHeader = [],
@@ -31,6 +33,7 @@ export default function Table({
   };
   const [cardShow,setCardShow] = useState(false);
   const [id,setId] = useState(null);
+  const [activeBatchChat, setActiveBatchChat] = useState(null);
   const handleQuickJoin = async (id) => {
     try {
       await updateDatatoapi(
@@ -43,6 +46,25 @@ export default function Table({
       toast.success("Joined appointment successfully!");
     } catch (err) {
       toast.error(err.response?.data?.message || "Failed to join appointment");
+    }
+  };
+
+  const handleBatchJoin = async (batchId, advisorID, meetlink) => {
+    try {
+      const url = `/batch/join/${batchId}`;
+      const userId = localStorage.getItem("userId") || advisorId; // Fallback or retrieve from state
+      
+      // Formally join using the API to trigger notifications
+      await sendDataToapi(
+        `${url}?userId=${userId}&advisorId=${advisorID}`,
+        {},
+        "application/json"
+      );
+      
+      window.open(meetlink, "_blank");
+    } catch (err) {
+      console.error("Formal join failed, opening link anyway:", err);
+      window.open(meetlink, "_blank");
     }
   };
 
@@ -103,6 +125,21 @@ export default function Table({
                     </td>
                   ))}
 
+                  {tableHeader.includes("Chat") && (
+                    <td className="center">
+                      <button 
+                        className="chat-btn" 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setActiveBatchChat(p);
+                        }}
+                        title="Open Batch Chat"
+                      >
+                        <FiMessageSquare />
+                      </button>
+                    </td>
+                  )}
+
                   {isMeetLink && (
                     <td className="center">
                       {p.isQuick ? (
@@ -111,21 +148,23 @@ export default function Table({
                           target={p.status === "pending" ? "_blank" : ""}
                           rel="noopener noreferrer"
                           className="join"
-                          onClick={() => {
+                          onClick={(e) => {
+                            e.stopPropagation();
                             if (p.status == "pending") handleQuickJoin(p._id);
                           }}
                         >
                           {p.status === "pending" ? "Join" : "-"}
                         </a>
                       ) : (
-                        <a
-                          href={p.meetlink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="join"
+                        <button
+                          className="join-btn"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleBatchJoin(p._id, p.advisorId?._id || p.advisorId, p.meetlink);
+                          }}
                         >
                           Join
-                        </a>
+                        </button>
                       )}
                     </td>
                   )}
@@ -165,6 +204,13 @@ export default function Table({
             {"Next >"}
           </button>
         </div>
+      )}
+      {activeBatchChat && (
+        <BatchChat 
+          batchId={activeBatchChat._id}
+          batchTitle={activeBatchChat.topic}
+          onClose={() => setActiveBatchChat(null)}
+        />
       )}
     </div>
   );

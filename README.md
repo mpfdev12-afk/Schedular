@@ -64,6 +64,17 @@ For platform owners, Schedular provides enterprise-level business intelligence.
 
 ---
 
+## Security, Privacy & Moderation 🛰️🛡️
+
+To ensure the safety and quality of our community wellness batches, the following moderation policies are in place:
+
+*   **Authorized Access**: Only enrolled Users and assigned Advisors are authorized to participate in batch conversations.
+*   **Admin Oversight**: The **General Manager (Admin role)** has "Read-Only" access to all batch communications. This is strictly for safety monitoring, conflict resolution, and quality assurance.
+*   **Input Blocking**: Admins cannot send messages or participate in conversations; their role is purely observational to maintain group integrity.
+*   **Live Sync**: All authorization checks are performed in real-time via the Socket.io engine and secure REST endpoints.
+
+---
+
 ## 🏛️ Deployment & Roles
 - **Admins**: Must have `isAdmin: true` in the database to unlock the Owner's Hub.
 - **Local Dev**: Ensure the backend `.env` has the correct `CORS_ORIGIN` to allow the frontend socket handshake.

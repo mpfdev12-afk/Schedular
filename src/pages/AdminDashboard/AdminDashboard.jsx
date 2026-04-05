@@ -4,27 +4,35 @@ import {
   PieChart, Pie, Cell, Legend, BarChart, Bar 
 } from 'recharts';
 import { fetchDataFromApi } from '../../utils/api';
+import { UsertableConfigs } from '../../components/Table/tableConfig';
+import Table from '../../components/Table/Table';
 import './AdminDashboard.scss';
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState(null);
   const [performance, setPerformance] = useState([]);
   const [growth, setGrowth] = useState([]);
+  const [batches, setBatches] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [id, setId] = useState(null);
+  const [page, setPage] = useState(1);
+  const [sortOrder, setSortOrder] = useState("A - Z");
 
   useEffect(() => {
     const loadAdminData = async () => {
       try {
         setLoading(true);
-        const [statsRes, perfRes, growthRes] = await Promise.all([
+        const [statsRes, perfRes, growthRes, batchRes] = await Promise.all([
           fetchDataFromApi('/admin/platform-stats'),
           fetchDataFromApi('/admin/advisor-performance'),
-          fetchDataFromApi('/admin/growth-metrics')
+          fetchDataFromApi('/admin/growth-metrics'),
+          fetchDataFromApi('/batch/getallbatches')
         ]);
         
         setStats(statsRes?.data);
         setPerformance(perfRes?.data || []);
         setGrowth(growthRes?.data || []);
+        setBatches(batchRes?.data || []);
       } catch (err) {
         console.error("Failed to load admin analytics:", err);
       } finally {
@@ -134,6 +142,24 @@ export default function AdminDashboard() {
               ))}
             </tbody>
           </table>
+        </div>
+
+        {/* Live Batch Moderation Table */}
+        <div className="admin-table-section moderation">
+          <h4>Live Batch Moderation Hub</h4>
+          <Table 
+             tableHeader={UsertableConfigs.Batches.header}
+             TableContent={batches}
+             SelectedFields={UsertableConfigs.Batches.fields}
+             tableTitle="Global Wellness Batches"
+             EmptyMessage="No active batches found for moderation."
+             isMeetLink={false}
+             total={batches.length}
+             sortOrder={sortOrder}
+             setSortOrder={setSortOrder}
+             page={page}
+             setPage={setPage}
+          />
         </div>
       </div>
     </div>
