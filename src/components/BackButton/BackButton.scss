@@ -1,9 +1,55 @@
-.back-btn{
-    background-color: #215ce6;
-    color: aliceblue;
-    position: absolute;
-    left: 10%;
-    margin: 10px;
-    top: 0;
-    margin-top: 100px;
+.back-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 100px;
+  color: #1e293b;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: fixed; // Fixed ensures it's always at the specified viewport coordinate
+  top: 160px; // Aggressive clearance of the (approx 100px) Navbar area
+  left: 48px;
+  z-index: 9999; // Absolute layering dominance
+
+  .back-icon {
+    font-size: 1.3rem;
+    transition: transform 0.3s ease;
+  }
+
+  span {
+    letter-spacing: -0.01em;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.7);
+    transform: translateX(-6px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    border-color: rgba(255, 255, 255, 1);
+
+    .back-icon {
+      transform: translateX(-3px);
+    }
+  }
+
+  &:active {
+    transform: scale(0.94);
+  }
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+  .back-btn {
+    top: 140px; // Deep clearance for mobile navbar + gaps
+    left: 20px;
+    padding: 7px 14px;
+    font-size: 0.85rem;
+  }
 }
