@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { 
   FiMenu, FiSearch, FiX, FiCalendar, FiZap, FiUsers, 
-  FiClock, FiCheckSquare, FiHeart, FiHelpCircle, FiSettings 
+  FiClock, FiCheckSquare, FiHeart, FiHelpCircle, FiSettings, FiShield 
 } from "react-icons/fi";
 import "./Sidebar.scss";
 import { useNavigate } from "react-router-dom";
@@ -36,6 +36,7 @@ export default function Sidebar({
       case "Positivity Zone": return <FiHeart />;
       case "Help Center": return <FiHelpCircle />;
       case "Settings": return <FiSettings />;
+      case "Control Hub": return <FiShield />;
       default: return <FiCalendar />;
     }
   };

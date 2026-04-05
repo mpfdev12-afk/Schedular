@@ -1,0 +1,149 @@
+.wellness-pearl-widget {
+  position: relative;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  min-height: 220px;
+  color: #334155;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+  }
+
+  .pearl-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    flex: 1;
+    gap: 6px;
+
+    h4 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #64748b;
+      margin: 0;
+      font-weight: 700;
+      margin-bottom: auto; /* Pushes everything else down */
+    }
+
+    .tier-display {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+
+      h2 {
+        font-size: 2rem;
+        font-weight: 800;
+        margin: 0;
+        color: #1e293b;
+      }
+
+      .vp-count {
+        font-size: 0.9rem;
+        font-weight: 800;
+        color: #10b981;
+        background: rgba(16, 185, 129, 0.15);
+        padding: 4px 12px;
+        border-radius: 12px;
+      }
+    }
+
+    p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #475569;
+      font-weight: 500;
+    }
+  }
+
+  /* --- Visuals clipped to card --- */
+  .pearl-visuals {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.8;
+  }
+
+  /* TIER 1: Seeker (0 - 99 VP) -> Soft Pearl & Mint */
+  &.tier-1 {
+    --core-color: rgba(16, 185, 129, 0.4); 
+    --aura-1: rgba(16, 185, 129, 0.3);
+    --aura-2: rgba(56, 189, 248, 0.25);
+  }
+
+  /* TIER 2: Mindful (100 - 499 VP) -> Vibrant Emerald */
+  &.tier-2 {
+    --core-color: rgba(5, 150, 105, 0.5);
+    --aura-1: rgba(16, 185, 129, 0.4);
+    --aura-2: rgba(52, 211, 153, 0.35);
+  }
+
+  /* TIER 3: Zen Master (500+ VP) -> Cosmic Amethyst / Emerald */
+  &.tier-3 {
+    --core-color: rgba(124, 58, 237, 0.45); 
+    --aura-1: rgba(16, 185, 129, 0.35);   
+    --aura-2: rgba(167, 139, 250, 0.4);   
+  }
+
+  /* Shared Orb Mechanics */
+  .pearl-core {
+    position: absolute;
+    top: 50%;
+    left: 80%; /* Shifted right so text is readable on left */
+    width: 150px;
+    height: 150px;
+    margin-top: -75px;
+    margin-left: -75px;
+    background: radial-gradient(circle, var(--core-color) 0%, transparent 70%);
+    filter: blur(25px);
+    border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+    transition: background 2s ease;
+  }
+
+  .pearl-aura {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(40px);
+    transition: background 2s ease;
+  }
+
+  .ambient-1 {
+    width: 250px;
+    height: 250px;
+    top: -50px;
+    right: -50px;
+    background: radial-gradient(circle, var(--aura-1), transparent 60%);
+    animation: slow-orbit 20s infinite linear reverse;
+  }
+
+  .ambient-2 {
+    width: 300px;
+    height: 300px;
+    bottom: -100px;
+    left: 20%;
+    background: radial-gradient(circle, var(--aura-2), transparent 60%);
+    animation: slow-orbit 30s infinite linear;
+  }
+}
+
+@keyframes slow-orbit {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(5%, -5%) rotate(120deg); }
+  66% { transform: translate(-5%, 5%) rotate(240deg); }
+  100% { transform: translate(0, 0) rotate(360deg); }
+}

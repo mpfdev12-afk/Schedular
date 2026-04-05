@@ -1,0 +1,212 @@
+@use "../../index.css" as *;
+
+.batch-chat-overlay {
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 360px;
+  background: rgba(10, 10, 15, 0.85); /* Deep Translucent Black */
+  backdrop-filter: blur(24px) saturate(160%);
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  color: #e2e8f0;
+
+  .chat-header {
+    padding: 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .title {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+
+      .icon {
+        color: #10b981; /* Emerald/Success */
+        font-size: 20px;
+      }
+
+      h4 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 600;
+      }
+
+      .online-tag {
+        font-size: 10px;
+        color: rgba(16, 185, 129, 0.7);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      color: #64748b;
+      cursor: pointer;
+      font-size: 20px;
+      transition: color 0.2s;
+
+      &:hover {
+        color: #f1f5f9;
+      }
+    }
+  }
+
+  .chat-messages {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    scroll-behavior: smooth;
+
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+    }
+
+    .chat-loader {
+      text-align: center;
+      padding: 40px;
+      color: #64748b;
+      font-size: 13px;
+      font-style: italic;
+    }
+
+    .message-wrapper {
+      max-width: 85%;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
+      .sender-name {
+        font-size: 11px;
+        color: #64748b;
+        margin-left: 8px;
+      }
+
+      .message-bubble {
+        padding: 10px 14px;
+        border-radius: 16px;
+        font-size: 14px;
+        line-height: 1.5;
+        word-wrap: break-word;
+      }
+
+      .timestamp {
+        font-size: 10px;
+        color: rgba(100, 116, 139, 0.6);
+        margin-left: 8px;
+        margin-top: 2px;
+      }
+
+      &.own {
+        align-self: flex-end;
+        align-items: flex-end;
+
+        .sender-name {
+          margin-right: 8px;
+          margin-left: 0;
+        }
+
+        .message-bubble {
+          background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+          color: #fff;
+          border-bottom-right-radius: 4px;
+          box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+        }
+
+        .timestamp {
+          margin-right: 8px;
+          margin-left: 0;
+        }
+      }
+
+      &.other {
+        align-self: flex-start;
+
+        .message-bubble {
+          background: rgba(255, 255, 255, 0.05);
+          color: #e2e8f0;
+          border-bottom-left-radius: 4px;
+          border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+      }
+    }
+  }
+
+  .chat-input-area {
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.2);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    gap: 12px;
+
+    input {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 10px 16px;
+      color: #fff;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+
+      &:focus {
+        border-color: rgba(16, 185, 129, 0.4);
+      }
+
+      &::placeholder {
+        color: #475569;
+      }
+    }
+
+    .send-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #10b981;
+      border: none;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 18px;
+      transition: transform 0.2s, background 0.2s;
+
+      &:hover:not(:disabled) {
+        transform: scale(1.05);
+        background: #059669;
+      }
+
+      &:disabled {
+        background: #1e293b;
+        color: #475569;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .batch-chat-overlay {
+    width: 100%;
+    border-left: none;
+  }
+}

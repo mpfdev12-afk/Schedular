@@ -26,3 +26,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Exclude Strategic Roadmap
+roadmap.md
+
+# Progress tracking
+progress.md

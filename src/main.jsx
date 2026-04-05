@@ -28,7 +28,9 @@ import QuickAppointment from "./pages/QuickAppointment/QuickAppointment.jsx";
 import LearningMaterial from "./pages/LearningMaterial/LearningMaterial.jsx";
 import AdvisorQuick from "./pages/AdvisorQuick/AdvisorQuick.jsx";
 import LoginasUser from "./pages/Login/LoginasUser.jsx";
+import AdminDashboard from "./pages/AdminDashboard/AdminDashboard.jsx";
 import { FEATURES } from "./config/featureFlags.js";
+import { SocketProvider } from "./context/SocketContext.jsx";
 
 // ─── Plug & Play Imports ───
 const ZenZone = FEATURES.ZEN_ZONE
@@ -167,6 +169,10 @@ const router = createBrowserRouter([
         path: "/advisor/register",
         element: <RegisterAdvisor />,
       },
+      {
+        path: "/admin/dashboard",
+        element: <AdminDashboard />,
+      },
     ],
   },
 ]);
@@ -237,8 +243,10 @@ function SWUpdateNotifier() {
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
-      <SWUpdateNotifier />
+      <SocketProvider>
+        <RouterProvider router={router} />
+        <SWUpdateNotifier />
+      </SocketProvider>
     </Provider>
   </StrictMode>,
 );

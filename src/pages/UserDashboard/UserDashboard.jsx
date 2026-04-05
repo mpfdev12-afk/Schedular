@@ -1,5 +1,6 @@
 import React, { useMemo, useState, useEffect } from "react";
 import { fetchDataFromApi } from "../../utils/api";
+import { useSelector } from "react-redux";
 import {
   capitalizeWords,
   formatDateToYYYYMMDD,
@@ -16,6 +17,8 @@ import { FaUserCircle } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import ProfileCard from "../../components/ProfileCard/ProfileCard";
 import EditProfileCard from "../../components/EditProfileCard/EditProfileCard";
+import WellnessPearl from "../../components/WellnessPearl/WellnessPearl";
+import BatchCoopCard from "../../components/BatchCoopCard/BatchCoopCard";
 
 export default function UserDashboard() {
   const [user, setUser] = useState(null);
@@ -23,6 +26,7 @@ export default function UserDashboard() {
   const [tableData, setTableData] = useState([]);
   const [events, setEvents] = useState([]);
   const [domain, setdomain] = useState("");
+  const role = useSelector((state) => state.role);
   const [tab, settab] = useState("Appointments");
   const [tableLimit, setTableLimit] = useState(8);
   const today = useMemo(() => new Date(), []);
@@ -120,7 +124,10 @@ export default function UserDashboard() {
         theme="pearl"
         searchText={searchText}
         setSearchText={setSearchText}
-        onSelectTab={settab}
+        onSelectTab={(t) => {
+          if (t === "Control Hub") navigate("/admin/dashboard");
+          else settab(t);
+        }}
         activeTab={tab}
         tabs={[
           "Appointments",
@@ -130,6 +137,7 @@ export default function UserDashboard() {
           "Positivity Zone",
           "Help Center",
           "Settings",
+          ...(role === "admin" ? ["Control Hub"] : [])
         ]}
       />
 
@@ -140,6 +148,12 @@ export default function UserDashboard() {
             <p className="muted">Welcome back, {capitalizeWords(user?.fullname || "User")}</p>
           </div>
           <div className="header-actions">
+            <div className="vitality-badge" title="Your Wellness Score">
+              <div className="vp-info">
+                <span className="vp-tier">Seeker</span>
+                <span className="vp-score">{user?.vitalityPoints || 0} <span className="vp-label">VP</span></span>
+              </div>
+            </div>
             <div 
               className="header-profile-avatar" 
               onClick={() => setProfileShow(true)}
@@ -157,9 +171,9 @@ export default function UserDashboard() {
         <Stats
           onEdit={() => { setProfileShow(true); setEdit(false); }}
           stats={[
-            { title: "Total Today's Appointment", value: 2 },
-            { title: "Total Upcoming Events", value: 10 },
-            { title: "Total Ongoing Batches", value: 12 },
+            { title: "Total Grace Tokens", value: user?.graceTokens || 0 },
+            { title: "Active Wellness Streak", value: `${user?.currentStreak || 0} Days` },
+            { title: "Total Appointments", value: totalData || 0 },
             { title: "Total Past Events", value: 15 },
           ]}
         />
@@ -170,24 +184,29 @@ export default function UserDashboard() {
               <Positivity />
             </div>
           ) : (
-            <Table
-              TableContent={tableData}
-              tableTitle={tableTitle}
-              tableHeader={tableHeader}
-              SelectedFields={selectedFields}
-              sortOrder={sortOrder}
-              setSortOrder={setSortOrder}
-              setSearchText={setSearchText}
-              setSelectedDate={setSelectedDate}
-              page={page}
-              setPage={setPage}
-              isMeetLink={isMeetLink}
-              limit={tableLimit}
-              EmptyMessage={EmptyMessage}
-              advisorId={user?._id}
-              isProfilepic={tab === "Appointments"}
-              total={totalData}
-            />
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+              {tab === "Batches" && tableData.length > 0 && (
+                <BatchCoopCard batch={tableData[0]} />
+              )}
+              <Table
+                TableContent={tableData}
+                tableTitle={tableTitle}
+                tableHeader={tableHeader}
+                SelectedFields={selectedFields}
+                sortOrder={sortOrder}
+                setSortOrder={setSortOrder}
+                setSearchText={setSearchText}
+                setSelectedDate={setSelectedDate}
+                page={page}
+                setPage={setPage}
+                isMeetLink={isMeetLink}
+                limit={tableLimit}
+                EmptyMessage={EmptyMessage}
+                advisorId={user?._id}
+                isProfilepic={tab === "Appointments"}
+                total={totalData}
+              />
+            </div>
           )}
 
           {/* <CalendarCard
@@ -199,6 +218,7 @@ export default function UserDashboard() {
             selectedDate={selectedDate}
           /> */}
           <div className="filter-sec">
+            <WellnessPearl vp={user?.vitalityPoints} />
             <div
               className="sec newMeeting"
               onClick={() => navigate("/category")}
