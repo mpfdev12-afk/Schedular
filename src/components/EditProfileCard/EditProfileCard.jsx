@@ -25,6 +25,7 @@ const EditProfileCard = ({ user, onEdit, onClose }) => {
     qualification: user?.qualification || "",
     experienceYears: user?.experienceYears || "",
     description: user?.description || "",
+    domain: user?.domain || "",
   });
 
   const dispatch = useDispatch();
@@ -153,6 +154,31 @@ const EditProfileCard = ({ user, onEdit, onClose }) => {
                 name="experienceYears"
                 placeholder="e.g. 5"
                 value={formData.experienceYears}
+                onChange={handleChange}
+                className="premium-field"
+              />
+            </div>
+            <div className="field-group">
+              <label>Domain</label>
+              <select
+                name="domain"
+                value={formData.domain}
+                onChange={handleChange}
+                className="premium-field"
+              >
+                <option value="">Select domain</option>
+                <option value="mental">Mental</option>
+                <option value="physical">Physical</option>
+                <option value="financial">Financial</option>
+              </select>
+            </div>
+            <div className="field-group">
+              <label>Languages Spoken</label>
+              <input
+                type="text"
+                name="languagesSpoken"
+                placeholder="e.g. English, Hindi, Spanish"
+                value={formData.languagesSpoken}
                 onChange={handleChange}
                 className="premium-field"
               />

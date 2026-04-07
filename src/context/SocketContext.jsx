@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -9,15 +9,18 @@ export const useSocket = () => useContext(SocketContext);
 
 export const SocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
+  const [notifications, setNotifications] = useState([]);
   const user = useSelector((state) => state.user);
-  
+
   // Get base URL from VITE_API_URL (strip /api/v1)
   const socketUrl = import.meta.env.VITE_API_URL.replace('/api/v1', '');
+
+  const clearNotifications = () => setNotifications([]);
 
   useEffect(() => {
     if (user && user._id) {
       console.log("SOCKET: Initializing connection for user:", user._id);
-      
+
       const newSocket = io(socketUrl, {
         withCredentials: true,
         transports: ['websocket'],
@@ -31,10 +34,22 @@ export const SocketProvider = ({ children }) => {
       // Global Notification Listeners
       newSocket.on("NOTIFICATION_NEW_BOOKING", (data) => {
         toast.info(data.message || "New booking alert!");
+        setNotifications((prev) => [
+          { message: data.message || "New booking alert!", batchId: data.batchId, time: new Date() },
+          ...prev,
+        ]);
       });
 
       newSocket.on("NOTIFICATION_BOOKING_CONFIRMED", (data) => {
         toast.success(data.message || "Your session is confirmed!");
+      });
+
+      newSocket.on("NOTIFICATION_QUICK_SESSION", (data) => {
+        toast.info(data.message || "New quick session request!");
+        setNotifications((prev) => [
+          { message: data.message || "New quick session request!", appointmentId: data.appointmentId, time: new Date() },
+          ...prev,
+        ]);
       });
 
       return () => {
@@ -51,7 +66,7 @@ export const SocketProvider = ({ children }) => {
   }, [user?._id]);
 
   return (
-    <SocketContext.Provider value={{ socket }}>
+    <SocketContext.Provider value={{ socket, notifications, clearNotifications }}>
       {children}
     </SocketContext.Provider>
   );

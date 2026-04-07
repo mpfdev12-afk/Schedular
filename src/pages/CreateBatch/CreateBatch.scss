@@ -1,81 +1,363 @@
-.create {
-  display: flex;
-  justify-content: center;
+// Theme tokens — mirrors advisor dashboard palette
+$bg: #080c14;
+$glass-bg: rgba(255, 255, 255, 0.04);
+$glass-border: rgba(255, 255, 255, 0.08);
+$glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+$text-main: #f1f5f9;
+$text-muted: #94a3b8;
+$accent: #3b82f6;
+$accent-glow: rgba(59, 130, 246, 0.15);
 
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
-    background-color: #fff;
-    border-radius: 16px;
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
-    padding: 2.5rem;
-    width: 100%;
-    max-width: 700px;
+$mental-color: #a78bfa;
+$mental-glow: rgba(167, 139, 250, 0.15);
+$physical-color: #34d399;
+$physical-glow: rgba(52, 211, 153, 0.15);
+$financial-color: #fbbf24;
+$financial-glow: rgba(251, 191, 36, 0.15);
 
-    h2 {
-      text-align: center;
+.create-batch-page {
+  min-height: 100vh;
+  background: $bg;
+  padding: 100px 1.5rem 80px;
+  position: relative;
+  overflow-x: hidden;
+
+  .bg-glow {
+    position: fixed;
+    top: -20%;
+    left: -10%;
+    width: 70vw;
+    height: 70vw;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 70%);
+    filter: blur(80px);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .create-batch-container {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .form-hero {
+    text-align: center;
+    margin-bottom: 2.5rem;
+
+    .form-badge {
+      display: inline-block;
+      padding: 0.4rem 1rem;
+      background: $accent-glow;
+      color: $accent;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 99px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
       margin-bottom: 1rem;
-      font-size: 1.8rem;
-      font-weight: 600;
     }
 
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
+    h1 {
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 900;
+      color: $text-main;
+      margin: 0 0 0.75rem;
+      letter-spacing: -0.03em;
 
-      select,
-      input {
-        width: 100%;
+      span {
+        color: $accent;
       }
     }
 
-    textarea,
-    input,
-    select {
-      padding: 0.9rem 1rem;
+    p {
+      color: $text-muted;
       font-size: 1rem;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      outline: none;
-      transition: border-color 0.3s, box-shadow 0.3s;
-
-      &:focus {
-        border-color: #007bff;
-        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
-      }
-    }
-
-    textarea {
-      resize: vertical;
-      min-height: 120px;
-      grid-column: span 2; // full width if placed inside form-row
-    }
-
-    button {
-      padding: 1rem;
-      background: linear-gradient(135deg, #007bff, #0056b3);
-      color: #fff;
-      border: none;
-      border-radius: 10px;
-      font-size: 1rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.3s ease;
-
-      &:hover {
-        background: linear-gradient(135deg, #0056b3, #004494);
-      }
     }
   }
 
-  /* 📱 Responsive */
-  @media (max-width: 768px) {
-    form {
-      .form-row {
-        grid-template-columns: 1fr; // stack in one column
+  .batch-form {
+    background: $glass-bg;
+    backdrop-filter: blur(24px);
+    border: 1px solid $glass-border;
+    border-radius: 28px;
+    box-shadow: $glass-shadow;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  // Section grouping
+  .form-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: $text-muted;
+
+      .req { color: $accent; margin-left: 2px; }
+    }
+  }
+
+  // No-domain gate
+  .no-domain-gate {
+    background: $glass-bg;
+    backdrop-filter: blur(24px);
+    border: 1px solid $glass-border;
+    border-radius: 28px;
+    padding: 3rem 2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+
+    .gate-icon { font-size: 2.5rem; }
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: $text-main;
+      margin: 0;
+    }
+
+    p {
+      color: $text-muted;
+      font-size: 0.95rem;
+      max-width: 380px;
+      line-height: 1.6;
+    }
+
+    .gate-btn {
+      margin-top: 0.5rem;
+      padding: 0.75rem 1.75rem;
+      background: linear-gradient(135deg, $accent, #2563eb);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s;
+
+      &:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(59,130,246,0.35); }
+    }
+  }
+
+  // Domain read-only display pill
+  .domain-pill-display {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.9rem 1.25rem;
+    border-radius: 14px;
+    border: 1px solid $glass-border;
+
+    &.domain-mental  { background: $mental-glow;   border-color: rgba(167,139,250,0.35); }
+    &.domain-physical { background: $physical-glow; border-color: rgba(52,211,153,0.35); }
+    &.domain-financial { background: $financial-glow; border-color: rgba(251,191,36,0.35); }
+
+    .domain-icon { font-size: 1.5rem; }
+
+    .domain-label {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: $text-main;
+    }
+    .domain-desc {
+      display: block;
+      font-size: 0.75rem;
+      color: $text-muted;
+    }
+
+    .domain-lock {
+      margin-left: auto;
+      font-size: 0.85rem;
+      opacity: 0.5;
+    }
+  }
+
+  // Domain cards
+  .domain-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+
+    .domain-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 1.1rem 0.75rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid $glass-border;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      text-align: center;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.06);
+        transform: translateY(-2px);
       }
+
+      &.active {
+        border-color: transparent;
+
+        &.domain-mental {
+          background: $mental-glow;
+          border-color: rgba(167, 139, 250, 0.4);
+          box-shadow: 0 0 20px rgba(167, 139, 250, 0.15);
+        }
+        &.domain-physical {
+          background: $physical-glow;
+          border-color: rgba(52, 211, 153, 0.4);
+          box-shadow: 0 0 20px rgba(52, 211, 153, 0.15);
+        }
+        &.domain-financial {
+          background: $financial-glow;
+          border-color: rgba(251, 191, 36, 0.4);
+          box-shadow: 0 0 20px rgba(251, 191, 36, 0.15);
+        }
+      }
+
+      .domain-icon {
+        font-size: 1.6rem;
+        line-height: 1;
+      }
+
+      .domain-label {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: $text-main;
+      }
+
+      .domain-desc {
+        font-size: 0.72rem;
+        color: $text-muted;
+      }
+
+      &.active.domain-mental .domain-label { color: $mental-color; }
+      &.active.domain-physical .domain-label { color: $physical-color; }
+      &.active.domain-financial .domain-label { color: $financial-color; }
+    }
+  }
+
+  // Field layout
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+
+    .field-label {
+      font-size: 0.78rem;
+      color: $text-muted;
+      font-weight: 500;
+
+      .req { color: $accent; margin-left: 2px; }
+    }
+  }
+
+  // Shared input/select/textarea styles
+  .batch-input,
+  .batch-select,
+  .batch-textarea {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid $glass-border;
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    color: $text-main;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%;
+    font-family: inherit;
+
+    &::placeholder { color: rgba(148, 163, 184, 0.5); }
+
+    &:focus {
+      border-color: rgba(59, 130, 246, 0.5);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.08);
+    }
+
+    &.disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    option {
+      background: #0f172a;
+      color: $text-main;
+    }
+  }
+
+  // Override date/time input calendar icon color
+  .batch-input[type="date"],
+  .batch-input[type="time"] {
+    color-scheme: dark;
+  }
+
+  .batch-textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(135deg, $accent, #2563eb);
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+    margin-top: 0.5rem;
+    letter-spacing: 0.02em;
+
+    &:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(59, 130, 246, 0.45);
+    }
+
+    &:active:not(:disabled) { transform: translateY(0); }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .create-batch-page {
+    padding-top: 80px;
+
+    .batch-form { padding: 1.5rem; }
+
+    .domain-cards {
+      grid-template-columns: 1fr;
+    }
+
+    .field-row {
+      grid-template-columns: 1fr;
     }
   }
 }

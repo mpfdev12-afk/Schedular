@@ -14,9 +14,10 @@ import CalendarCard from "../../components/Cards/CalendarCard";
 import Stats from "../../components/Stats/Stats";
 import { tableConfigs } from "../../components/Table/tableConfig";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Useraction } from "../../store/userSlice";
 import { RoleAction } from "../../store/roleSlice";
+import { useSocket } from "../../context/SocketContext";
 
 import { Positivity } from "../PositivityZone/Positivity";
 import { FaUserCircle } from "react-icons/fa";
@@ -26,7 +27,14 @@ import EditProfileCard from "../../components/EditProfileCard/EditProfileCard";
 
 export default function AdvisorDashboard() {
   const dispatch = useDispatch();
+  const { notifications, clearNotifications } = useSocket();
+  const reduxUser = useSelector((state) => state.user);
   const [user, setUser] = useState(null);
+
+  // Keep local user state in sync when EditProfileCard updates Redux
+  useEffect(() => {
+    if (reduxUser && user) setUser(reduxUser);
+  }, [reduxUser]);
   const [loading, setLoading] = useState(false);
   const [tableData, setTableData] = useState([]);
   const [events, setEvents] = useState([]);
@@ -276,7 +284,23 @@ export default function AdvisorDashboard() {
               selectedDate={selectedDate}
             />
             {tab != "Batches" && (
-              <div className="notification">Notifications(0)</div>
+              <div className="notification">
+                <div className="notification-header">
+                  <span>Notifications ({notifications.length})</span>
+                  {notifications.length > 0 && (
+                    <button className="notification-clear" onClick={clearNotifications}>
+                      Clear
+                    </button>
+                  )}
+                </div>
+                {notifications.length > 0 && (
+                  <ul className="notification-list">
+                    {notifications.map((n, i) => (
+                      <li key={i} className="notification-item">{n.message}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
             )}
           </div>
         </section>
