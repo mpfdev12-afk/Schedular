@@ -17,7 +17,6 @@ import { FaUserCircle } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import ProfileCard from "../../components/ProfileCard/ProfileCard";
 import EditProfileCard from "../../components/EditProfileCard/EditProfileCard";
-import WellnessPearl from "../../components/WellnessPearl/WellnessPearl";
 import BatchCoopCard from "../../components/BatchCoopCard/BatchCoopCard";
 
 export default function UserDashboard() {
@@ -148,12 +147,6 @@ export default function UserDashboard() {
             <p className="muted">Welcome back, {capitalizeWords(user?.fullname || "User")}</p>
           </div>
           <div className="header-actions">
-            <div className="vitality-badge" title="Your Wellness Score">
-              <div className="vp-info">
-                <span className="vp-tier">Seeker</span>
-                <span className="vp-score">{user?.vitalityPoints || 0} <span className="vp-label">VP</span></span>
-              </div>
-            </div>
             <div 
               className="header-profile-avatar" 
               onClick={() => setProfileShow(true)}
@@ -218,7 +211,6 @@ export default function UserDashboard() {
             selectedDate={selectedDate}
           /> */}
           <div className="filter-sec">
-            <WellnessPearl vp={user?.vitalityPoints} />
             <div
               className="sec newMeeting"
               onClick={() => navigate("/category")}

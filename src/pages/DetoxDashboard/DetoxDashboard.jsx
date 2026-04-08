@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import useDetoxSync from "../../hooks/useDetoxSync";
+import WellnessPearl from "../../components/WellnessPearl/WellnessPearl";
 import "./DetoxDashboard.scss";
 
 export default function DetoxDashboard() {
@@ -113,6 +114,11 @@ export default function DetoxDashboard() {
           Your calm journey — every moment away from the feed counts.
         </p>
       </header>
+
+      {/* ─── Embodied Data Pearl ─── */}
+      <section className="dash-section pearl-section" style={{ border: 'none', background: 'transparent', boxShadow: 'none', padding: 0 }}>
+        <WellnessPearl last7={last7} streak={streak} />
+      </section>
 
       {/* ─── Stats Grid ─── */}
       <section className="stats-row">

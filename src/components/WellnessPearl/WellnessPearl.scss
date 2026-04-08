@@ -49,7 +49,7 @@
         color: #1e293b;
       }
 
-      .vp-count {
+      .streak-count {
         font-size: 0.9rem;
         font-weight: 800;
         color: #10b981;
@@ -79,25 +79,37 @@
     opacity: 0.8;
   }
 
-  /* TIER 1: Seeker (0 - 99 VP) -> Soft Pearl & Mint */
-  &.tier-1 {
+  /* TIER: Neutral (Awake but no activity yet today) -> Soft Mint */
+  &.tier-neutral {
     --core-color: rgba(16, 185, 129, 0.4); 
     --aura-1: rgba(16, 185, 129, 0.3);
     --aura-2: rgba(56, 189, 248, 0.25);
   }
 
-  /* TIER 2: Mindful (100 - 499 VP) -> Vibrant Emerald */
-  &.tier-2 {
-    --core-color: rgba(5, 150, 105, 0.5);
-    --aura-1: rgba(16, 185, 129, 0.4);
-    --aura-2: rgba(52, 211, 153, 0.35);
+  /* TIER: Blooming (Activity today) -> Vibrant Emerald */
+  &.tier-blooming {
+    --core-color: rgba(5, 150, 105, 0.6);
+    --aura-1: rgba(16, 185, 129, 0.5);
+    --aura-2: rgba(52, 211, 153, 0.45);
   }
 
-  /* TIER 3: Zen Master (500+ VP) -> Cosmic Amethyst / Emerald */
-  &.tier-3 {
-    --core-color: rgba(124, 58, 237, 0.45); 
-    --aura-1: rgba(16, 185, 129, 0.35);   
-    --aura-2: rgba(167, 139, 250, 0.4);   
+  /* TIER: Blooming Master (Activity today + streak >= 7) -> Cosmic Amethyst / Emerald */
+  &.tier-blooming-master {
+    --core-color: rgba(124, 58, 237, 0.55); 
+    --aura-1: rgba(16, 185, 129, 0.45);   
+    --aura-2: rgba(167, 139, 250, 0.5);   
+  }
+
+  /* TIER: Hibernation (No activity for 2+ days) -> Calming deep indigo/blue */
+  &.tier-hibernation {
+    --core-color: rgba(71, 85, 105, 0.4);     /* Slate */
+    --aura-1: rgba(51, 65, 85, 0.3);
+    --aura-2: rgba(30, 58, 138, 0.25);        /* Deep Blue */
+    
+    .streak-count {
+       display: none; /* Hide streak completely to avoid guilt */
+    }
+    .pearl-aura { filter: blur(60px); } /* Extra blurry when resting */
   }
 
   /* Shared Orb Mechanics */
