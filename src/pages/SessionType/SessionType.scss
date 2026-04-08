@@ -25,9 +25,14 @@
 
   .session-header {
     text-align: center;
-    max-width: 800px;
-    margin-bottom: 60px;
+    max-width: 900px;
+    margin-bottom: 36px;
     z-index: 1;
+
+    // Tighten StepIndicator bottom gap within this header
+    .step-indicator {
+      margin-bottom: 1.5rem;
+    }
 
     .domain-pill {
       display: inline-block;
@@ -42,13 +47,17 @@
       background: rgba(255, 255, 255, 0.5);
     }
 
-    h1 {
-      font-size: 3.5rem;
-      font-weight: 900;
-      color: #0f172a;
-      letter-spacing: -0.04em;
-      margin-bottom: 16px;
-      line-height: 1.1;
+    .header-title-section {
+      margin-bottom: 12px;
+
+      h1 {
+        font-size: 3.5rem;
+        font-weight: 900;
+        color: #0f172a;
+        letter-spacing: -0.04em;
+        line-height: 1.1;
+        margin: 0;
+      }
     }
 
     .session-desc {
@@ -139,6 +148,102 @@
   }
 }
 
+// Finance Hub pill — placed below the description
+.finance-hub-pill {
+  margin: 1rem auto 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.4rem;
+  border: none;
+  border-radius: 99px;
+  background: rgba(251, 191, 36, 0.1);
+  cursor: pointer;
+  white-space: nowrap;
+  outline: none;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+
+  // Shimmer border via pseudo-element
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 99px;
+    padding: 1.5px;
+    background: linear-gradient(
+      90deg,
+      rgba(251, 191, 36, 0.2),
+      rgba(253, 224, 71, 0.9),
+      rgba(251, 191, 36, 0.2)
+    );
+    background-size: 200% 100%;
+    animation: shimmer-border 2.2s linear infinite;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  // Pulse glow
+  animation: pill-glow 3s ease-in-out infinite;
+
+  .pill-icon {
+    font-size: 1.1rem;
+    animation: icon-float 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 4px rgba(251, 191, 36, 0.7));
+    position: relative;
+    z-index: 2;
+  }
+
+  .pill-text {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #92400e;
+    letter-spacing: 0.01em;
+    position: relative;
+    z-index: 2;
+  }
+
+  .pill-arrow {
+    font-size: 0.9rem;
+    color: #b45309;
+    transition: transform 0.2s;
+    position: relative;
+    z-index: 2;
+  }
+
+  &:hover {
+    background: rgba(251, 191, 36, 0.2);
+    transform: translateX(4px);
+    
+    .pill-arrow {
+      transform: translateX(3px);
+    }
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+@keyframes shimmer-border {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes pill-glow {
+  0%, 100% { box-shadow: 0 0 10px rgba(251, 191, 36, 0.15); }
+  50%       { box-shadow: 0 0 22px rgba(251, 191, 36, 0.35); }
+}
+
+@keyframes icon-float {
+  0%, 100% { transform: translateY(0);    }
+  50%       { transform: translateY(-2px); }
+}
+
 /* Mobile Responsiveness */
 @media (max-width: 1024px) {
   .session-type {
@@ -155,6 +260,14 @@
     .session-header {
       h1 { font-size: 2.8rem; }
       .session-desc { font-size: 1.05rem; }
+      
+      .header-title-section {
+        gap: 12px;
+        
+        h1 {
+          font-size: 2.5rem;
+        }
+      }
     }
 
     .session-grid {
@@ -164,6 +277,23 @@
     
     .session-card {
       padding: 32px;
+    }
+
+    .finance-hub-pill {
+      padding: 0.65rem 1.2rem;
+      font-size: 0.9rem;
+      
+      .pill-icon {
+        font-size: 1rem;
+      }
+      
+      .pill-text {
+        font-size: 0.85rem;
+      }
+      
+      .pill-arrow {
+        font-size: 0.8rem;
+      }
     }
   }
 }

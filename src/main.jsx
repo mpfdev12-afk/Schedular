@@ -29,6 +29,7 @@ import LearningMaterial from "./pages/LearningMaterial/LearningMaterial.jsx";
 import AdvisorQuick from "./pages/AdvisorQuick/AdvisorQuick.jsx";
 import LoginasUser from "./pages/Login/LoginasUser.jsx";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashboard.jsx";
+import FinancialHub from "./pages/FinancialHub/FinancialHub.jsx";
 import { FEATURES } from "./config/featureFlags.js";
 import { SocketProvider } from "./context/SocketContext.jsx";
 
@@ -172,6 +173,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/dashboard",
         element: <AdminDashboard />,
+      },
+      {
+        path: "/financial-hub",
+        element: <FinancialHub />,
       },
     ],
   },
