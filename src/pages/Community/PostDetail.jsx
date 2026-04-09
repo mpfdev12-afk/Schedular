@@ -21,6 +21,15 @@ export default function PostDetail() {
     // Owner Controls
     const [showEditModal, setShowEditModal] = useState(false);
 
+    // Followed Tags State
+    const [userFollowedTags, setUserFollowedTags] = useState([]);
+
+    useEffect(() => {
+        if(user && user.followedTags) {
+            setUserFollowedTags(user.followedTags);
+        }
+    }, [user]);
+
     useEffect(() => {
         fetchPostData();
     }, [id]);
@@ -93,6 +102,18 @@ export default function PostDetail() {
         }
     };
 
+    const handleToggleTag = async (tag) => {
+        try {
+            const res = await sendDataToapi('/community/tags/toggle', { tag }, 'application/json');
+            if(res.data && res.data.success) {
+                setUserFollowedTags(res.data.data.followedTags);
+                toast.success(res.data.data.followedTags.includes(tag) ? `Followed #${tag}` : `Unfollowed #${tag}`);
+            }
+        } catch (err) {
+            toast.error("Error updating tag preference");
+        }
+    };
+
     if (loading) return <div className="loading-state">Loading sanctuary...</div>;
     if (!post) return <div className="empty-state">Post not found.</div>;
 
@@ -104,7 +125,7 @@ export default function PostDetail() {
 
     return (
         <div className="post-detail-container">
-            <button className="back-btn" onClick={() => navigate('/community')}>← Back to Circles</button>
+            <button className="community-back-btn" onClick={() => navigate('/community')}>← Back to Circles</button>
 
             {/* Admin Controls */}
             {user?.isAdmin && (
@@ -130,7 +151,25 @@ export default function PostDetail() {
                     <span className="author">Posted by: {post.isAnonymous ? "Anonymous Seeker" : (post.authorId?.fullname || "User")}</span>
                 </div>
                 <h1>{post.title}</h1>
-                <p className="post-body">{post.body}</p>
+                <div className="post-body ql-editor" dangerouslySetInnerHTML={{ __html: post.body }} />
+
+                {post.tags && post.tags.length > 0 && (
+                    <div className="post-detail-tags">
+                        {post.tags.map(tag => {
+                            const isFollowing = userFollowedTags.includes(tag);
+                            return (
+                                <button 
+                                    key={tag} 
+                                    className={`detail-tag-btn ${isFollowing ? 'following' : ''}`}
+                                    onClick={() => handleToggleTag(tag)}
+                                    title={isFollowing ? "Click to Unfollow" : "Click to Follow"}
+                                >
+                                    #{tag} {isFollowing ? '★' : '+'}
+                                </button>
+                            );
+                        })}
+                    </div>
+                )}
 
                 <div className="reactions-box">
                     <button className="react-btn" onClick={() => handleReaction('🙏')}>

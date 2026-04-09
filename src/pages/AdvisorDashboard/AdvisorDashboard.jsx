@@ -169,9 +169,13 @@ export default function AdvisorDashboard() {
         theme={theme}
         searchText={searchText}
         setSearchText={setSearchText}
-        onSelectTab={settab}
+        onSelectTab={(t) => {
+          if (t === "Community Feed") navigate("/community");
+          else settab(t);
+        }}
         activeTab={tab}
         tabs={[
+          "Community Feed",
           "Appointments",
           "Quick Sessions",
           "Batches",

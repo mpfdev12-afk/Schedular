@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'react-toastify';
 import { sendDataToapi } from '../../utils/api';
+import ReactQuill from 'react-quill-new';
+import 'react-quill-new/dist/quill.snow.css';
 import './CreatePostModal.scss';
 
 export default function CreatePostModal({ isOpen, onClose, onPostCreated }) {
@@ -10,6 +12,25 @@ export default function CreatePostModal({ isOpen, onClose, onPostCreated }) {
     const [domain, setDomain] = useState("mental");
     const [isAnonymous, setIsAnonymous] = useState(false);
     const [loading, setLoading] = useState(false);
+    
+    // Tagging Engine
+    const [tags, setTags] = useState([]);
+    const [tagInput, setTagInput] = useState("");
+
+    const handleTagInput = (e) => {
+        if (e.key === 'Enter' || e.key === ',') {
+            e.preventDefault();
+            const cleanTag = tagInput.trim().toLowerCase();
+            if (cleanTag && tags.length < 5 && !tags.includes(cleanTag)) {
+                setTags([...tags, cleanTag]);
+            }
+            setTagInput("");
+        }
+    };
+
+    const removeTag = (tagToRemove) => {
+        setTags(tags.filter(t => t !== tagToRemove));
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -20,7 +41,7 @@ export default function CreatePostModal({ isOpen, onClose, onPostCreated }) {
         setLoading(true);
         try {
             const res = await sendDataToapi("/community/posts", {
-                title, body, domain, isAnonymous
+                title, body, domain, isAnonymous, tags
             }, 'application/json');
             // result.data is the actual API response wrapper { success, data, message }
             if (res.data && res.data.success) {
@@ -28,6 +49,7 @@ export default function CreatePostModal({ isOpen, onClose, onPostCreated }) {
                 onPostCreated(res.data.data);
                 setTitle("");
                 setBody("");
+                setTags([]);
                 onClose();
             }
         } catch (error) {
@@ -75,14 +97,35 @@ export default function CreatePostModal({ isOpen, onClose, onPostCreated }) {
                             />
                         </div>
                         
-                        <div className="form-group">
-                            <textarea 
-                                placeholder="Share your thoughts, ask a question, or look for guidance..."
-                                rows="5"
+                        <div className="form-group quill-editor-group">
+                            <ReactQuill 
+                                theme="snow"
                                 value={body}
-                                onChange={e => setBody(e.target.value)}
-                                required
+                                onChange={setBody}
+                                placeholder="Share your thoughts, ask a question, or look for guidance..."
                             />
+                        </div>
+                        
+                        <div className="form-group">
+                            <label>Tags (Optional, Max 5)</label>
+                            <div className="tags-input-container">
+                                <div className="tags-list">
+                                    {tags.map(tag => (
+                                        <span key={tag} className="tag-pill">
+                                            #{tag} <button type="button" onClick={() => removeTag(tag)}>×</button>
+                                        </span>
+                                    ))}
+                                </div>
+                                <input 
+                                    type="text" 
+                                    placeholder={tags.length < 5 ? "Type a tag and press Enter..." : "Tag limit reached (5)"}
+                                    value={tagInput}
+                                    onChange={e => setTagInput(e.target.value)}
+                                    onKeyDown={handleTagInput}
+                                    disabled={tags.length >= 5}
+                                />
+                            </div>
+                            <p className="hint-text">Use tags like 'anxiety', 'workout', 'budgeting'</p>
                         </div>
                         
                         <div className="privacy-toggle">

@@ -14,6 +14,8 @@ export default function Community() {
     
     const [posts, setPosts] = useState([]);
     const [domainFilter, setDomainFilter] = useState('all');
+    const [filterMode, setFilterMode] = useState('all'); // all, following
+    const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
     
@@ -28,7 +30,11 @@ export default function Community() {
 
     useEffect(() => {
         setLoading(true);
-        fetchDataFromApi(`/community/posts?domain=${domainFilter}`)
+        let url = `/community/posts?domain=${domainFilter}`;
+        if(filterMode === 'following') url += `&filter=following`;
+        if(searchQuery) url += `&search=${encodeURIComponent(searchQuery)}`;
+
+        fetchDataFromApi(url)
             .then(res => {
                 setPosts(res?.data || []);
             })
@@ -53,12 +59,22 @@ export default function Community() {
     return (
         <div className="community-feed-container">
             <aside className="community-sidebar">
+                <div className="search-box">
+                    <input 
+                        type="text" 
+                        placeholder="Search sanctuary..." 
+                        value={searchQuery}
+                        onChange={e => setSearchQuery(e.target.value)}
+                    />
+                </div>
+
                 <h2>Circles</h2>
                 <ul>
-                    <li className={domainFilter === 'all' ? 'active' : ''} onClick={() => setDomainFilter('all')}>All Circles</li>
-                    <li className={domainFilter === 'mental' ? 'active' : ''} onClick={() => setDomainFilter('mental')}>🧠 Mental Sanctuary</li>
-                    <li className={domainFilter === 'physical' ? 'active' : ''} onClick={() => setDomainFilter('physical')}>💪 Physical Grounding</li>
-                    <li className={domainFilter === 'financial' ? 'active' : ''} onClick={() => setDomainFilter('financial')}>💸 Financial Clarity</li>
+                    <li className={domainFilter === 'all' && filterMode === 'all' ? 'active' : ''} onClick={() => { setDomainFilter('all'); setFilterMode('all'); }}>All Circles</li>
+                    <li className={filterMode === 'following' ? 'active' : ''} onClick={() => setFilterMode('following')}>⭐ My Followed Tags</li>
+                    <li className={domainFilter === 'mental' && filterMode === 'all' ? 'active' : ''} onClick={() => { setDomainFilter('mental'); setFilterMode('all'); }}>🧠 Mental Sanctuary</li>
+                    <li className={domainFilter === 'physical' && filterMode === 'all' ? 'active' : ''} onClick={() => { setDomainFilter('physical'); setFilterMode('all'); }}>💪 Physical Grounding</li>
+                    <li className={domainFilter === 'financial' && filterMode === 'all' ? 'active' : ''} onClick={() => { setDomainFilter('financial'); setFilterMode('all'); }}>💸 Financial Clarity</li>
                 </ul>
                 <button className="create-post-btn" onClick={() => setShowModal(true)}>
                     + New Post
@@ -77,9 +93,21 @@ export default function Community() {
                 ) : (
                     <div className="post-list">
                         {posts.map(post => (
-                            <div key={post._id} className="post-card" onClick={() => navigate(`/community/post/${post._id}`)}>
+                            <div key={post._id} className={`post-card ${post.authorModel === 'Advisor' ? 'advisor-verified' : ''}`} onClick={() => navigate(`/community/post/${post._id}`)}>
+                                {post.authorModel === 'Advisor' && (
+                                    <div className="card-advisor-badge">✨ Advisor Verified</div>
+                                )}
                                 <h3>{post.title}</h3>
-                                <p className="preview">{post.body.substring(0, 150)}...</p>
+                                <p className="preview">{post.body.replace(/<[^>]+>/g, '').substring(0, 150)}...</p>
+                                
+                                {post.tags && post.tags.length > 0 && (
+                                    <div className="post-tags-readonly">
+                                        {post.tags.map(tag => (
+                                            <span key={tag} className="tag-chip">#{tag}</span>
+                                        ))}
+                                    </div>
+                                )}
+
                                 <div className="post-meta">
                                     <span className="author">By: {post.isAnonymous ? "Anonymous Seeker" : (post.authorId?.fullname || "User")}</span>
                                     

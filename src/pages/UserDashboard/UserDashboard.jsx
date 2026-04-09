@@ -135,10 +135,12 @@ export default function UserDashboard() {
         setSearchText={setSearchText}
         onSelectTab={(t) => {
           if (t === "Control Hub") navigate("/admin/dashboard");
+          else if (t === "Community Feed") navigate("/community");
           else settab(t);
         }}
         activeTab={tab}
         tabs={[
+          "Community Feed",
           "Appointments",
           "Batches",
           "Learning Resources",

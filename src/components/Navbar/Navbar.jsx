@@ -3,6 +3,7 @@ import "./Navbar.scss";
 import { useNavigate } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import { IoNotificationsOutline } from "react-icons/io5";
+import { FiMenu, FiX } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import ProfileCard from "../ProfileCard/ProfileCard";
 import { motion, AnimatePresence } from "framer-motion";
@@ -13,6 +14,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isLoggedin, setLoggedin] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [profileShow, setProfileShow] = useState(false);
   const [edit, setEdit] = useState(true);
   const [scrolled, setScrolled] = useState(false);
@@ -46,6 +48,7 @@ const Navbar = () => {
       <div className={`nav ${scrolled ? "scrolled" : ""}`}>
         {/* Logo & Brand */}
         <div className="left" onClick={() => {
+          setIsMobileMenuOpen(false);
           if (!user?._id) navigate("/");
           else if (role === "advisor") navigate("/dashboard");
           else navigate("/category");
@@ -111,8 +114,79 @@ const Navbar = () => {
               </div>
             </div>
           )}
+          
+          {/* Mobile Burger Button */}
+          <div className="mobile-burger-btn" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+            {isMobileMenuOpen ? <FiX size={28} /> : <FiMenu size={28} />}
+          </div>
         </div>
       </div>
+
+      {/* Mobile Dropdown Menu */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <>
+            <div 
+              className="mobile-menu-backdrop" 
+              onClick={() => setIsMobileMenuOpen(false)}
+              style={{ position: 'fixed', inset: 0, zIndex: 9997 }}
+            />
+            <motion.div 
+              className="mobile-dropdown-menu"
+              initial={{ opacity: 0, y: -20, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -20, scale: 0.95 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+            >
+            <div className="dropdown-content">
+              <span 
+                className="mobile-link" 
+                onClick={() => {
+                  navigate(isLoggedin ? "/community" : "/community/welcome");
+                  setIsMobileMenuOpen(false);
+                }}
+              >
+                Community
+              </span>
+
+              {isLoggedin ? (
+                <span
+                  className="mobile-link"
+                  onClick={() => {
+                    navigate("/dashboard");
+                    setIsMobileMenuOpen(false);
+                  }}
+                >
+                  Dashboard
+                </span>
+              ) : (
+                <span 
+                  className="mobile-link" 
+                  onClick={() => {
+                    navigate("/advisor/login");
+                    setIsMobileMenuOpen(false);
+                  }}
+                >
+                  Login as Advisor
+                </span>
+              )}
+
+              {!isLoggedin && (
+                <button 
+                  className="mobile-login-btn" 
+                  onClick={() => {
+                    navigate("/user/login");
+                    setIsMobileMenuOpen(false);
+                  }}
+                >
+                  Login as User
+                </button>
+              )}
+            </div>
+          </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
       {/* Profile Modal */}
       {profileShow && (

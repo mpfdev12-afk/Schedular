@@ -9,7 +9,9 @@
     z-index: 9999;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    padding: 3rem 1rem;
+    overflow-y: auto;
 }
 
 .create-post-modal {
@@ -19,7 +21,8 @@
     border-radius: 20px;
     padding: 2.5rem;
     width: 90%;
-    max-width: 600px;
+    max-width: 850px;
+    margin: auto; // Required to visually center in an overflow-y list
     box-shadow: 0 20px 40px rgba(0,0,0,0.1);
     position: relative;
 
@@ -90,6 +93,108 @@
         textarea {
             resize: vertical;
             min-height: 120px;
+        }
+
+        &.quill-editor-group {
+            .quill {
+                background: rgba(255, 255, 255, 0.8);
+                border-radius: 12px;
+                border: 1px solid #cbd5e1;
+                /* Removes overflow clipping so Quill dropdown menus can extend naturally */
+                transition: all 0.2s;
+
+                &:focus-within {
+                    border-color: #4f46e5;
+                    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+                }
+
+                .ql-toolbar {
+                    border: none;
+                    border-bottom: 1px solid #cbd5e1;
+                    background: rgba(248, 250, 252, 0.9);
+                    font-family: inherit;
+                    border-top-left-radius: 12px;
+                    border-top-right-radius: 12px;
+                }
+
+                .ql-container {
+                    border: none;
+                    font-family: inherit;
+                    font-size: 1rem;
+                    min-height: 250px;
+                    
+                    .ql-editor {
+                        min-height: 250px;
+                        color: #334155;
+                        line-height: 1.6;
+                        font-size: 1.05rem;
+                    }
+                }
+            }
+        }
+
+        .hint-text {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-top: 6px;
+        }
+
+        .tags-input-container {
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px 12px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            transition: all 0.2s;
+
+            &:focus-within {
+                border-color: #4f46e5;
+                box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+            }
+
+            .tags-list {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px;
+            }
+
+            .tag-pill {
+                background: #e0e7ff;
+                color: #4338ca;
+                padding: 4px 10px;
+                border-radius: 16px;
+                font-size: 0.85rem;
+                font-weight: 500;
+                display: flex;
+                align-items: center;
+                gap: 4px;
+
+                button {
+                    background: transparent;
+                    border: none;
+                    color: #4338ca;
+                    font-size: 1.1rem;
+                    line-height: 1;
+                    cursor: pointer;
+                    padding: 0;
+                    opacity: 0.7;
+
+                    &:hover { opacity: 1; }
+                }
+            }
+
+            input {
+                flex: 1;
+                min-width: 150px;
+                border: none;
+                background: transparent;
+                padding: 4px;
+                box-shadow: none;
+
+                &:focus { box-shadow: none; }
+            }
         }
     }
 
