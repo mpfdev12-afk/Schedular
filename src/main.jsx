@@ -2,6 +2,7 @@ import React, { StrictMode, useEffect, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
+import { HelmetProvider } from "react-helmet-async";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { toast } from "react-toastify";
 import Home from "./pages/Home/Home.jsx";
@@ -264,8 +265,10 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={store}>
       <SocketProvider>
-        <RouterProvider router={router} />
-        <SWUpdateNotifier />
+        <HelmetProvider>
+          <RouterProvider router={router} />
+          <SWUpdateNotifier />
+        </HelmetProvider>
       </SocketProvider>
     </Provider>
   </StrictMode>,

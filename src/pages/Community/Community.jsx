@@ -75,6 +75,7 @@ export default function Community() {
                     <li className={domainFilter === 'mental' && filterMode === 'all' ? 'active' : ''} onClick={() => { setDomainFilter('mental'); setFilterMode('all'); }}>🧠 Mental Sanctuary</li>
                     <li className={domainFilter === 'physical' && filterMode === 'all' ? 'active' : ''} onClick={() => { setDomainFilter('physical'); setFilterMode('all'); }}>💪 Physical Grounding</li>
                     <li className={domainFilter === 'financial' && filterMode === 'all' ? 'active' : ''} onClick={() => { setDomainFilter('financial'); setFilterMode('all'); }}>💸 Financial Clarity</li>
+                    <li className={domainFilter === 'positivity' && filterMode === 'all' ? 'active' : ''} onClick={() => { setDomainFilter('positivity'); setFilterMode('all'); }}>🌈 Positivity Zone</li>
                 </ul>
                 <button className="create-post-btn" onClick={() => setShowModal(true)}>
                     + New Post

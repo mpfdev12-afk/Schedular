@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { fetchDataFromApi, sendDataToapi, updateDatatoapi, deleteDataFromApi } from '../../utils/api';
 import { toast } from 'react-toastify';
+import { Helmet } from 'react-helmet-async';
 import EditPostModal from '../../components/EditPostModal/EditPostModal';
 import './PostDetail.scss';
 
@@ -68,6 +69,7 @@ export default function PostDetail() {
     };
 
     const handleReaction = async (emoji) => {
+        if (!user?._id) return toast.info("Please log in to react to posts.");
         try {
             await sendDataToapi(`/community/posts/${id}/react`, { emoji }, 'application/json');
             fetchPostData(); // refresh reactions
@@ -125,6 +127,13 @@ export default function PostDetail() {
 
     return (
         <div className="post-detail-container">
+            <Helmet>
+                <title>{post.title} | Community</title>
+                <meta name="description" content={post.body.replace(/<[^>]*>?/gm, '').substring(0, 150)} />
+                <meta property="og:title" content={`${post.title} | Community Board`} />
+                <meta property="og:description" content={post.body.replace(/<[^>]*>?/gm, '').substring(0, 150)} />
+            </Helmet>
+
             <button className="community-back-btn" onClick={() => navigate('/community')}>← Back to Circles</button>
 
             {/* Admin Controls */}
@@ -200,31 +209,38 @@ export default function PostDetail() {
                 ))}
             </div>
 
-            <div className="reply-form-container">
-                <form onSubmit={handleReplySubmit}>
-                    <textarea 
-                        placeholder="Offer your support or guidance..." 
-                        rows="4" 
-                        value={replyBody}
-                        onChange={e => setReplyBody(e.target.value)}
-                        required 
-                    />
-                    
-                    <div className="form-actions">
-                        {role !== 'advisor' && (
-                            <label className="anon-label">
-                                <input 
-                                    type="checkbox" 
-                                    checked={replyingAsAnon} 
-                                    onChange={e => setReplyingAsAnon(e.target.checked)} 
-                                />
-                                Reply Anonymously
-                            </label>
-                        )}
-                        <button type="submit" className="submit-reply">Post Reply</button>
-                    </div>
-                </form>
-            </div>
+            {user?._id ? (
+                <div className="reply-form-container">
+                    <form onSubmit={handleReplySubmit}>
+                        <textarea 
+                            placeholder="Offer your support or guidance..." 
+                            rows="4" 
+                            value={replyBody}
+                            onChange={e => setReplyBody(e.target.value)}
+                            required 
+                        />
+                        
+                        <div className="form-actions">
+                            {role !== 'advisor' && (
+                                <label className="anon-label">
+                                    <input 
+                                        type="checkbox" 
+                                        checked={replyingAsAnon} 
+                                        onChange={e => setReplyingAsAnon(e.target.checked)} 
+                                    />
+                                    Reply Anonymously
+                                </label>
+                            )}
+                            <button type="submit" className="submit-reply">Post Reply</button>
+                        </div>
+                    </form>
+                </div>
+            ) : (
+                <div className="guest-login-prompt" style={{textAlign: 'center', padding: '30px', background: 'rgba(0,0,0,0.02)', borderRadius: '12px'}}>
+                    <p style={{marginBottom: '15px', color: '#64748b', fontWeight: '600'}}>Want to join the conversation?</p>
+                    <button onClick={() => navigate('/user/login')} style={{padding: '12px 24px', background: '#4f46e5', color: '#fff', border: 'none', borderRadius: '10px', cursor: 'pointer', fontWeight: 'bold', fontSize: '1rem', transition: 'all 0.2s ease'}}>Log In to Reply & React</button>
+                </div>
+            )}
 
             <EditPostModal 
                 isOpen={showEditModal}

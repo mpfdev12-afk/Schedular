@@ -82,8 +82,28 @@ export default function CreatePostModal({ isOpen, onClose, onPostCreated }) {
                                 <option value="mental">🧠 Mental Sanctuary</option>
                                 <option value="physical">💪 Physical Grounding</option>
                                 <option value="financial">💸 Financial Clarity</option>
+                                <option value="positivity">🌈 Positivity Zone</option>
                             </select>
                         </div>
+
+                        {domain === 'positivity' && (
+                            <div className="gamification-banner" style={{
+                                background: 'linear-gradient(135deg, rgba(234, 179, 8, 0.1), rgba(245, 158, 11, 0.05))',
+                                border: '1px solid rgba(245, 158, 11, 0.3)',
+                                padding: '12px 16px',
+                                borderRadius: '12px',
+                                marginBottom: '20px',
+                                color: '#b45309',
+                                fontSize: '0.85rem',
+                                fontWeight: '600',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '10px'
+                            }}>
+                                <span>🌟</span>
+                                <span>Posts in this zone that receive <strong>3+ ❤️</strong> from the community will be permanently featured on the Global Dashboard!</span>
+                            </div>
+                        )}
                         
                         <div className="form-group">
                             <label>What's on your mind?</label>
