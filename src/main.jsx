@@ -30,6 +30,9 @@ import AdvisorQuick from "./pages/AdvisorQuick/AdvisorQuick.jsx";
 import LoginasUser from "./pages/Login/LoginasUser.jsx";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashboard.jsx";
 import FinancialHub from "./pages/FinancialHub/FinancialHub.jsx";
+import Community from "./pages/Community/Community.jsx";
+import CommunityWelcome from "./pages/Community/CommunityWelcome.jsx";
+import PostDetail from "./pages/Community/PostDetail.jsx";
 import { FEATURES } from "./config/featureFlags.js";
 import { SocketProvider } from "./context/SocketContext.jsx";
 
@@ -177,6 +180,18 @@ const router = createBrowserRouter([
       {
         path: "/financial-hub",
         element: <FinancialHub />,
+      },
+      {
+        path: "/community",
+        element: <Community />,
+      },
+      {
+        path: "/community/welcome",
+        element: <CommunityWelcome />,
+      },
+      {
+        path: "/community/post/:id",
+        element: <PostDetail />,
       },
     ],
   },

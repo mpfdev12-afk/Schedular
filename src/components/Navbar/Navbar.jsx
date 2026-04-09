@@ -58,6 +58,13 @@ const Navbar = () => {
 
         {/* Links */}
         <div className="right">
+          <span 
+            className="link" 
+            onClick={() => navigate(isLoggedin ? "/community" : "/community/welcome")}
+          >
+            Community
+          </span>
+
           {isLoggedin ? (
             <span
               className="link"
