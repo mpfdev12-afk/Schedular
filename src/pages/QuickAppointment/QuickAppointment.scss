@@ -80,6 +80,14 @@
       transform: translateY(-5px);
       box-shadow: 0 20px 45px var(--accent-glow);
     }
+
+    &.medical {
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      &:hover {
+        background: rgba(239, 68, 68, 0.05);
+        color: #ef4444;
+      }
+    }
   }
 
   /* ─── Loading View Pulse ─── */
@@ -133,6 +141,7 @@
         animation: pulseDot 1.5s infinite;
       }
     }
+    &.medical .dot { background: #ef4444; }
   }
 
   .btn-cancel {

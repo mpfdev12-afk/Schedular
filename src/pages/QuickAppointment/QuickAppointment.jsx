@@ -24,8 +24,18 @@ const ICONS = {
   detox: <DetoxIcon />
 };
 
+const DOCTOR_TOPICS = [
+  "Diabetes Management", "Hypertension", "Heart Disease", 
+  "Thyroid Problems", "Digestive Disorders", "Respiratory Issues",
+  "Sleep Apnea", "Menstrual Health", "Skin Disorders", 
+  "Migraine Management"
+];
+
 const QuickAppointment = () => {
   const { category, topic } = useParams();
+  const decodedTopic = topic?.replace(/-/g, " ");
+  const isMedical = DOCTOR_TOPICS.includes(decodedTopic);
+  
   const [quickAppointment, setQuick] = useState(null);
   const [status, setStatus] = useState("idle"); // idle → pending → confirmed
   const [linkOpened, setLinkOpened] = useState(false);
@@ -114,10 +124,14 @@ const QuickAppointment = () => {
             exit={{ opacity: 0, scale: 0.95 }}
           >
             <div className="icon-main">{domainIcon}</div>
-            <h2>Immediate Rapid Guidance</h2>
-            <p>Need urgent clarity? Generate a request for an instant 15-minute 1-on-1 session with an available expert.</p>
-            <button className="btn-generate glass-card" onClick={handleQuick}>
-              Find an Expert Now
+            <h2>{isMedical ? "Connect with a Doctor" : "Immediate Rapid Guidance"}</h2>
+            <p>
+              {isMedical 
+                ? "Generate a request for an instant 15-minute medical consultation with a verified doctor." 
+                : "Need urgent clarity? Generate a request for an instant 15-minute 1-on-1 session with an available expert."}
+            </p>
+            <button className={`btn-generate glass-card ${isMedical ? 'medical' : ''}`} onClick={handleQuick}>
+              {isMedical ? "Find a Doctor Now" : "Find an Expert Now"}
             </button>
           </motion.div>
         )}
@@ -133,16 +147,17 @@ const QuickAppointment = () => {
             <div className="pulse-container">
               <motion.div 
                 className="pulse-ring" 
+                style={{ borderColor: isMedical ? "#ef4444" : "" }}
                 animate={{ scale: [1, 1.5, 2], opacity: [0.5, 0.2, 0] }}
                 transition={{ duration: 2, repeat: Infinity }}
               />
-              <div className="icon-center">{domainIcon}</div>
+              <div className="icon-center">{isMedical ? "🩺" : domainIcon}</div>
             </div>
-            <h2>Searching for your Expert...</h2>
+            <h2>{isMedical ? "Contacting available Doctors..." : "Searching for your Expert..."}</h2>
             <p>Matching you with an available {category} specialized professional for your topic.</p>
 
-            <div className="status-badge glass-card">
-              <span className="dot animate-pulse" /> Connecting to network...
+            <div className={`status-badge glass-card ${isMedical ? 'medical' : ''}`}>
+              <span className="dot animate-pulse" /> {isMedical ? "Checking MCI registration..." : "Connecting to network..."}
             </div>
 
             <button className="btn-cancel" onClick={handleCancel}>

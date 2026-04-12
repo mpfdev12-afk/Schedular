@@ -85,8 +85,8 @@
 
             &:focus {
                 outline: none;
-                border-color: #4f46e5;
-                box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+                border-color: var(--org-primary);
+                box-shadow: 0 0 0 3px var(--org-primary-light);
             }
         }
         
@@ -104,8 +104,8 @@
                 transition: all 0.2s;
 
                 &:focus-within {
-                    border-color: #4f46e5;
-                    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+                    border-color: var(--org-primary);
+                    box-shadow: 0 0 0 3px var(--org-primary-light);
                 }
 
                 .ql-toolbar {
@@ -150,8 +150,8 @@
             transition: all 0.2s;
 
             &:focus-within {
-                border-color: #4f46e5;
-                box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+                border-color: var(--org-primary);
+                box-shadow: 0 0 0 3px var(--org-primary-light);
             }
 
             .tags-list {
@@ -200,10 +200,10 @@
 
     .privacy-toggle {
         margin: 1.5rem 0 2rem 0;
-        background: rgba(79, 70, 229, 0.05);
+        background: var(--org-primary-light);
         padding: 1rem;
         border-radius: 12px;
-        border: 1px dashed rgba(79, 70, 229, 0.2);
+        border: 1px dashed var(--org-primary-light);
 
         .toggle-label {
             display: flex;
@@ -214,7 +214,7 @@
             input[type="checkbox"] {
                 width: 20px;
                 height: 20px;
-                accent-color: #4f46e5;
+                accent-color: var(--org-primary);
                 cursor: pointer;
             }
 
@@ -234,7 +234,7 @@
     .submit-btn {
         width: 100%;
         padding: 14px;
-        background: #4f46e5;
+        background: var(--org-primary);
         color: white;
         border: none;
         border-radius: 12px;

@@ -133,6 +133,36 @@ const SessionType = () => {
             <span className="pill-arrow">→</span>
           </motion.button>
         )}
+
+        {category === "physical" && (
+          <div className="domain-hub-pills">
+            <motion.button
+              className="domain-hub-pill physical-hub-btn"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.5 }}
+              onClick={() => navigate("/physical-hub")}
+              whileHover={{ scale: 1.05 }}
+            >
+              <span className="pill-icon">💪</span>
+              <span className="pill-text">My Physical Hub</span>
+              <span className="pill-arrow">→</span>
+            </motion.button>
+
+            <motion.button
+              className="domain-hub-pill health-checkup-btn"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.5 }}
+              onClick={() => navigate("/health-checkup")}
+              whileHover={{ scale: 1.05 }}
+            >
+              <span className="pill-icon">🧪</span>
+              <span className="pill-text">Book Health Checkup</span>
+              <span className="pill-arrow">→</span>
+            </motion.button>
+          </div>
+        )}
       </header>
 
       <div className="session-grid">

@@ -251,14 +251,14 @@ export default function UserDashboard() {
             </div>
 
             {/* Trending Community Widget */}
-            <div className="sec-full trending-community-widget" style={{ marginTop: '1rem', background: 'rgba(79, 70, 229, 0.05)', borderRadius: '12px', padding: '1rem', border: '1px solid rgba(79, 70, 229, 0.2)'}}>
+            <div className="sec-full trending-community-widget" style={{ marginTop: '1rem', background: 'var(--org-primary-light)', borderRadius: '12px', padding: '1rem', border: '1px solid var(--org-primary)', opacity: 0.8 }}>
               <h3 style={{ fontSize: '1rem', color: '#334155', marginBottom: '0.5rem' }}>Trending in Community</h3>
               {trendingPosts.length === 0 ? <p style={{fontSize: '0.85rem', color: '#64748b'}}>No recent discussions.</p> : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   {trendingPosts.map(post => (
                     <div key={post._id} style={{ padding: '8px', background: 'white', borderRadius: '8px', cursor: 'pointer', border: '1px solid #e2e8f0'}} onClick={() => navigate(`/community/post/${post._id}`)}>
                       <div style={{ fontWeight: '600', fontSize: '0.85rem', color: '#1e293b', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{post.title}</div>
-                      <div style={{ fontSize: '0.75rem', color: '#4f46e5', marginTop: '4px', textTransform: 'uppercase', fontWeight: 'bold' }}>{post.domain} Circle</div>
+                      <div style={{ fontSize: '0.75rem', color: 'var(--org-primary)', marginTop: '4px', textTransform: 'uppercase', fontWeight: 'bold' }}>{post.domain} Circle</div>
                     </div>
                   ))}
                 </div>

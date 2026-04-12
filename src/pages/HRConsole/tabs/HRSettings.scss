@@ -1,0 +1,185 @@
+.hr-settings-tab {
+  .settings-section {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+
+    .section-header {
+      margin-bottom: 24px;
+      h3 {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 4px;
+        
+        svg { color: #1a56db; }
+      }
+      p {
+        font-size: 0.9rem;
+        color: #64748b;
+      }
+    }
+
+    .key-generator {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #f1f5f9;
+
+      input {
+        flex: 1;
+        padding: 10px 16px;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        outline: none;
+        
+        &:focus {
+          border-color: #1a56db;
+          box-shadow: 0 0 0 3px rgba(26, 86, 219, 0.1);
+        }
+      }
+
+      button {
+        padding: 10px 20px;
+        background: #1a56db;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: background 0.2s;
+
+        &:hover { background: #1e429f; }
+        &:disabled { background: #94a3b8; }
+      }
+    }
+
+    .new-key-alert {
+      background: #fdf2f2;
+      border: 1px solid #fbd5d5;
+      padding: 16px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      animation: slideDown 0.3s ease;
+
+      .alert-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 4px;
+        color: #9b1c1c;
+        
+        button {
+          background: transparent;
+          border: none;
+          color: #9b1c1c;
+          font-size: 0.8rem;
+          font-weight: 600;
+          cursor: pointer;
+        }
+      }
+
+      p {
+        font-size: 0.85rem;
+        color: #9b1c1c;
+        margin-bottom: 12px;
+        font-weight: 500;
+      }
+
+      .key-display {
+        display: flex;
+        gap: 8px;
+
+        input {
+          flex: 1;
+          padding: 8px 12px;
+          background: white;
+          border: 1px solid #fbd5d5;
+          border-radius: 6px;
+          font-family: monospace;
+          font-size: 0.9rem;
+        }
+
+        button {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          padding: 8px 12px;
+          background: #c53030;
+          color: white;
+          border: none;
+          border-radius: 6px;
+          font-size: 0.8rem;
+          font-weight: 600;
+          cursor: pointer;
+
+          &:hover { background: #9b1c1c; }
+        }
+      }
+    }
+
+    .keys-list {
+      table {
+        width: 100%;
+        border-collapse: collapse;
+
+        th {
+          text-align: left;
+          padding: 12px;
+          font-size: 0.75rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          color: #64748b;
+          border-bottom: 1px solid #e2e8f0;
+        }
+
+        td {
+          padding: 14px 12px;
+          font-size: 0.9rem;
+          color: #1e293b;
+          border-bottom: 1px solid #f1f5f9;
+        }
+
+        .revoke-btn {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          padding: 6px 12px;
+          background: white;
+          border: 1px solid #e2e8f0;
+          border-radius: 6px;
+          font-size: 0.8rem;
+          font-weight: 600;
+          color: #ef4444;
+          cursor: pointer;
+          transition: all 0.2s;
+
+          &:hover {
+            background: #fef2f2;
+            border-color: #fca5a5;
+          }
+        }
+      }
+
+      .no-keys, .keys-loading {
+        text-align: center;
+        padding: 40px;
+        color: #64748b;
+        font-size: 0.9rem;
+        font-style: italic;
+      }
+    }
+  }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

@@ -25,24 +25,56 @@
 
   --color-text-main: #1e293b;
   --color-text-muted: #64748b;
+
+  /* Design Tokens - Overridden by OrgBrandingProvider for B2B users */
+  --org-primary: #4f46e5;
+  --org-primary-light: rgba(79, 70, 229, 0.1);
+  --org-font-family: 'Plus Jakarta Sans', sans-serif;
+  --org-border-radius: 12px;
+  
+  --accent-glow: rgba(79, 70, 229, 0.4);
+  --glass-bg: rgba(255, 255, 255, 0.7);
 }
 
-* {
-  font-family: "Plus Jakarta Sans", "Inter", sans-serif;
+/* ─── Global Theme Utilities ─── */
+.bg-org-primary { background-color: var(--org-primary) !important; }
+.text-org-primary { color: var(--org-primary) !important; }
+.border-org-primary { border-color: var(--org-primary) !important; }
+.fill-org-primary { fill: var(--org-primary) !important; }
+
+.org-button-primary {
+  background-color: var(--org-primary);
+  color: white;
+  border-radius: var(--org-border-radius);
+  transition: all 0.2s ease;
+}
+.org-button-primary:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 4px 12px var(--org-primary-light);
 }
 
 body {
+  margin: 0;
+  font-family: var(--org-font-family);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   background-color: var(--color-bg-base);
   color: var(--color-text-main);
 }
 
+/* Global utility for org-aware rounding */
+.org-rounded {
+  border-radius: var(--org-border-radius);
+}
+
 .glass-card {
-  background: rgba(255, 255, 255, 0.65);
+  background: var(--glass-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.6);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.04);
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: var(--org-border-radius);
 }
 
 /* Global Modal Overlay (Shared by Navbar and Stats) */

@@ -1,5 +1,5 @@
-$blue: #004DFF;
-$gradient-blue: linear-gradient(135deg, #004DFF 0%, #00d2ff 100%);
+$blue: var(--org-primary);
+$gradient-blue: linear-gradient(135deg, var(--org-primary) 0%, #00d2ff 100%);
 $font-premium: 'Outfit', 'Inter', sans-serif;
 
 .nav {
@@ -90,7 +90,7 @@ $font-premium: 'Outfit', 'Inter', sans-serif;
       .logo-wrapper {
         transform: scale(1.05);
         background: white;
-        box-shadow: 0 8px 25px rgba(0, 77, 255, 0.1);
+        box-shadow: 0 8px 25px var(--org-primary-light);
       }
 
       .brand-name {
@@ -138,6 +138,23 @@ $font-premium: 'Outfit', 'Inter', sans-serif;
       }
     }
 
+    .for-business-link {
+      border: 1.5px solid rgba(99, 102, 241, 0.5);
+      border-radius: 20px;
+      padding: 0.3rem 0.9rem !important;
+      color: var(--org-primary) !important;
+      font-size: 0.85rem !important;
+
+      &:hover {
+        background: var(--org-primary-light);
+        border-color: var(--org-primary);
+      }
+
+      &::after {
+        display: none !important;
+      }
+    }
+
     .login-btn {
       background: $gradient-blue;
       color: white;
@@ -149,11 +166,11 @@ $font-premium: 'Outfit', 'Inter', sans-serif;
       cursor: pointer;
       font-family: $font-premium;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(0, 77, 255, 0.2);
+      box-shadow: 0 4px 15px var(--org-primary-light);
 
       &:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(0, 77, 255, 0.3);
+        box-shadow: 0 6px 20px var(--accent-glow);
         filter: brightness(1.1);
       }
 
@@ -171,7 +188,7 @@ $font-premium: 'Outfit', 'Inter', sans-serif;
       transition: all 0.2s;
 
       &:hover {
-        background: rgba(0, 77, 255, 0.05);
+        background: var(--org-primary-light);
         color: $blue;
       }
     }
@@ -195,8 +212,8 @@ $font-premium: 'Outfit', 'Inter', sans-serif;
 
         &:hover {
           color: $blue;
-          background: rgba(0, 77, 255, 0.05);
-          border-color: rgba(0, 77, 255, 0.1);
+          background: var(--org-primary-light);
+          border-color: var(--org-primary-light);
           transform: translateY(-2px);
         }
       }
@@ -219,7 +236,7 @@ $font-premium: 'Outfit', 'Inter', sans-serif;
           transform: translateY(-2px);
           .profile-pic {
             border-color: $blue;
-            box-shadow: 0 4px 15px rgba(0, 77, 255, 0.2);
+            box-shadow: 0 4px 15px var(--org-primary-light);
           }
         }
 
@@ -309,13 +326,13 @@ $font-premium: 'Outfit', 'Inter', sans-serif;
       cursor: pointer;
       
       &:hover {
-        background: rgba(0, 77, 255, 0.05);
-        color: #004DFF;
+        background: var(--org-primary-light);
+        color: var(--org-primary);
       }
     }
 
     .mobile-login-btn {
-      background: linear-gradient(135deg, #004DFF 0%, #00d2ff 100%);
+      background: linear-gradient(135deg, var(--org-primary) 0%, #00d2ff 100%);
       color: white;
       padding: 14px;
       border: none;
@@ -323,7 +340,7 @@ $font-premium: 'Outfit', 'Inter', sans-serif;
       font-size: 1rem;
       font-weight: 700;
       margin-top: 0.5rem;
-      box-shadow: 0 4px 15px rgba(0, 77, 255, 0.2);
+      box-shadow: 0 4px 15px var(--org-primary-light);
     }
   }
 }

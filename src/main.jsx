@@ -9,6 +9,8 @@ import Home from "./pages/Home/Home.jsx";
 import Calender from "./pages/Calender/Calender.jsx";
 import Login from "./pages/Login/Login.jsx";
 import LandingPage from "./pages/LandingPage/LandingPage.jsx";
+import B2BLanding from "./pages/LandingPage/B2BLanding.jsx";
+import HealthCheckup from "./pages/HealthCheckup/HealthCheckup.jsx";
 import Category from "./pages/Category/Category.jsx";
 import SessionType from "./pages/SessionType/SessionType.jsx";
 import Signin from "./pages/SignIn/Signin.jsx";
@@ -34,8 +36,14 @@ import FinancialHub from "./pages/FinancialHub/FinancialHub.jsx";
 import Community from "./pages/Community/Community.jsx";
 import CommunityWelcome from "./pages/Community/CommunityWelcome.jsx";
 import PostDetail from "./pages/Community/PostDetail.jsx";
+import Leaderboard from "./pages/Leaderboard/Leaderboard.jsx";
+import PhysicalHub from "./pages/PhysicalHub/PhysicalHub.jsx";
+import Pharmacy from "./pages/Pharmacy/Pharmacy.jsx";
+import PrescriptionView from "./pages/Prescription/PrescriptionView.jsx";
 import { FEATURES } from "./config/featureFlags.js";
 import { SocketProvider } from "./context/SocketContext.jsx";
+import { OrgBrandingProvider } from "./context/OrgBrandingContext.jsx";
+import SSOCallback from "./pages/SSOCallback/SSOCallback.jsx";
 
 // ─── Plug & Play Imports ───
 const ZenZone = FEATURES.ZEN_ZONE
@@ -47,6 +55,10 @@ const MindfulnessZone = FEATURES.MINDFULNESS_ZONE
 const DetoxDashboard = FEATURES.DETOX_MODE
   ? React.lazy(() => import("./pages/DetoxDashboard/DetoxDashboard.jsx"))
   : null;
+const HRConsole = FEATURES.B2B_MODE
+  ? React.lazy(() => import("./pages/HRConsole/HRConsole.jsx"))
+  : null;
+const OrgSetup = React.lazy(() => import("./pages/OrgSetup/OrgSetup.jsx"));
 
 const router = createBrowserRouter([
   {
@@ -56,6 +68,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/business",
+        element: <B2BLanding />,
       },
       {
         path: "/user/login",
@@ -129,6 +145,10 @@ const router = createBrowserRouter([
         path: "/dashboard",
         element: <DashBoard />,
       },
+      {
+        path: "/sso/callback",
+        element: <SSOCallback />,
+      },
       // ─── Plug & Play Routes ───
       ...(FEATURES.ZEN_ZONE
         ? [
@@ -166,6 +186,19 @@ const router = createBrowserRouter([
             },
           ]
         : []),
+      // ─── B2B HR Console ───
+      ...(FEATURES.B2B_MODE
+        ? [
+            {
+              path: "/hr-console",
+              element: (
+                <Suspense fallback={<div>Loading HR Console...</div>}>
+                  <HRConsole />
+                </Suspense>
+              ),
+            },
+          ]
+        : []),
       {
         path: "/user/register",
         element: <RegisterForm />,
@@ -193,6 +226,34 @@ const router = createBrowserRouter([
       {
         path: "/community/post/:id",
         element: <PostDetail />,
+      },
+      {
+        path: "/leaderboard",
+        element: <Leaderboard />,
+      },
+      {
+        path: "/physical-hub",
+        element: <PhysicalHub />,
+      },
+      {
+        path: "/prescription/:id",
+        element: <PrescriptionView />,
+      },
+      {
+        path: "/health-checkup",
+        element: <HealthCheckup />,
+      },
+      {
+        path: "/pharmacy",
+        element: <Pharmacy />,
+      },
+      {
+        path: "/org-setup",
+        element: (
+          <Suspense fallback={<div>Loading Setup Wizard...</div>}>
+            <OrgSetup />
+          </Suspense>
+        ),
       },
     ],
   },
@@ -265,10 +326,12 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={store}>
       <SocketProvider>
-        <HelmetProvider>
-          <RouterProvider router={router} />
-          <SWUpdateNotifier />
-        </HelmetProvider>
+        <OrgBrandingProvider>
+          <HelmetProvider>
+            <RouterProvider router={router} />
+            <SWUpdateNotifier />
+          </HelmetProvider>
+        </OrgBrandingProvider>
       </SocketProvider>
     </Provider>
   </StrictMode>,

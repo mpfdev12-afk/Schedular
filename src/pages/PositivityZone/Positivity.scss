@@ -1,4 +1,4 @@
-$blue: #004DFF;
+$blue: var(--org-primary);
 
 .main {
   overflow-y: auto;
@@ -239,7 +239,7 @@ $blue: #004DFF;
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background-color: #004DFF;
+    background-color: var(--org-primary);
     color: white;
     border-radius: 50%;
     width: 55px;

@@ -61,12 +61,20 @@ const Navbar = () => {
 
         {/* Links */}
         <div className="right">
-          <span 
-            className="link" 
+          <span
+            className="link"
             onClick={() => navigate(isLoggedin ? "/community" : "/community/welcome")}
           >
             Community
           </span>
+          {isLoggedin && (
+            <span
+              className="link"
+              onClick={() => navigate("/leaderboard")}
+            >
+              Leaderboard
+            </span>
+          )}
 
           {isLoggedin ? (
             <span
@@ -76,9 +84,14 @@ const Navbar = () => {
               Dashboard
             </span>
           ) : (
-            <span className="link" onClick={() => navigate("/advisor/login")}>
-              Login as Advisor
-            </span>
+            <>
+              <span className="link" onClick={() => navigate("/advisor/login")}>
+                Login as Advisor
+              </span>
+              <span className="link for-business-link" onClick={() => navigate("/business")}>
+                For Business
+              </span>
+            </>
           )}
 
           {!isLoggedin && (
@@ -148,6 +161,17 @@ const Navbar = () => {
               >
                 Community
               </span>
+              {isLoggedin && (
+                <span 
+                  className="mobile-link" 
+                  onClick={() => {
+                    navigate("/leaderboard");
+                    setIsMobileMenuOpen(false);
+                  }}
+                >
+                  Leaderboard
+                </span>
+              )}
 
               {isLoggedin ? (
                 <span
@@ -160,15 +184,26 @@ const Navbar = () => {
                   Dashboard
                 </span>
               ) : (
-                <span 
-                  className="mobile-link" 
-                  onClick={() => {
-                    navigate("/advisor/login");
-                    setIsMobileMenuOpen(false);
-                  }}
-                >
-                  Login as Advisor
-                </span>
+                <>
+                  <span
+                    className="mobile-link"
+                    onClick={() => {
+                      navigate("/advisor/login");
+                      setIsMobileMenuOpen(false);
+                    }}
+                  >
+                    Login as Advisor
+                  </span>
+                  <span
+                    className="mobile-link for-business-link"
+                    onClick={() => {
+                      navigate("/business");
+                      setIsMobileMenuOpen(false);
+                    }}
+                  >
+                    For Business
+                  </span>
+                </>
               )}
 
               {!isLoggedin && (

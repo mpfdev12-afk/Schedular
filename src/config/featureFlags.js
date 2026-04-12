@@ -16,4 +16,13 @@ export const FEATURES = {
 
   // 🧘‍♀️ Detox Mode — Full wellness toolkit (replaces Zen Zone + Mindfulness Zone)
   DETOX_MODE: true,
+
+  // ============================================================
+  // 🏢 B2B Features — all off by default, enable as built
+  // ============================================================
+  B2B_MODE: true,              // Master switch for all B2B functionality
+  HR_CONSOLE: true,            // HR Admin Console UI
+  ORG_LEADERBOARD: true,       // Org-scoped leaderboards
+  CORPORATE_HEALTH: true,      // Health checkup campaigns
+  WHITE_LABEL: true,           // Org branding/theming
 };

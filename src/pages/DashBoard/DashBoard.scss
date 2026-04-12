@@ -34,7 +34,7 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #004DFF;
+  color: var(--org-primary);
   background-color: white;
   padding: 10px 15px;
   font-weight: bold;
@@ -45,7 +45,7 @@ html, body {
   transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s;
 
   &:hover {
-    background-color: #004DFF;
+    background-color: var(--org-primary);
     color: #ffffff;
     transform: translateY(-8px);
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.013);
@@ -55,9 +55,9 @@ html, body {
 
 .domain{
   background-color: #ffffff !important;
-  color: #004DFF !important;
+  color: var(--org-primary) !important;
  margin-right: 20px !important;
- //border:2px solid #004DFF;
+ //border:2px solid var(--org-primary);
  border: none;
  width: 150px !important;
 }
@@ -183,7 +183,7 @@ scrollbar-width: none; // Firefox
     top: 24px;
     right: 32px;
     font-size: 24px;
-    color: #004DFF;
+    color: var(--org-primary);
     cursor: pointer;
   }
 
@@ -220,7 +220,7 @@ scrollbar-width: none; // Firefox
     }
 
     .fg {
-      stroke: #004DFF;
+      stroke: var(--org-primary);
       stroke-dasharray: 439.82; // 2πr = 2 * 3.14 * 70
       stroke-dashoffset: 439.82;
       transition: stroke-dashoffset 0.6s ease-in-out;
@@ -282,7 +282,7 @@ scrollbar-width: none; // Firefox
       margin-bottom: 10px;
 
       strong {
-        color: #004DFF;
+        color: var(--org-primary);
         font-weight: 600;
         margin-right: 6px;
       }
@@ -357,7 +357,7 @@ scrollbar-width: none; // Firefox
     font-weight: bold;
     background: #fefbfb;
     border-radius: 10px;
-    border: solid #004DFF;
+    border: solid var(--org-primary);
     display: flex;
     justify-content: space-between;
     align-items: center;
