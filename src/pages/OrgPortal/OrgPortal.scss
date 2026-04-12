@@ -1,0 +1,201 @@
+.org-portal {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f4ff;
+  position: relative;
+  overflow: hidden;
+  font-family: var(--org-font-family, 'Plus Jakarta Sans', 'Inter', sans-serif);
+  padding: 2rem;
+
+  &__glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse 80% 60% at 50% 30%,
+      var(--org-primary-light, rgba(99, 102, 241, 0.12)) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
+  }
+
+  &__card {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 480px;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    border-radius: var(--org-border-radius, 28px);
+    box-shadow:
+      0 8px 40px rgba(0, 0, 0, 0.08),
+      0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+    padding: 3rem 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0;
+  }
+
+  // ── Logo ──────────────────────────────────────────────
+  &__logo-wrap {
+    margin-bottom: 1.75rem;
+  }
+
+  &__logo-img {
+    width: 96px;
+    height: 96px;
+    object-fit: contain;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  &__initials {
+    width: 96px;
+    height: 96px;
+    border-radius: 20px;
+    background: var(--org-primary, #6366f1);
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.04em;
+    box-shadow: 0 4px 20px var(--org-primary-light, rgba(99, 102, 241, 0.3));
+  }
+
+  // ── Text ──────────────────────────────────────────────
+  &__text {
+    margin-bottom: 2rem;
+  }
+
+  &__eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--org-primary, #6366f1);
+    margin: 0 0 0.75rem;
+  }
+
+  &__heading {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.2;
+    margin: 0 0 1rem;
+  }
+
+  &__org-name {
+    color: var(--org-primary, #6366f1);
+  }
+
+  &__sub {
+    font-size: 0.95rem;
+    color: #64748b;
+    line-height: 1.6;
+    margin: 0;
+    max-width: 340px;
+  }
+
+  // ── Actions ───────────────────────────────────────────
+  &__actions {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  &__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+    border-radius: var(--org-border-radius, 14px);
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: box-shadow 0.2s ease;
+
+    &--primary {
+      background: var(--org-primary, #6366f1);
+      color: #fff;
+      box-shadow: 0 4px 16px var(--org-primary-light, rgba(99, 102, 241, 0.35));
+
+      &:hover {
+        box-shadow: 0 6px 24px var(--org-primary-light, rgba(99, 102, 241, 0.45));
+      }
+    }
+
+    &--sso {
+      background: rgba(255, 255, 255, 0.8);
+      color: #1e293b;
+      border: 1.5px solid rgba(0, 0, 0, 0.1);
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.95);
+        border-color: var(--org-primary, #6366f1);
+        color: var(--org-primary, #6366f1);
+      }
+    }
+  }
+
+  &__divider {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #94a3b8;
+    font-size: 0.8rem;
+    font-weight: 500;
+    width: 100%;
+
+    &::before,
+    &::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: rgba(0, 0, 0, 0.08);
+    }
+  }
+
+  // ── Footer ────────────────────────────────────────────
+  &__footer {
+    font-size: 0.78rem;
+    color: #94a3b8;
+    margin: 0;
+
+    a {
+      color: inherit;
+      font-weight: 600;
+      text-decoration: none;
+
+      &:hover {
+        color: var(--org-primary, #6366f1);
+      }
+    }
+  }
+
+  // ── Mobile ────────────────────────────────────────────
+  @media (max-width: 480px) {
+    padding: 1rem;
+
+    &__card {
+      padding: 2rem 1.5rem 1.5rem;
+    }
+
+    &__heading {
+      font-size: 1.5rem;
+    }
+  }
+}
