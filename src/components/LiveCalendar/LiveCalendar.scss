@@ -1,0 +1,227 @@
+// ── Color tokens ─────────────────────────────────────────────
+$mental:   #6366f1;
+$physical: #10b981;
+$financial:#f59e0b;
+$today-bg: #1e293b;
+
+.live-cal {
+  width: 390px;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 28px;
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.10),
+    0 0 0 1px rgba(255,255,255,0.5) inset;
+  padding: 1.5rem 1.5rem 1.25rem;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  position: relative;
+  overflow: hidden;
+
+  // subtle top-left glow
+  &::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    left: -60px;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(99,102,241,0.18), transparent 70%);
+    pointer-events: none;
+  }
+
+  // ── Header ────────────────────────────────────────────────
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+  }
+
+  &__month-row {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  &__month {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #1e293b;
+    line-height: 1;
+  }
+
+  &__year {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #94a3b8;
+    letter-spacing: 0.04em;
+  }
+
+  &__clock {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #1e293b;
+    display: flex;
+    align-items: baseline;
+    gap: 3px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__ampm {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #64748b;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    align-self: center;
+  }
+
+  // ── Today strip ───────────────────────────────────────────
+  &__today-strip {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-bottom: 1rem;
+    padding: 0.45rem 0.75rem;
+    background: rgba(99, 102, 241, 0.07);
+    border-radius: 10px;
+  }
+
+  &__today-text {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: $mental;
+    letter-spacing: 0.02em;
+  }
+
+  // ── Pulse dot ─────────────────────────────────────────────
+  &__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: $mental;
+    flex-shrink: 0;
+
+    &--pulse {
+      animation: calPulse 1.8s ease-in-out infinite;
+    }
+  }
+
+  @keyframes calPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(99,102,241,0.5); }
+    50%       { box-shadow: 0 0 0 5px rgba(99,102,241,0);  }
+  }
+
+  // ── Grid shared ───────────────────────────────────────────
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 3px;
+    margin-bottom: 0.4rem;
+
+    &--labels {
+      margin-bottom: 0.25rem;
+    }
+  }
+
+  &__day-label {
+    text-align: center;
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: #94a3b8;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 2px 0;
+  }
+
+  // ── Date cells ────────────────────────────────────────────
+  &__cell {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+    border-radius: 9px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: #475569;
+    transition: background 0.2s ease;
+    cursor: default;
+    gap: 2px;
+
+    &--empty {
+      pointer-events: none;
+    }
+
+    &--active:hover {
+      background: rgba(99, 102, 241, 0.07);
+    }
+
+    // Today cell
+    &--today {
+      background: $today-bg !important;
+      border-radius: 10px;
+
+      .live-cal__date-num {
+        color: #fff;
+        font-weight: 800;
+      }
+    }
+  }
+
+  &__date-num {
+    line-height: 1;
+  }
+
+  // ── Event dots ────────────────────────────────────────────
+  &__event-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    flex-shrink: 0;
+
+    &--mental    { background: $mental; }
+    &--physical  { background: $physical; }
+    &--financial { background: $financial; }
+  }
+
+  // ── Legend ────────────────────────────────────────────────
+  &__legend {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 0.9rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(0,0,0,0.06);
+  }
+
+  &__legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: #64748b;
+    letter-spacing: 0.02em;
+  }
+
+  &__legend-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  // ── Mobile ────────────────────────────────────────────────
+  @media (max-width: 768px) {
+    width: 320px;
+    padding: 1.25rem 1.1rem 1rem;
+
+    &__clock   { font-size: 1.1rem; }
+    &__month   { font-size: 1rem;   }
+    &__cell    { font-size: 0.7rem; }
+  }
+}

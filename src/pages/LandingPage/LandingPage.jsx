@@ -14,6 +14,7 @@ import { News } from "../../data/News";
 import { FaArrowDown } from "react-icons/fa";
 import { Positivity } from "../PositivityZone/Positivity";
 import axios from "axios";
+import LiveCalendar from "../../components/LiveCalendar/LiveCalendar";
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -103,23 +104,18 @@ const LandingPage = () => {
           </motion.div>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className="right"
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <motion.img 
-            src="calender2.png" 
-            animate={{ 
-              y: [0, -15, 0],
-            }}
-            transition={{ 
-              duration: 4, 
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          />
+          <motion.div
+            animate={{ y: [0, -15, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <LiveCalendar />
+          </motion.div>
         </motion.div>
       </motion.div>
 
