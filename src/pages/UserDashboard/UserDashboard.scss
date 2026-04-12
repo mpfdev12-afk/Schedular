@@ -244,23 +244,56 @@ $text-muted: #64748b;
   /* Components High-Contrast Overrides */
   .stats {
     .stat-card {
-      background: rgba(255, 255, 255, 0.4);
-      border-color: rgba(255, 255, 255, 0.5);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.03);
+      background: rgba(255, 255, 255, 0.5);
+      border-color: rgba(255, 255, 255, 0.6);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
 
       &:hover {
-        background: rgba(255, 255, 255, 0.8);
+        background: white;
         border-color: $sage-green;
+        box-shadow: 0 15px 35px rgba($sage-green, 0.1);
+
+        .stat-body .stat-number {
+          color: $sage-green !important; // Override Stats.scss white-on-hover
+          text-shadow: none !important;
+        }
+        
+        .stat-body .muted {
+          color: $text-dark;
+        }
       }
 
       .stat-body {
         .stat-number {
-          text-shadow: none;
+          color: $text-dark;
+          transition: all 0.3s ease;
         }
         .muted {
           color: $text-muted;
           font-weight: 700;
+          transition: all 0.3s ease;
         }
+      }
+    }
+  }
+
+  /* Trending Widget Interactive States */
+  .trending-community-widget {
+    transition: all 0.3s ease;
+    
+    &:hover {
+      opacity: 1 !important;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+    }
+
+    .trending-post-item {
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      
+      &:hover {
+        background: #f8fafc !important;
+        border-color: $sage-green !important;
+        transform: scale(1.02);
       }
     }
   }

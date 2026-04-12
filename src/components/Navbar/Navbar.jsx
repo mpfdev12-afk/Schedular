@@ -9,8 +9,10 @@ import ProfileCard from "../ProfileCard/ProfileCard";
 import { motion, AnimatePresence } from "framer-motion";
 import EditProfileCard from "../EditProfileCard/EditProfileCard";
 import LiveLogo from "./LiveLogo";
+import { useOrgBranding } from "../../context/OrgBrandingContext";
 
 const Navbar = () => {
+  const { branding, isWhiteLabel } = useOrgBranding();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isLoggedin, setLoggedin] = useState(false);
@@ -54,9 +56,13 @@ const Navbar = () => {
           else navigate("/category");
         }}>
           <div className="logo-wrapper">
-            <LiveLogo size={42} />
+            {isWhiteLabel && branding?.logo ? (
+               <img src={branding.logo} alt="Org Logo" className="org-nav-logo" style={{ height: '36px', objectFit: 'contain' }} />
+            ) : (
+              <LiveLogo size={42} />
+            )}
           </div>
-          <span className="brand-name">Schedular</span>
+          <span className="brand-name">{isWhiteLabel ? branding?.name : "Schedular"}</span>
         </div>
 
         {/* Links */}

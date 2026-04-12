@@ -14,7 +14,7 @@
   width: 260px;
   background: #ffffff;
   border-right: 1px solid #e2e8f0;
-  padding: 24px 0;
+  padding: 110px 0 24px 0; // Increased to clear sticky navbar (70px + 15px offset + breathing room)
   display: flex;
   flex-direction: column;
   position: fixed;
@@ -103,7 +103,7 @@
 .hr-main {
   flex: 1;
   margin-left: 260px;
-  padding: 32px;
+  padding: 110px 32px 32px; // Increased top padding to match sidebar offset
   max-width: 1200px;
 }
 

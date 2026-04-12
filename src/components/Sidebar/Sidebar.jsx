@@ -6,6 +6,7 @@ import {
 import "./Sidebar.scss";
 import { useNavigate } from "react-router-dom";
 import LiveLogo from "../Navbar/LiveLogo";
+import { useOrgBranding } from "../../context/OrgBrandingContext";
 
 export default function Sidebar({
   theme = "navy",
@@ -15,6 +16,7 @@ export default function Sidebar({
   activeTab,
   tabs = [],
 }) {
+  const { branding, isWhiteLabel } = useOrgBranding();
   const [currTime, setCurrTime] = useState(new Date());
   const [isOpen, setIsOpen] = useState(false);
 
@@ -52,9 +54,18 @@ export default function Sidebar({
         {/* Branding Area */}
         <div className="sidebar-branding" onClick={() => navigate("/")}>
           <div className="logo-container">
-            <LiveLogo size={42} />
+            {isWhiteLabel && branding?.logo ? (
+              <img 
+                src={branding.logo} 
+                alt="Org Logo" 
+                className="org-logo-img"
+                style={{ width: 34, height: 34, objectFit: 'contain' }} 
+              />
+            ) : (
+              <LiveLogo size={42} />
+            )}
           </div>
-          <span className="brand-text">Schedular</span>
+          <span className="brand-text">{isWhiteLabel ? branding?.name : "Schedular"}</span>
         </div>
 
         {/* Search */}

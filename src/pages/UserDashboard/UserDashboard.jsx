@@ -256,7 +256,12 @@ export default function UserDashboard() {
               {trendingPosts.length === 0 ? <p style={{fontSize: '0.85rem', color: '#64748b'}}>No recent discussions.</p> : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   {trendingPosts.map(post => (
-                    <div key={post._id} style={{ padding: '8px', background: 'white', borderRadius: '8px', cursor: 'pointer', border: '1px solid #e2e8f0'}} onClick={() => navigate(`/community/post/${post._id}`)}>
+                    <div 
+                      key={post._id} 
+                      className="trending-post-item"
+                      style={{ padding: '8px', background: 'white', borderRadius: '8px', cursor: 'pointer', border: '1px solid #e2e8f0'}} 
+                      onClick={() => navigate(`/community/post/${post._id}`)}
+                    >
                       <div style={{ fontWeight: '600', fontSize: '0.85rem', color: '#1e293b', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{post.title}</div>
                       <div style={{ fontSize: '0.75rem', color: 'var(--org-primary)', marginTop: '4px', textTransform: 'uppercase', fontWeight: 'bold' }}>{post.domain} Circle</div>
                     </div>

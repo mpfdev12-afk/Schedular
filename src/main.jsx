@@ -59,6 +59,7 @@ const HRConsole = FEATURES.B2B_MODE
   ? React.lazy(() => import("./pages/HRConsole/HRConsole.jsx"))
   : null;
 const OrgSetup = React.lazy(() => import("./pages/OrgSetup/OrgSetup.jsx"));
+const DiscoveryGateway = React.lazy(() => import("./pages/DiscoveryGateway/DiscoveryGateway.jsx"));
 
 const router = createBrowserRouter([
   {
@@ -252,6 +253,14 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<div>Loading Setup Wizard...</div>}>
             <OrgSetup />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/p/:slug",
+        element: (
+          <Suspense fallback={<div>Discovery...</div>}>
+            <DiscoveryGateway />
           </Suspense>
         ),
       },

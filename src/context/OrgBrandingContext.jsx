@@ -108,6 +108,25 @@ export function OrgBrandingProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const user = useSelector((state) => state.user);
 
+  // Helper to fetch branding by slug publicly (e.g. for Discovery Gateway)
+  const fetchBySlug = async (slug) => {
+    if (!FEATURES.B2B_MODE || !slug) return;
+    try {
+      setLoading(true);
+      const res = await fetchDataFromApi(`/org/branding/${slug}`);
+      const org = res?.data;
+      if (org) {
+        setBranding(org);
+        applyBrandingToDOM(org);
+        return org;
+      }
+    } catch (err) {
+      console.warn(`Public branding fetch failed for slug: ${slug}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Exposed helper to refresh branding (useful after admin updates branding)
   const refreshBranding = async () => {
     if (!FEATURES.B2B_MODE) return;
@@ -127,49 +146,56 @@ export function OrgBrandingProvider({ children }) {
     }
   };
 
-  // ─── Path A: Subdomain white-label detection ───
+  // ─── Path A: White-label detection (Subdomain + Path Slug) ───
   useEffect(() => {
     if (!FEATURES.B2B_MODE) return;
 
     const hostname = window.location.hostname;
+    const path = window.location.pathname;
     const reservedSubdomains = ["app", "business", "console", "www", "admin"];
+    
+    // 1. Check Subdomain (slug.fmpire.com)
     const domainMatch = hostname.match(
       /^([^.]+)\.(fmpire\.in|fmpire\.com|localhost)$/,
     );
+    
+    let extractedSlug = null;
+    if (domainMatch) {
+      const subdomain = domainMatch[1];
+      if (!reservedSubdomains.includes(subdomain.toLowerCase())) {
+        extractedSlug = subdomain;
+      }
+    }
 
-    if (!domainMatch) return;
+    // 2. Check Path Slug (/p/acme-corp) -> Higher priority for Pilots
+    if (path.startsWith("/p/")) {
+      const parts = path.split("/");
+      if (parts[2]) extractedSlug = parts[2];
+    }
 
-    const extractedSlug = domainMatch[1];
-    if (reservedSubdomains.includes(extractedSlug.toLowerCase())) return;
-
-    setLoading(true);
-    fetchDataFromApi(`/org/branding/${extractedSlug}`)
-      .then((res) => {
-        const org = res?.data;
-        if (org) {
-          setBranding(org);
-          applyBrandingToDOM(org);
-        }
-      })
-      .catch(() => {
-        // Slug doesn't match any org — fall back to default B2C experience
-      })
-      .finally(() => setLoading(false));
+    if (extractedSlug) {
+      fetchBySlug(extractedSlug);
+    }
   }, []);
 
   // ─── Path B: Authenticated employee on any domain ───
   useEffect(() => {
     if (!FEATURES.B2B_MODE) return;
-    // Only run if user is logged in, has an org, and subdomain path hasn't already set branding
+    // Only run if user is logged in, has an org, and branding hasn't been set by Path A
     if (!user?._id || !user?.organizationId || branding) return;
 
-    // Use the shared refresh function so callers can re-use it too
     refreshBranding();
   }, [user?._id, user?.organizationId, branding]);
 
   return (
     <OrgBrandingContext.Provider
-      value={{ branding, loading, isWhiteLabel: !!branding, refreshBranding }}
+      value={{ 
+        branding, 
+        loading, 
+        isWhiteLabel: !!branding, 
+        refreshBranding,
+        fetchBySlug
+      }}
     >
       {children}
     </OrgBrandingContext.Provider>
