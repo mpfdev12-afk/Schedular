@@ -241,20 +241,44 @@ export default function OrgSetup() {
                    <div className="preview-label">Live Portal Preview</div>
                    <div className="portal-mockup" style={{ '--primary': formData.primaryColor }}>
                       <div className="mock-nav">
-                        {formData.logo ? <img src={formData.logo} alt="Preview" /> : <div className="placeholder-logo"></div>}
+                        <div className="mock-logo-box">
+                          {formData.logo ? <img src={formData.logo} alt="Preview" /> : <div className="placeholder-logo"></div>}
+                        </div>
+                        <div className="mock-nav-links">
+                           <span></span>
+                           <span></span>
+                        </div>
                         <div className="mock-user"></div>
                       </div>
                       <div className="mock-body">
-                         <div className="mock-sidebar"></div>
+                         <div className="mock-sidebar">
+                            <div className="s-item active" style={{ background: formData.primaryColor, opacity: 0.1 }}></div>
+                            <div className="s-item"></div>
+                            <div className="s-item"></div>
+                         </div>
                          <div className="mock-main">
-                            <div className="mock-hero" style={{ background: formData.primaryColor, opacity: 0.1 }}></div>
-                            <div className="mock-card">
-                               <div className="mock-title" style={{ color: formData.primaryColor }}>Corporate Wellness</div>
-                               <div className="mock-btn" style={{ background: formData.primaryColor }}>Book Session</div>
+                            <div className="mock-hero" style={{ background: `linear-gradient(135deg, ${formData.primaryColor}22, ${formData.primaryColor}05)` }}>
+                               <div className="hero-text">
+                                  <div className="h-line1" style={{ background: formData.primaryColor }}></div>
+                                  <div className="h-line2"></div>
+                               </div>
+                            </div>
+                            <div className="mock-grid">
+                               <div className="mock-card">
+                                  <div className="card-img" style={{ background: formData.primaryColor, opacity: 0.05 }}></div>
+                                  <div className="mock-title" style={{ color: formData.primaryColor }}>Wellness</div>
+                                  <div className="mock-btn" style={{ background: formData.primaryColor }}>View</div>
+                               </div>
+                               <div className="mock-card">
+                                  <div className="card-img" style={{ background: formData.primaryColor, opacity: 0.05 }}></div>
+                                  <div className="mock-title" style={{ color: formData.primaryColor }}>Health</div>
+                                  <div className="mock-btn" style={{ background: formData.primaryColor }}>View</div>
+                               </div>
                             </div>
                          </div>
                       </div>
                    </div>
+                   <div className="preview-tip">The portal reflects your brand identity in real-time.</div>
                 </div>
               </motion.div>
             )}

@@ -71,15 +71,71 @@ export default function B2BLanding() {
           transition={{ duration: 0.8 }}
         >
           <div className="dashboard-preview glass-card">
-            {/* Mock Dashboard UI */}
-            <div className="mock-nav"></div>
-            <div className="mock-grid">
-              <div className="mock-chart main"></div>
-              <div className="mock-sidebar">
-                <div className="mock-item"></div>
-                <div className="mock-item"></div>
-                <div className="mock-item"></div>
+            <div className="preview-header">
+              <div className="header-left">
+                <div className="dot red"></div>
+                <div className="dot yellow"></div>
+                <div className="dot green"></div>
+                <span className="app-title">Fmpire HR Console</span>
               </div>
+              <div className="header-right">
+                <div className="mock-search"></div>
+                <div className="mock-avatar"></div>
+              </div>
+            </div>
+            
+            <div className="preview-body">
+              <aside className="preview-sidebar">
+                <div className="nav-item active"></div>
+                <div className="nav-item"></div>
+                <div className="nav-item"></div>
+                <div className="nav-item"></div>
+                <div className="spacer"></div>
+                <div className="nav-item bottom"></div>
+              </aside>
+              
+              <main className="preview-main">
+                <div className="stats-row">
+                  <div className="stat-card">
+                    <div className="stat-label">Wellness Index</div>
+                    <div className="stat-value">92%</div>
+                    <div className="stat-trend">+4.2%</div>
+                  </div>
+                  <div className="stat-card highlight">
+                    <div className="stat-label">Productivity</div>
+                    <div className="stat-value">1.5x</div>
+                    <div className="stat-trend">+12%</div>
+                  </div>
+                </div>
+                
+                <div className="chart-area">
+                  <div className="chart-header">
+                    <div className="chart-title">Engagement ROI</div>
+                    <div className="chart-legend">
+                      <span></span> Target
+                      <span></span> Actual
+                    </div>
+                  </div>
+                  <div className="visual-chart">
+                    <div className="bar" style={{ height: '40%' }}></div>
+                    <div className="bar" style={{ height: '60%' }}></div>
+                    <div className="bar" style={{ height: '45%' }}></div>
+                    <div className="bar" style={{ height: '80%' }}></div>
+                    <div className="bar active" style={{ height: '95%' }}></div>
+                  </div>
+                </div>
+
+                <div className="recent-activity">
+                  <div className="activity-item">
+                    <div className="item-icon"></div>
+                    <div className="item-text">New Expert Session: Mental Focus</div>
+                  </div>
+                  <div className="activity-item">
+                    <div className="item-icon"></div>
+                    <div className="item-text">Health Checkup: 84% Completed</div>
+                  </div>
+                </div>
+              </main>
             </div>
           </div>
         </motion.div>
@@ -120,8 +176,16 @@ export default function B2BLanding() {
             </ul>
           </div>
           <div className="pillar-visual glass-card">
-            {/* 3D Pillar Art or Infographic */}
-            <div className="pillar-blob"></div>
+            <motion.img 
+              src="/three-pillar-model.png" 
+              alt="3-Pillar Holistic Wellness Model" 
+              className="pillar-illustration"
+              initial={{ y: 20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              transition={{ duration: 1, ease: "easeOut" }}
+              whileHover={{ scale: 1.05, rotate: 2 }}
+            />
+            <div className="visual-glow"></div>
           </div>
         </div>
       </section>
